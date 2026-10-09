@@ -47,6 +47,7 @@ avec Fekk, la communauté les retrouve.
   - Préfixer toutes les classes et tous les id avec l'id de la scène (`s1-…`) : les scènes partagent
     le même document. Les id de `<defs>` SVG (dégradés, filtres, clipPath) doivent aussi être préfixés.
   - Les styles vont dans un `<style>` injecté par la scène, avec des sélecteurs préfixés.
+- Ne jamais placer un tween à une position **négative** dans `tl` (ex. `h - 0.02` avec h = 0) : GSAP décale alors tous les enfants et casse le calage. Les états initiaux visibles au tout premier frame doivent être posés dans le markup ou via `fromTo` (un `tl.set` à t=0 peut ne pas s'appliquer si le premier seek tombe pile sur `start`).
 - Plugins GSAP disponibles : CustomEase, DrawSVGPlugin, MorphSVGPlugin, MotionPathPlugin, SplitText.
 - Assets partagés (`lib/assets.js`), à utiliser tels quels pour la continuité :
   - `FEKK.ASSETS.phoneFront` et `phoneBack` : **le** téléphone perdu (coque bleue, écran 18:47).

@@ -29,6 +29,13 @@
     unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
   }
 
+  @font-face {
+    font-family: 'Inter Variable';
+    font-style: italic; font-display: block; font-weight: 100 900;
+    src: url(node_modules/@fontsource-variable/inter/files/inter-latin-wght-italic.woff2) format('woff2-variations');
+    unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+  }
+
   :root {
     --ink: #0B1210; --night: #10213A; --dusk: #2A2350;
     --sand: #F3E6CF; --sand2: #E6CFA6; --clay: #C8643B; --sunset: #FF7A2F;
@@ -41,6 +48,8 @@
   body { font-family: var(--ui); color: #fff; -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision; }
   #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: var(--ink); }
   .layer { position: absolute; inset: 0; overflow: hidden; visibility: hidden; }
+  /* Une scène hors de sa fenêtre est invisible, même si GSAP a posé visibility:visible sur un enfant. */
+  .layer.off, .layer.off * { visibility: hidden !important; }
   /* Grain filmique global, statique (pas d'animation CSS). */
   #grain { position: absolute; inset: 0; pointer-events: none; z-index: 9999; opacity: 0.07; mix-blend-mode: overlay; }
   /* Debug : ?safe=1 affiche les zones de sécurité des réseaux sociaux. */
@@ -75,6 +84,7 @@
   await Promise.all([
     document.fonts.load("800 100px 'Bricolage Grotesque Variable'"),
     document.fonts.load("400 100px 'Inter Variable'"),
+    document.fonts.load("italic 400 100px 'Inter Variable'"),
   ]);
   const stage = document.getElementById('stage');
   const master = gsap.timeline({ paused: true });
@@ -108,6 +118,7 @@
     for (const { s, root } of layers) {
       const on = t >= s.start && t < s.end;
       root.style.visibility = on ? 'visible' : 'hidden';
+      root.classList.toggle('off', !on);
       if (on && s.onFrame) s.onFrame(t - s.start);
     }
   };

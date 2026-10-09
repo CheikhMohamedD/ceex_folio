@@ -1,3 +1,7 @@
 node_modules/
 out/stills/
 out/*.tmp.mp4
+out/audio-tmp/
+audio/fekk.wav
+out/review/
+out/fekk-v*.mp4

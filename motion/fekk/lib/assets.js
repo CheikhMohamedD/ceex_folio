@@ -9,9 +9,9 @@
 <svg class="asset-phone-front" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg">
   <rect x="2" y="2" width="196" height="396" rx="34" fill="${C.blue}"/>
   <rect x="10" y="10" width="180" height="380" rx="27" fill="#0A0D14"/>
-  <rect x="16" y="16" width="168" height="368" rx="22" fill="url(#pfScreen)"/>
+  <rect x="16" y="16" width="168" height="368" rx="22" fill="url(#asset-pfScreen)"/>
   <defs>
-    <linearGradient id="pfScreen" x1="0" y1="0" x2="0.4" y2="1">
+    <linearGradient id="asset-pfScreen" x1="0" y1="0" x2="0.4" y2="1">
       <stop offset="0" stop-color="#2A2350"/><stop offset="0.6" stop-color="#C8643B"/><stop offset="1" stop-color="#FF7A2F"/>
     </linearGradient>
   </defs>
