@@ -293,7 +293,8 @@
         .s1-lb { font-size:150px; top:690px; text-shadow: 9px 10px 0 ${C.ink}; }
         .s1-lc { font-size:300px; top:822px; text-shadow: 12px 14px 0 ${C.ink}; }
         .s1-under { position:absolute; left:0; top:0; width:1080px; height:1920px; overflow:visible; }
-        .s1-flash { position:absolute; inset:0; background:#FFF3D6; opacity:0; mix-blend-mode: screen; }
+        .s1-flash { position:absolute; inset:0; opacity:0; mix-blend-mode: screen;
+          background: radial-gradient(circle at 560px 1650px, ${C.yellow} 0, rgba(253,239,66,0.75) 110px, rgba(255,122,47,0.35) 300px, rgba(255,122,47,0) 560px); }
         .s1-ink { position:absolute; inset:0; background:${C.ink}; opacity:0; }
       </style>`));
 
@@ -746,8 +747,9 @@
       tl.to(crackPaths, { drawSVG: '100%', duration: 0.1, ease: 'power3.out', stagger: 0.025 }, T_IMPACT + 0.01);
       tl.to(shards, { opacity: (i) => [0.28, 0.18][i], duration: 0.05, stagger: 0.03 }, T_IMPACT + 0.05);
       // Flash d'impact
-      tl.fromTo(flash, { opacity: 0 }, { opacity: 0.45, duration: 0.03, ease: 'none', immediateRender: false }, T_IMPACT);
-      tl.to(flash, { opacity: 0, duration: 0.2, ease: 'power2.out' }, T_IMPACT + 0.03);
+      // Flash chaud localisé autour du point d'impact (jaune en screen), 2 images à 60 fps puis coupe.
+      tl.set(flash, { opacity: 1 }, T_IMPACT);
+      tl.to(flash, { opacity: 0, duration: 0.035, ease: 'power1.in' }, T_IMPACT + 0.017);
       // Shake caméra
       const sr = FEKK.rng(2300);
       for (let i = 0; i < 7; i++) {
@@ -821,29 +823,34 @@
       S([la, lb, lc], { opacity: 1 });
       S([...sa.chars, ...sb.words, ...sc.chars], { opacity: 0 });
       S(la, { y: 0, scale: 1, transformOrigin: '50% 50%' });
+      // Calage : « Un instant… » jaillit dès l'impact, se range AVANT que « et » n'entre (par le bas),
+      // et « perdu. » est posé vers 2.95 pour rester lisible jusqu'à la coupe ink (3.44).
+      const T_LA = 2.3, T_LA_UP = 2.5, LA_UP_D = 0.22, T_LB = 2.63, T_LC = 2.75, LC_ST = 0.02, LC_D = 0.11;
       // « Un instant… » : les lettres jaillissent du bas, en éventail
       tl.fromTo(sa.chars, { opacity: 0, yPercent: 90, rotation: (i) => (i % 2 ? 14 : -10), scaleY: 1.35 },
-        { opacity: 1, yPercent: 0, rotation: 0, scaleY: 1, duration: 0.3, ease: 'back.out(2.2)', stagger: 0.018, immediateRender: false }, 2.36);
-      // il monte et se range quand la suite arrive (overlap)
-      tl.to(la, { y: -126, scale: 0.8, duration: 0.34, ease: 'fekk.swift' }, 2.6);
-      // « et c'est » : mots qui claquent
-      tl.fromTo(sb.words, { opacity: 0, scale: 1.6, y: -40 },
-        { opacity: 1, scale: 1, y: 0, duration: 0.22, ease: 'fekk.snap', stagger: 0.09, immediateRender: false }, 2.66);
+        { opacity: 1, yPercent: 0, rotation: 0, scaleY: 1, duration: 0.26, ease: 'back.out(2.2)', stagger: 0.018, immediateRender: false }, T_LA);
+      // il monte et se range (overlap avec la fin de l'écriture), libérant la place de la ligne 2
+      tl.to(la, { y: -126, scale: 0.8, duration: LA_UP_D, ease: 'fekk.swift' }, T_LA_UP);
+      tl.to(la, { y: '-=8', duration: T_BLACK - (T_LA_UP + LA_UP_D), ease: 'none' }, T_LA_UP + LA_UP_D);
+      // « et c'est » : les mots montent du bas, overshoot VERTICAL uniquement (pas d'empiètement latéral)
+      tl.fromTo(sb.words, { opacity: 0, y: 70, scaleY: 1.35, scaleX: 1, transformOrigin: '50% 100%' },
+        { opacity: 1, y: 0, scaleY: 1, duration: 0.2, ease: 'back.out(1.8)', stagger: 0.06, immediateRender: false }, T_LB);
       // « perdu. » : slam massif, squash à l'atterrissage
-      tl.fromTo(sc.chars, { scale: 1.45, y: 30, rotation: (i) => [-8, 6, -4, 7, -6, 4][i % 6], transformOrigin: '50% 90%' },
-        { scale: 1, y: 0, rotation: 0, duration: 0.14, ease: 'power4.in', stagger: 0.03, immediateRender: false }, 2.8);
-      tl.fromTo(sc.chars, { opacity: 0 }, { opacity: 1, duration: 0.04, ease: 'none', stagger: 0.03, immediateRender: false }, 2.8);
+      tl.fromTo(sc.chars, { scale: 1.3, y: 40, rotation: (i) => [-8, 6, -4, 7, -6, 4][i % 6], transformOrigin: '50% 75%' },
+        { scale: 1, y: 0, rotation: 0, duration: LC_D, ease: 'power4.in', stagger: LC_ST, immediateRender: false }, T_LC);
+      tl.fromTo(sc.chars, { opacity: 0 }, { opacity: 1, duration: 0.04, ease: 'none', stagger: LC_ST, immediateRender: false }, T_LC);
       sc.chars.forEach((ch, i) => {
-        const t = 2.8 + i * 0.03 + 0.14;
+        const t = T_LC + i * LC_ST + LC_D;
         tl.to(ch, { scaleY: 0.86, scaleX: 1.07, duration: 0.05, ease: 'power2.out' }, t);
         tl.to(ch, { scaleY: 1, scaleX: 1, duration: 0.22, ease: 'elastic.out(1, 0.45)' }, t + 0.05);
       });
+      const LC_LANDED = T_LC + (sc.chars.length - 1) * LC_ST + LC_D;
       // Soulignement rouge tracé
       const under = q('.s1-underline');
       S(under, { drawSVG: '0%' });
-      tl.to(under, { drawSVG: '100%', duration: 0.2, ease: 'power3.out' }, 3.04);
+      tl.to(under, { drawSVG: '100%', duration: 0.18, ease: 'power3.out' }, LC_LANDED + 0.02);
       // micro-dérive pour que rien ne fige
-      tl.to([lb, lc], { y: '-=10', duration: 0.5, ease: 'none' }, 2.8);
+      tl.to([lb, lc], { y: '-=10', duration: T_BLACK - T_LB, ease: 'none' }, T_LB);
 
       // ---- Transition sortante : plongée dans l'écran éteint → plein cadre ink ----
       const ox = LAND[0] + DRIFT.ground[1] + 8; // position écran du téléphone une fois la caméra posée
@@ -855,12 +862,14 @@
       tl.to(phShadow, { opacity: 0, duration: 0.15 }, T_ZOOM);
       tl.to(qa('.s1-crack', phone), { opacity: 0, duration: 0.14, ease: 'power1.in' }, T_ZOOM + 0.14);
       tl.to(vig, { opacity: 1.0, duration: 0.3, ease: 'power2.in' }, T_ZOOM);
-      // Les textes passent « à travers » la caméra
-      const TX = 3.3, TXD = T_BLACK - TX;
-      tl.to(la, { y: '-=260', scale: 1.9, opacity: 0, duration: TXD, ease: 'power2.in' }, TX);
-      tl.to(lb, { y: '-=60', scale: 2.3, opacity: 0, duration: TXD, ease: 'power2.in' }, TX + 0.01);
-      tl.to(lc, { y: '+=240', scale: 2.8, opacity: 0, duration: TXD - 0.01, ease: 'power2.in' }, TX + 0.01);
-      tl.to(q('.s1-under'), { y: 300, scale: 2.8, transformOrigin: '540px 1108px', opacity: 0, duration: TXD - 0.01, ease: 'power2.in' }, TX + 0.01);
+      // Les textes restent à 100 % au-dessus du zoom : légère poussée vers la caméra (scale seul,
+      // pas de fondu gris), puis la coupe sèche ink à T_BLACK les recouvre.
+      const TX = 3.2, TXD = T_BLACK - TX;
+      tl.to(la, { scale: 0.8 * 1.07, duration: TXD, ease: 'power2.in' }, TX);
+      tl.to(lb, { scale: 1.07, transformOrigin: '50% 50%', duration: TXD, ease: 'power2.in' }, TX);
+      // lc et le soulignement grossissent autour du même point écran (y=960 → 138px dans .s1-lc, top 822)
+      tl.to(lc, { scale: 1.07, transformOrigin: '540px 138px', duration: TXD, ease: 'power2.in' }, TX);
+      tl.to(q('.s1-under'), { scale: 1.07, transformOrigin: '540px 960px', duration: TXD, ease: 'power2.in' }, TX);
       tl.to(q('.s1-label'), { y: -80, opacity: 0, duration: 0.2, ease: 'power2.in' }, T_ZOOM + 0.06);
       S(ink, { opacity: 0 });
       tl.set(ink, { opacity: 1 }, T_BLACK);
