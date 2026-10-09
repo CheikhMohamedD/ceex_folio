@@ -825,7 +825,7 @@
       S(la, { y: 0, scale: 1, transformOrigin: '50% 50%' });
       // Calage : « Un instant… » jaillit dès l'impact, se range AVANT que « et » n'entre (par le bas),
       // et « perdu. » est posé vers 2.87 pour rester lisible (~0,57 s, phrase entière) jusqu'à la coupe ink (3.44).
-      const T_LA = 2.3, T_LA_UP = 2.46, LA_UP_D = 0.2, T_LB = 2.57, T_LC = 2.66, LC_ST = 0.02, LC_D = 0.11;
+      const T_LA = 2.22, T_LA_UP = 2.36, LA_UP_D = 0.2, T_LB = 2.46, T_LC = 2.55, LC_ST = 0.02, LC_D = 0.11;
       // « Un instant… » : les lettres jaillissent du bas, en éventail
       tl.fromTo(sa.chars, { opacity: 0, yPercent: 90, rotation: (i) => (i % 2 ? 14 : -10), scaleY: 1.35 },
         { opacity: 1, yPercent: 0, rotation: 0, scaleY: 1, duration: 0.26, ease: 'back.out(2.2)', stagger: 0.018, immediateRender: false }, T_LA);

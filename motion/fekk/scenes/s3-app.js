@@ -332,12 +332,12 @@
         <div class="s3-lbl" style="top:476px">Lieu</div>
         <div class="s3-field s3-f1" style="top:506px;height:80px">
           <div class="s3-ficon">${ico('pin', 24, C.green, 2.2)}</div>
-          <div class="s3-ftxt"><span class="s3-ph">Où l’avez-vous perdu ?</span><span class="s3-typed"></span><span class="s3-caret"></span></div>
+          <div class="s3-ftxt"><span class="s3-ph">Où l’avez-vous perdu ?</span><span class="s3-typed"></span><span class="s3-caret"></span></div>
         </div>
         <div class="s3-lbl" style="top:610px">Date et heure</div>
         <div class="s3-field s3-f2" style="top:640px;height:80px">
           <div class="s3-ficon">${ico('cal', 24, C.green, 2.2)}</div>
-          <div class="s3-ftxt"><span class="s3-ph">Quand ?</span><span class="s3-typed"></span><span class="s3-caret"></span></div>
+          <div class="s3-ftxt"><span class="s3-ph">Quand ?</span><span class="s3-typed"></span><span class="s3-caret"></span></div>
         </div>
         <div class="s3-togrow"><div class="s3-ficon" style="background:#fff">${ico('users', 24, C.green, 2.2)}</div>
           <div>Alerter la communauté<small>Les voisins autour de vous</small></div><div class="s3-tog"><i></i></div></div>
@@ -883,8 +883,8 @@
         [5.0, 5.35, { s: 1.38, top: 462 }, 'power3.out'],     // notification
         [5.4, 5.9, { s: 1.3, top: 352 }, 'power2.inOut'],     // glisse vers la jauge / carte de match
         [5.9, 6.75, { s: 1.32, top: 352 }, 'sine.inOut'],
-        [6.75, 7.2, { s: 1.36, top: 352 }, 'power2.inOut'],   // point relais + code
-        [7.2, 8.0, { s: 1.38, top: 352 }, 'sine.inOut'],      // lente dérive
+        [6.75, 7.2, { s: 1.32, top: 330 }, 'power2.inOut'],   // point relais + code
+        [7.2, 8.0, { s: 1.33, top: 330 }, 'sine.inOut'],      // lente dérive
       ];
       const camPhone = (t) => {
         let c = { s: REST.s, top: REST.top };

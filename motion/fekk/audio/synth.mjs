@@ -399,8 +399,8 @@ const drums = BUS.drums, music = BUS.music, sfx = BUS.sfx;
 const SYNC = {
   carDepart: 1.18,      // s1 DEPART (anticipation dès 1.16)
   bounce: 2.59,         // s1 T_IMPACT + 0.29 : second contact du téléphone (sommet du rebond ≈ 2.48)
-  perduSlam: 2.77,      // s1 T_LC + LC_D : première lettre de « perdu. » posée (dernière à 2.87)
-  underline: 2.89,      // s1 LC_LANDED + 0.02 : soulignement rouge (0,18 s)
+  perduSlam: 2.66,      // s1 T_LC + LC_D : première lettre de « perdu. » posée (dernière à 2.76)
+  underline: 2.78,      // s1 LC_LANDED + 0.02 : soulignement rouge (0,18 s)
   stickerImp: 0.11,     // s2 T_IMP = HITS + 0.11 : impact (squash) de chaque sticker
   pinLand: 6.52,        // s2 T_LAND (3.02) : épingle Fekk posée, squash ; flood 6.62 → 6.94
   chip: 8.01,           // s3 chip0 pressée 8.00, chipSel 8.02
@@ -706,7 +706,7 @@ place(drums, 3.5, crash(0.42, 0.7, 1.8), { pan: 0.15, rev: 0.25, fadeIn: 0.001, 
 place(sfx, 3.5, thump(70, 34, 0.32, 0.55), { fadeIn: 0.0008, fadeOut: 0.05 });   // sub-drop
 
 // 5.4–6.2 — Les objets deviennent des épingles sur la carte : petits plinks épars.
-[[5.45, 86], [5.58, 81], [5.70, 84], [5.83, 79], [5.95, 86], [6.06, 81]].forEach(([t, m], k) =>
+[[5.66, 86], [5.86, 81], [6.04, 84], [6.085, 79], [6.13, 86], [6.22, 81]].forEach(([t, m], k) =>
   place(music, t, bell(mtof(m), { dur: 0.5, ratio: 2, index: 0.8, decay: 0.12, vel: 0.13 }), { pan: [-0.6, 0.5, -0.2, 0.7, -0.45, 0.2][k], rev: 0.35, dly: 0.2 }));
 
 // 6.52 — L'épingle se pose (squash) : thump + clave, pop du point, puis swell qui
@@ -723,7 +723,9 @@ place(sfx, 3.5, thump(70, 34, 0.32, 0.55), { fadeIn: 0.0008, fadeOut: 0.05 });  
 }
 // 7.0 — Transition : cymbale douce, groove qui reprend (plus lumineux).
 place(drums, 7.0, crash(0.32, 0.55, 1.4), { pan: -0.15, rev: 0.3, fadeIn: 0.001, fadeOut: 0.1 });
-place(music, 7.0, bell(mtof(77), { dur: 1.2, ratio: 2, index: 1.2, decay: 0.4, vel: 0.18 }), { pan: 0.2, rev: 0.35, dly: 0.25 });
+place(music, 7.32, bell(mtof(77), { dur: 1.2, ratio: 2, index: 1.2, decay: 0.4, vel: 0.18 }), { pan: 0.2, rev: 0.35, dly: 0.25 });   // épingle du splash posée
+place(music, 7.42, bell(mtof(89), { dur: 0.3, ratio: 2, index: 0.6, decay: 0.07, vel: 0.12 }), { pan: 0.1, rev: 0.3 });            // pop du point du splash
+place(sfx, 7.82, swell(0.3, { f0: 900, f1: 6000, curve: 2.2, vel: 0.22 }), { pan: 0, rev: 0.2, fadeIn: 0.01, fadeOut: 0.004 });  // zoom-through du logo
 
 // 7.8–9.3 — Frappe clavier (ticks), puis « tap » sur Publier à 9.3 et validation ✓.
 function tick(vel) {
@@ -805,6 +807,16 @@ for (const [a, b] of SYNC.typing) {
   SC.push([g0, 0.2]);
 }
 
+// 13.45–14.8 — La notification remonte, l'itinéraire se trace (13.85 → 14.60, power2.inOut),
+// le bouton « Récupérer mon objet » pulse à 14.35 et 14.80.
+place(sfx, 13.45, swell(0.18, { f0: 1200, f1: 7000, curve: 2.0, vel: 0.16 }), { pan: 0.2, rev: 0.2, fadeIn: 0.01, fadeOut: 0.004 });
+{
+  const E = (u) => (u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2);
+  [72, 74, 77, 79, 81, 84].forEach((m, k) =>
+    place(music, 13.85 + 0.75 * E(k / 5), bell(mtof(m), { dur: 0.5, ratio: 2, index: 0.7, decay: 0.12, vel: 0.13 }), { pan: lerp(-0.3, 0.3, k / 5), rev: 0.3, dly: 0.15 }));
+  [14.35, 14.8].forEach((t) => place(sfx, t, clave(0.22, 2100), { pan: 0.05, rev: 0.12 }));
+}
+
 // 15.0 — Whoosh de sortie (la maquette part en zoom vers le bas).
 {
   const d = 0.58, b = len(d), nz = noiseGen(), bp = new Biquad('bp', 400, 1.2);
@@ -851,7 +863,9 @@ place(sfx, 17.2, swell(0.6, { f0: 700, f1: 11000, q: 0.6, curve: 2.8, vel: 0.5 }
   [41, 48, 53, 57, 60, 65, 69, 72, 79].forEach((m, k) => kora(17.8 + k * 0.022, m, 0.42 - k * 0.015, { pan: lerp(-0.5, 0.5, k / 8), t60: 2.6, bright: 0.6, dur: 2.2, rev: 0.4 }));
   [81, 84, 89].forEach((m, k) => place(music, 17.82 + k * 0.05, bell(mtof(m), { dur: 2.2, ratio: 2, index: 1.0, decay: 0.8, idxDecay: 0.25, vel: 0.2 }), { pan: [-0.3, 0.3, 0][k], rev: 0.5, dly: 0.15 }));
   place(drums, 17.8, crash(0.35, 1.0, 2.2), { pan: 0.1, rev: 0.35, fadeIn: 0.001, fadeOut: 0.2 });
-  place(music, SYNC.logoDot, bell(mtof(89), { dur: 0.3, ratio: 2, index: 0.6, decay: 0.08, vel: 0.15 }), { pan: 0.15, rev: 0.3 });   // pop du point du logo
+  place(music, SYNC.logoDot, bell(mtof(96), { dur: 0.3, ratio: 2, index: 0.6, decay: 0.06, vel: 0.3 }), { pan: 0.15, rev: 0.3 });   // pop du point du logo
+  [17.98, 18.06, 18.14, 18.22].forEach((t, k) => place(drums, t, clave(0.1, 2200 + 120 * k), { pan: lerp(-0.25, 0.25, k / 3), rev: 0.15 }));   // lettres « fekk »
+  place(music, 18.8, bell(mtof(84), { dur: 0.4, ratio: 2, index: 0.6, decay: 0.1, vel: 0.14 }), { pan: 0, rev: 0.3 });   // pop de la pilule CTA
 }
 
 // ═════════════════════════════════════════════════════════════════════════════

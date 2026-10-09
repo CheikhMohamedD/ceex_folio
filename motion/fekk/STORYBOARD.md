@@ -123,7 +123,7 @@ shaker, claves et basse sub.
 | 7.8–9.6 | Petits ticks de frappe clavier, « tap » sur Publier vers 9.3. |
 | 9.8–12.0 | Pings radar (3–4 pulses). |
 | 12.0 | Son de notification (deux notes ascendantes) et buzz de vibration. |
-| 13.4 | Arpège ascendant (le match). |
+| 12.56–12.95 | Arpège ascendant calé sur la jauge 0 → 94 % (le match). |
 | 15.0 | Whoosh de sortie. |
 | 16.6 | « Jërëjëf » : accent chaleureux, petit carillon. |
 | 17.4 | Swell, puis logo à 17.8 (accord final majeur). |
