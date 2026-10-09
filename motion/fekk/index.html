@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Fekk — 20s</title>
+<style>
+  @font-face {
+    font-family: 'Bricolage Grotesque Variable';
+    font-style: normal; font-display: block; font-weight: 200 800;
+    src: url(node_modules/@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-standard-normal.woff2) format('woff2-variations');
+    unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+  }
+  @font-face {
+    font-family: 'Bricolage Grotesque Variable';
+    font-style: normal; font-display: block; font-weight: 200 800;
+    src: url(node_modules/@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-ext-standard-normal.woff2) format('woff2-variations');
+    unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+  }
+  @font-face {
+    font-family: 'Inter Variable';
+    font-style: normal; font-display: block; font-weight: 100 900;
+    src: url(node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2) format('woff2-variations');
+    unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+  }
+  @font-face {
+    font-family: 'Inter Variable';
+    font-style: normal; font-display: block; font-weight: 100 900;
+    src: url(node_modules/@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2) format('woff2-variations');
+    unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+  }
+
+  :root {
+    --ink: #0B1210; --night: #10213A; --dusk: #2A2350;
+    --sand: #F3E6CF; --sand2: #E6CFA6; --clay: #C8643B; --sunset: #FF7A2F;
+    --green: #00853F; --mint: #2BD67B; --yellow: #FDEF42; --red: #E31B23; --blue: #1F5FD1;
+    --display: 'Bricolage Grotesque Variable', system-ui, sans-serif;
+    --ui: 'Inter Variable', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--ink); }
+  body { font-family: var(--ui); color: #fff; -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: var(--ink); }
+  .layer { position: absolute; inset: 0; overflow: hidden; visibility: hidden; }
+  /* Grain filmique global, statique (pas d'animation CSS). */
+  #grain { position: absolute; inset: 0; pointer-events: none; z-index: 9999; opacity: 0.07; mix-blend-mode: overlay; }
+  /* Debug : ?safe=1 affiche les zones de sécurité des réseaux sociaux. */
+  #safe { position: absolute; inset: 0; z-index: 10000; pointer-events: none; display: none; }
+  #safe.on { display: block; }
+  #safe div { position: absolute; background: rgba(255,0,80,.25); }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<svg id="grain" width="1080" height="1920"><filter id="grainF"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(#grainF)"/></svg>
+<div id="safe"><div style="left:0;right:0;top:0;height:220px"></div><div style="left:0;right:0;bottom:0;height:380px"></div><div style="left:0;top:0;bottom:0;width:90px"></div><div style="right:0;top:0;bottom:0;width:90px"></div></div>
+
+<script src="node_modules/gsap/dist/gsap.min.js"></script>
+<script src="node_modules/gsap/dist/CustomEase.min.js"></script>
+<script src="node_modules/gsap/dist/DrawSVGPlugin.min.js"></script>
+<script src="node_modules/gsap/dist/MorphSVGPlugin.min.js"></script>
+<script src="node_modules/gsap/dist/MotionPathPlugin.min.js"></script>
+<script src="node_modules/gsap/dist/SplitText.min.js"></script>
+<script src="lib/core.js"></script>
+<script src="lib/assets.js"></script>
+
+<!-- Scènes, dans l'ordre du film -->
+<script src="scenes/s1-moment.js"></script>
+<script src="scenes/s2-perdus.js"></script>
+<script src="scenes/s3-app.js"></script>
+<script src="scenes/s5-retrouvailles.js"></script>
+
+<script>
+(async function () {
+  await document.fonts.ready;
+  await Promise.all([
+    document.fonts.load("800 100px 'Bricolage Grotesque Variable'"),
+    document.fonts.load("400 100px 'Inter Variable'"),
+  ]);
+  const stage = document.getElementById('stage');
+  const master = gsap.timeline({ paused: true });
+  const params = new URLSearchParams(location.search);
+  const only = params.get('scene'); // ?scene=s1 pour isoler une scène
+  if (params.get('safe')) document.getElementById('safe').classList.add('on');
+
+  const layers = [];
+  FEKK.SCENES.forEach((s, i) => {
+    if (only && s.id !== only) return;
+    const root = document.createElement('div');
+    root.className = 'layer';
+    root.dataset.scene = s.id;
+    root.style.zIndex = s.z ?? (i + 1) * 10;
+    stage.appendChild(root);
+    const tl = gsap.timeline();
+    try {
+      s.build(root, tl, { FEKK, C: FEKK.C, W: FEKK.W, H: FEKK.H, duration: s.end - s.start });
+    } catch (e) {
+      console.error('[scene ' + s.id + '] build failed', e);
+      window.__errors = (window.__errors || []).concat(String(e && e.stack || e));
+    }
+    master.add(tl, s.start);
+    layers.push({ s, root });
+  });
+  // Garantit que la timeline couvre toute la durée.
+  master.set({}, {}, FEKK.DURATION);
+
+  window.__seek = function (t) {
+    master.seek(t, false);
+    for (const { s, root } of layers) {
+      const on = t >= s.start && t < s.end;
+      root.style.visibility = on ? 'visible' : 'hidden';
+      if (on && s.onFrame) s.onFrame(t - s.start);
+    }
+  };
+  window.__DURATION = FEKK.DURATION;
+  window.__seek(parseFloat(params.get('t') || '0'));
+  window.__ready = true;
+})();
+</script>
+</body>
+</html>
