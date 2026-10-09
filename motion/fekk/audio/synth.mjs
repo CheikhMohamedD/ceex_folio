@@ -383,8 +383,8 @@ const CHORD = {
 };
 const PROG = [
   [0.0, 3.5, 'Dm'], [3.5, 5.5, 'Dm'], [5.5, 6.6, 'Bb'], [6.6, 7.0, 'C'],
-  [7.0, 9.0, 'F'], [9.0, 11.0, 'Dm'], [11.0, 12.0, 'Bb'], [12.0, 13.4, 'C'],
-  [13.4, 15.5, 'F'], [15.5, 17.0, 'Bb'], [17.0, 17.8, 'C'], [17.8, 20.0, 'F'],
+  [7.0, 9.0, 'F'], [9.0, 11.0, 'Dm'], [11.0, 12.0, 'Bb'], [12.0, 12.5, 'C'],
+  [12.5, 15.5, 'F'], [15.5, 17.0, 'Bb'], [17.0, 17.8, 'C'], [17.8, 20.0, 'F'],
 ];
 const chordAt = (t) => CHORD[(PROG.find(([a, b]) => t >= a && t < b) || PROG[PROG.length - 1])[2]];
 
@@ -392,6 +392,30 @@ const chordAt = (t) => CHORD[(PROG.find(([a, b]) => t >= a && t < b) || PROG[PRO
 //  PARTITION
 // ═════════════════════════════════════════════════════════════════════════════
 const drums = BUS.drums, music = BUS.music, sfx = BUS.sfx;
+
+// ── Repères image (temps absolus), relevés dans le code des scènes ─────────
+// Tous les cues ci-dessous qui suivent un mouvement précis partent de ces
+// constantes : si une scène bouge, on ne corrige qu'ici.
+const SYNC = {
+  carDepart: 1.18,      // s1 DEPART (anticipation dès 1.16)
+  bounce: 2.59,         // s1 T_IMPACT + 0.29 : second contact du téléphone (sommet du rebond ≈ 2.48)
+  perduSlam: 2.77,      // s1 T_LC + LC_D : première lettre de « perdu. » posée (dernière à 2.87)
+  underline: 2.89,      // s1 LC_LANDED + 0.02 : soulignement rouge (0,18 s)
+  stickerImp: 0.11,     // s2 T_IMP = HITS + 0.11 : impact (squash) de chaque sticker
+  pinLand: 6.52,        // s2 T_LAND (3.02) : épingle Fekk posée, squash ; flood 6.62 → 6.94
+  chip: 8.01,           // s3 chip0 pressée 8.00, chipSel 8.02
+  typing: [[8.12, 8.48], [8.60, 8.97], [9.02, 9.24]],   // s3 TYPE (a, b) + 7
+  check: 9.58,          // s3 coche tracée 9.58 → 9.76, pop du bouton 9.60
+  screenSwap: 9.80,     // s3 slide + scale vers la carte (0,42 s), feuille 10.0
+  pins: [10.30, 0.16],  // s3 8 épingles « trouvé » : 10.30 + i × 0.16 (fekk.land 0,38 s → posées ≈ +0.16)
+  relayPin: 10.90,      // s3 épingle du point relais (fekk.land 0,4 s → posée ≈ 11.08)
+  notif: 12.0,          // s3 notification (fekk.land 0,5 s : entre dans l'écran ≈ 12.10, se pose ≈ 12.22)
+  shake: [12.02, 0.42], // s3 shake (keyframes) + arcs de vibration
+  gauge: [12.56, 12.95],// s3 compteur 0 → 94 % (power3.out), pop + halo de la jauge à 12.95
+  phoneOn: 16.0,        // s5 0.50 : écran qui s'allume (flash, zing), notification à 16.12
+  jt: 16.34,            // s5 JT = 0.84 : étincelle, bulle « Jërëjëf ! », rayons, coup de caméra
+  logoDot: 18.16,       // s5 2.66 : pop du .logo-dot
+};
 const hum = () => rr(-0.004, 0.004);
 const at = (t) => Math.max(0, t + hum());   // humanisation, jamais avant 0
 
@@ -451,7 +475,7 @@ function bassRegion(t0, t1, vel = 1) {
 bassRegion(3.5, 6.0, 1);
 bassRegion(7.0, 15.0, 0.95);
 // accent chaud sous « Jërëjëf » et fondamentale du logo
-place(BUS.bass, 16.6, bassNote(mtof(34), 0.6, 0.6), { fadeOut: 0.04 });
+place(BUS.bass, SYNC.jt, bassNote(mtof(34), 0.6, 0.6), { fadeOut: 0.04 });
 {
   const b = len(2.2); let ph = 0;
   for (let i = 0; i < b.length; i++) { const t = i / SR; ph += (TAU * mtof(29)) / SR; b[i] = (Math.sin(ph) + 0.45 * Math.sin(2 * ph) + 0.12 * Math.sin(3 * ph)) * adsr(t, 1.0, 0.01, 0.4, 0.5, 0.95) * 0.5; }
@@ -461,8 +485,8 @@ place(BUS.bass, 16.6, bassNote(mtof(34), 0.6, 0.6), { fadeOut: 0.04 });
 // ── Pad ────────────────────────────────────────────────────────────────────
 const PAD_SEG = [
   [0.0, 3.447, 'Dm', 0.7, 0.55, 0.004], [3.5, 5.5, 'Dm', 0.03, 0.5], [5.5, 6.6, 'Bb', 0.15, 0.5], [6.6, 7.0, 'C', 0.2, 0.55],
-  [7.0, 9.0, 'F', 0.05, 0.5], [9.0, 11.0, 'Dm', 0.12, 0.5], [11.0, 12.0, 'Bb', 0.12, 0.5], [12.0, 13.4, 'C', 0.12, 0.5],
-  [13.4, 15.5, 'F', 0.08, 0.5], [15.5, 17.0, 'Bb', 0.3, 0.62], [17.0, 17.8, 'C', 0.15, 0.62], [17.8, 20.0, 'F', 0.02, 0.9],
+  [7.0, 9.0, 'F', 0.05, 0.5], [9.0, 11.0, 'Dm', 0.12, 0.5], [11.0, 12.0, 'Bb', 0.12, 0.5], [12.0, 12.5, 'C', 0.12, 0.5],
+  [12.5, 15.5, 'F', 0.08, 0.5], [15.5, 17.0, 'Bb', 0.3, 0.62], [17.0, 17.8, 'C', 0.15, 0.62], [17.8, 20.0, 'F', 0.02, 0.9],
 ];
 for (const [a, b, name, att, g, rel = 0.12] of PAD_SEG) {
   const final = a >= 17.8;
@@ -494,9 +518,8 @@ kora(0.04, 74, 0.5, { pan: -0.2, dly: 0.25 }); kora(0.29, 69, 0.36, { pan: 0.25,
 const KORA_IDX = [0, 3, 1, 3, 4, 2, 1, 3, 0, 3, 1, 4, 5, 3, 2, 1];
 for (let s = Math.round(7.0 / STEP); s * STEP < 14.9; s++) {
   const t = s * STEP, st = s % 16;
-  if (t >= 7.75 && t < 9.65 && st % 2) continue;   // aère pendant la frappe
-  if (t >= 11.95 && t < 12.9) continue;            // laisse la place à la notification
-  if (t >= 13.35 && t < 14.3) continue;            // laisse la place à l'arpège
+  if (t >= 7.95 && t < 9.65 && st % 2) continue;   // aère pendant la frappe
+  if (t >= 11.95 && t < 13.4) continue;            // laisse la place à la notification et à l'arpège du match
   if (RNG() < 0.18 && st % 4) continue;
   const tones = chordAt(t + 0.001).kora;
   const m = tones[KORA_IDX[st] % tones.length];
@@ -535,29 +558,43 @@ for (const [t, m] of MEL) kora(t, m, 0.38, { pan: rr(-0.3, 0.3), t60: 1.6, brigh
   placeStereo(BUS.amb, 0, L, R, { rev: 0.1, fadeIn: 0.01 });
 }
 
-// 0.25–2.5 — Moteur du car rapide : arrive par la droite, ralenti, repart à gauche.
+// 0.25–2.5 — Moteur du car rapide : arrive par la droite, ralenti (arrêt à 1.0), repart à
+// gauche dès l'anticipation de SYNC.carDepart (1.16–1.18), sort du cadre vers 2.48.
 {
   const t0 = 0.25, d = 2.3, b = len(d), lp = new Biquad('lp', 520, 1.1), lp2 = new Biquad('lp', 1100, 0.7), hpE = new Biquad('hp', 70, 0.7);
   const osc = new Saw(0), osc2 = new Square(0.3), nz = noiseGen();
+  const T1 = SYNC.carDepart - 0.06, T2 = SYNC.carDepart - 0.02;   // 1.12 (embrayage) / 1.16 (le car arrache)
   let ph = 0;
   const pans = new Float32Array(b.length);
   for (let i = 0; i < b.length; i++) {
     const t = i / SR + t0;
-    const rev = t < 1.4 ? lerp(1.15, 0.85, smooth((t - 0.25) / 1.1)) : lerp(0.85, 1.5, smooth((t - 1.55) / 0.8));
+    const rev = t < T2 ? lerp(1.15, 0.85, smooth((t - 0.25) / 0.8)) : lerp(0.85, 1.5, smooth((t - T2) / 1.0));
     const f = 46 * rev;
     ph += (TAU * f * 0.5) / SR;
     const putt = 0.55 + 0.45 * Math.max(0, Math.sin(ph)) ** 2;    // explosions du moteur diesel
-    const amp = smooth((t - 0.25) / 0.35) * (t < 1.4 ? 1 : t < 1.55 ? 0.75 : lerp(1.1, 0, smooth((t - 1.9) / 0.6)));
+    const clutch = 1 - 0.25 * (smooth((t - T1) / 0.03) - smooth((t - T2) / 0.03)) + 0.1 * smooth((t - T2) / 0.05);
+    const amp = smooth((t - 0.25) / 0.35) * clutch * lerp(1, 0, smooth((t - 1.9) / 0.6));
     b[i] = hpE.p(lp2.p(lp.p(osc.p(f) * 0.6 + osc2.p(f * 2) * 0.35 + nz() * 0.25))) * putt * amp * 1.6;
-    pans[i] = t < 1.4 ? lerp(0.75, 0.05, smooth((t - 0.25) / 1.1)) : lerp(0.05, -0.85, smooth((t - 1.55) / 0.9));
+    pans[i] = t < T2 ? lerp(0.75, 0.05, smooth((t - 0.25) / 0.85)) : lerp(0.05, -0.85, smooth((t - T2) / 1.2));
   }
   // panoramique dynamique
   const s0 = Math.round(t0 * SR);
   for (let i = 0; i < b.length; i++) {
     const fo = Math.min(1, i / 96, (b.length - 1 - i) / 480);
-    const a = ((pans[i] + 1) * Math.PI) / 4, v = b[i] * fo * 0.3;
+    const a = ((pans[i] + 1) * Math.PI) / 4, v = b[i] * fo * 0.2;
     BUS.sfx.L[s0 + i] += v * Math.cos(a) * Math.SQRT2; BUS.sfx.R[s0 + i] += v * Math.sin(a) * Math.SQRT2;
   }
+}
+
+// SYNC.carDepart — coup d'accélérateur : grondement qui monte (le car arrache).
+{
+  const d = 0.32, b = len(d), s1 = new Saw(0), s2 = new Saw(0.4), lp = new Biquad('lp', 600, 1.2), hp = new Biquad('hp', 60, 0.7), nz = noiseGen();
+  for (let i = 0; i < b.length; i++) {
+    const t = i / SR, f = 48 + 52 * smooth(t / 0.2);
+    const e = Math.min(1, t / 0.012) * Math.exp(-t / 0.12);
+    b[i] = hp.p(lp.p(s1.p(f) * 0.6 + s2.p(f * 1.5) * 0.3 + nz() * 0.2)) * (0.6 + 0.4 * Math.abs(Math.sin(TAU * f * 0.25 * t))) * e;
+  }
+  place(sfx, SYNC.carDepart - 0.01, b, { gain: 0.42, pan: 0.0, rev: 0.08, fadeIn: 0.004, fadeOut: 0.03 });
 }
 
 // 0.6 — Klaxon stylisé du car rapide : deux bips (tierce majeure fa–la).
@@ -594,7 +631,7 @@ place(sfx, 0.82, horn(0.26), { gain: 0.46, pan: 0.4, rev: 0.25, fadeOut: 0.006 }
   }
   const s0 = Math.round(t0 * SR);
   for (let i = 0; i < b.length; i++) {
-    const fo = Math.min(1, i / 96, (b.length - 1 - i) / 240), a = ((pans[i] + 1) * Math.PI) / 4, v = b[i] * fo * 1.0;
+    const fo = Math.min(1, i / 96, (b.length - 1 - i) / 240), a = ((pans[i] + 1) * Math.PI) / 4, v = b[i] * fo * 0.8;
     BUS.sfx.L[s0 + i] += v * Math.cos(a) * Math.SQRT2; BUS.sfx.R[s0 + i] += v * Math.sin(a) * Math.SQRT2;
     BUS.rev.L[s0 + i] += v * 0.35; BUS.rev.R[s0 + i] += v * 0.35;
   }
@@ -619,9 +656,23 @@ function thump(f0, f1, decay, vel) {
   const dust = len(0.6), nz2 = noiseGen(), lp = new Biquad('lp', 900, 0.6), hp2 = new Biquad('hp', 120, 0.6);
   for (let i = 0; i < dust.length; i++) { const t = i / SR; dust[i] = hp2.p(lp.p(nz2())) * Math.min(1, t / 0.01) * Math.exp(-t / 0.14) * 1.5; }
   place(sfx, 2.31, dust, { gain: 0.35, pan: -0.1, rev: 0.2 });
-  place(sfx, 2.46, thump(140, 60, 0.05, 0.35), { pan: 0.05, fadeIn: 0.0008 });   // rebond
-  place(sfx, 2.55, thump(170, 80, 0.03, 0.14), { pan: 0.08, fadeIn: 0.0008 });
+  place(sfx, SYNC.bounce, thump(140, 60, 0.05, 0.35), { pan: 0.05, fadeIn: 0.0008 });          // second contact (rebond)
+  place(sfx, SYNC.bounce + 0.08, thump(170, 80, 0.03, 0.14), { pan: 0.08, fadeIn: 0.0008 });   // petit sursaut élastique
   SC.push([2.3, 0.85]);
+}
+
+// « et c'est perdu. » — slam des lettres (squash) puis feutre du soulignement rouge.
+{
+  place(sfx, SYNC.perduSlam, thump(90, 40, 0.12, 0.5), { pan: 0, fadeIn: 0.0008, fadeOut: 0.04 });
+  place(drums, SYNC.perduSlam + 0.003, clap(0.42), { pan: 0.05, rev: 0.2 });
+  const d = 0.18, b = len(d), nz = noiseGen(), bp = new Biquad('bp', 2000, 1.4), hp = new Biquad('hp', 700, 0.7);
+  for (let i = 0; i < b.length; i++) {
+    const t = i / SR, u = t / d;
+    if ((i & 15) === 0) bp.set('bp', 1700 + 900 * u, 1.4);            // le feutre file vers la droite
+    const grain = 0.7 + 0.3 * Math.sin(TAU * 37 * t) * Math.sin(TAU * 61 * t);
+    b[i] = hp.p(bp.p(nz())) * grain * smooth(u / 0.12) * (1 - smooth((u - 0.55) / 0.45)) * 1.6;
+  }
+  place(sfx, SYNC.underline, b, { gain: 0.32, pan: 0.1, rev: 0.08, fadeOut: 0.01 });
 }
 
 // 3.0–3.45 — Riser (bruit + ton qui monte + roulement de sabar accélérant), coupure nette.
@@ -648,6 +699,7 @@ WORD_HITS.forEach((t, k) => {
   place(sfx, t, stab([50, 57, 62, 65, TOPS[k] - 12, TOPS[k]], 0.95 + 0.06 * k), { pan, rev: 0.25, dly: 0.12, fadeIn: 0.001 });
   place(drums, t, sabar('gin', 0.8, 0.85), { pan: -pan * 0.5, rev: 0.12 });
   place(drums, t + 0.003, clap(0.55 + 0.05 * k), { pan: pan * 0.6, rev: 0.22 });
+  place(sfx, t + SYNC.stickerImp, thump(160, 70, 0.04, 0.3), { pan: -pan * 0.5, fadeIn: 0.0008 });   // rebond du sticker
   if (k) SC.push([t, 0.45]);
 });
 place(drums, 3.5, crash(0.42, 0.7, 1.8), { pan: 0.15, rev: 0.25, fadeIn: 0.001, fadeOut: 0.1 });
@@ -657,13 +709,14 @@ place(sfx, 3.5, thump(70, 34, 0.32, 0.55), { fadeIn: 0.0008, fadeOut: 0.05 });  
 [[5.45, 86], [5.58, 81], [5.70, 84], [5.83, 79], [5.95, 86], [6.06, 81]].forEach(([t, m], k) =>
   place(music, t, bell(mtof(m), { dur: 0.5, ratio: 2, index: 0.8, decay: 0.12, vel: 0.13 }), { pan: [-0.6, 0.5, -0.2, 0.7, -0.45, 0.2][k], rev: 0.35, dly: 0.2 }));
 
-// 6.6 — Pop de l'épingle, petit atterrissage, puis swell vers la transition de 7.0.
+// 6.52 — L'épingle se pose (squash) : thump + clave, pop du point, puis swell qui
+// prépare le flood vert (6.62 → 6.94) et la transition de 7.0.
 {
   const b = len(0.12); let ph = 0;
   for (let i = 0; i < b.length; i++) { const t = i / SR, f = 380 + 1250 * (1 - Math.exp(-t / 0.018)); ph += (TAU * f) / SR; b[i] = Math.sin(ph) * Math.exp(-t / 0.035) * 0.9; }
-  place(sfx, 6.6, b, { gain: 0.6, rev: 0.25, dly: 0.2 });
-  place(sfx, 6.6, clave(0.25, 1800), { rev: 0.1 });
-  place(sfx, 6.72, thump(200, 90, 0.04, 0.35), { fadeIn: 0.0008 });             // fekk.land
+  place(sfx, SYNC.pinLand + 0.015, b, { gain: 0.6, rev: 0.25, dly: 0.2 });       // pop du .logo-dot (6.54)
+  place(sfx, SYNC.pinLand, clave(0.25, 1800), { rev: 0.1 });
+  place(sfx, SYNC.pinLand, thump(200, 90, 0.04, 0.35), { fadeIn: 0.0008 });      // atterrissage
   place(sfx, 6.62, swell(0.38, { f0: 400, f1: 7000, q: 0.7, curve: 2.4, vel: 0.5 }), { rev: 0.3, fadeIn: 0.01, fadeOut: 0.004 });
   const [L, R] = padChord([60, 65, 69, 74], 0.38, { att: 0.36, rel: 0.06, gain: 0.35 });
   placeStereo(BUS.pad, 6.62, L, R, { rev: 0.4, fadeOut: 0.004 });
@@ -678,8 +731,8 @@ function tick(vel) {
   for (let i = 0; i < b.length; i++) { const t = i / SR; b[i] = (hp.p(nz()) * 0.6 + Math.sin(TAU * f * t) * 0.5) * Math.exp(-t / 0.0035) * vel; }
   return b;
 }
-place(sfx, 7.82, bell(mtof(84), { dur: 0.3, ratio: 3, index: 0.6, decay: 0.06, vel: 0.22 }), { pan: -0.1, rev: 0.15 });   // puce « Téléphone »
-for (const [a, b] of [[7.95, 8.42], [8.5, 8.95], [9.0, 9.22]]) {
+place(sfx, SYNC.chip, bell(mtof(84), { dur: 0.3, ratio: 3, index: 0.6, decay: 0.06, vel: 0.22 }), { pan: -0.1, rev: 0.15 });   // puce « Téléphone »
+for (const [a, b] of SYNC.typing) {
   let t = a;
   while (t < b) { place(sfx, t, tick(rr(0.22, 0.34)), { pan: rr(-0.25, 0.25), fadeIn: 0.0005, fadeOut: 0.003 }); t += rr(0.048, 0.085); }
 }
@@ -688,8 +741,20 @@ for (const [a, b] of [[7.95, 8.42], [8.5, 8.95], [9.0, 9.22]]) {
   const b = len(0.35); let ph = 0;                                                // ripple
   for (let i = 0; i < b.length; i++) { const t = i / SR, f = 520 + 380 * (1 - Math.exp(-t / 0.05)); ph += (TAU * f) / SR; b[i] = Math.sin(ph) * Math.min(1, t / 0.004) * Math.exp(-t / 0.09) * 0.5; }
   place(sfx, 9.3, b, { rev: 0.35, dly: 0.1 });
-  place(music, 9.46, bell(mtof(84), { dur: 0.8, ratio: 2, index: 1, decay: 0.22, vel: 0.28 }), { pan: 0.15, rev: 0.3 });  // ✓ mint
-  place(music, 9.52, bell(mtof(89), { dur: 0.8, ratio: 2, index: 1, decay: 0.22, vel: 0.22 }), { pan: 0.25, rev: 0.3 });
+  place(music, SYNC.check, bell(mtof(84), { dur: 0.8, ratio: 2, index: 1, decay: 0.22, vel: 0.28 }), { pan: 0.15, rev: 0.3 });  // ✓ mint
+  place(music, SYNC.check + 0.06, bell(mtof(89), { dur: 0.8, ratio: 2, index: 1, decay: 0.22, vel: 0.22 }), { pan: 0.25, rev: 0.3 });
+}
+
+// 9.80 — Changement d'écran (slide de droite à gauche + scale) : swish court panoramiqué.
+{
+  const b = swell(0.22, { f0: 1200, f1: 5000, q: 0.9, curve: 2.2, vel: 0.25 });
+  const s0 = Math.round((SYNC.screenSwap - 0.06) * SR);
+  for (let i = 0; i < b.length; i++) {
+    const u = i / b.length, fo = Math.min(1, i / 96, (b.length - 1 - i) / 144);
+    const a = ((lerp(0.4, -0.4, u) + 1) * Math.PI) / 4, v = b[i] * fo;
+    BUS.sfx.L[s0 + i] += v * Math.cos(a) * Math.SQRT2; BUS.sfx.R[s0 + i] += v * Math.sin(a) * Math.SQRT2;
+    BUS.rev.L[s0 + i] += v * 0.2; BUS.rev.R[s0 + i] += v * 0.2;
+  }
 }
 
 // 9.8–12.0 — Pings radar (4 pulses) depuis Colobane, avec écho ping-pong.
@@ -700,16 +765,22 @@ for (const [a, b] of [[7.95, 8.42], [8.5, 8.95], [9.0, 9.22]]) {
   const sw = swell(0.14, { f0: 900, f1: 2200, q: 2, curve: 1.6, vel: 0.12 });
   place(sfx, t - 0.13, sw, { fadeOut: 0.01, rev: 0.2 });
 });
-[[10.25, 81], [10.62, 79], [10.88, 84], [11.24, 81], [11.62, 86]].forEach(([t, m]) =>      // épingles « trouvé »
-  place(music, t, bell(mtof(m), { dur: 0.4, ratio: 2, index: 0.7, decay: 0.09, vel: 0.12 }), { pan: rr(-0.6, 0.6), rev: 0.3 }));
+// Épingles « trouvé » : une clochette sur l'atterrissage d'une épingle sur deux (celles
+// qui ne tombent pas sur un ping), plus une note dédiée pour l'épingle du point relais.
+{
+  const land = (i) => SYNC.pins[0] + i * SYNC.pins[1] + 0.16;
+  [[land(1), 81, 0.12], [land(3), 79, 0.12], [SYNC.relayPin + 0.18, 84, 0.15], [land(5), 81, 0.12], [land(7), 86, 0.12]].forEach(([t, m, v]) =>
+    place(music, t, bell(mtof(m), { dur: 0.4, ratio: 2, index: 0.7, decay: 0.09, vel: v }), { pan: rr(-0.6, 0.6), rev: 0.3 }));
+}
 
 // 12.0 — Notification (deux notes ascendantes sol → do) + buzz de vibration.
 {
   const n1 = bell(mtof(79), { dur: 0.9, ratio: 4, index: 1.1, decay: 0.28, idxDecay: 0.05, vel: 0.62, partial: 0.18 });
   const n2 = bell(mtof(84), { dur: 1.2, ratio: 4, index: 1.1, decay: 0.38, idxDecay: 0.05, vel: 0.62, partial: 0.18 });
-  place(sfx, 12.0, n1, { pan: -0.08, rev: 0.25, dly: 0.15 });
-  place(sfx, 12.11, n2, { pan: 0.08, rev: 0.3, dly: 0.2 });
-  for (const [a, d] of [[12.18, 0.22], [12.47, 0.24]]) {
+  place(sfx, SYNC.notif + 0.10, n1, { pan: -0.08, rev: 0.25, dly: 0.15 });     // la bannière entre dans l'écran
+  place(sfx, SYNC.notif + 0.22, n2, { pan: 0.08, rev: 0.3, dly: 0.2 });       // elle se pose (fekk.land)
+  const [s0, sd] = SYNC.shake;                                                // buzz calé sur le shake 12.02 → 12.44
+  for (const [a, d] of [[s0, sd / 2 - 0.01], [s0 + sd / 2 + 0.01, sd / 2 - 0.01]]) {
     const b = len(d), sq = new Square(0), lp = new Biquad('lp', 950, 2.5), hp = new Biquad('hp', 90, 0.7), nz = noiseGen();
     for (let i = 0; i < b.length; i++) {
       const t = i / SR, f = 168 * (1 + 0.01 * nz());
@@ -720,14 +791,19 @@ for (const [a, b] of [[7.95, 8.42], [8.5, 8.95], [9.0, 9.22]]) {
   }
 }
 
-// 13.4 — Arpège ascendant du match (kora + cloche douce), triolets de doubles.
-[65, 69, 72, 74, 77, 79, 81, 84, 86, 89].forEach((m, k) => {
-  const t = 13.4 + k * (BEAT / 6);
-  const pan = lerp(-0.55, 0.55, k / 9);
-  kora(t, m, 0.5 + 0.02 * k, { pan, t60: k === 9 ? 2.2 : 1.2, bright: 0.7, dur: k === 9 ? 2.2 : 1.3, rev: 0.25, dly: 0.2 });
-  place(music, t, bell(mtof(m + 12), { dur: 0.6, ratio: 2, index: 0.6, decay: 0.15, vel: 0.07 }), { pan, rev: 0.3 });
-});
-SC.push([13.4, 0.2]);
+// Le match : arpège ascendant (glissando de kora + cloche douce) qui suit le compteur
+// 0 → 94 % (ralentit comme lui) ; la dernière note tombe sur le pop de la jauge.
+{
+  const [g0, g1] = SYNC.gauge;
+  [65, 69, 72, 74, 77, 79, 81, 84, 86, 89].forEach((m, k) => {
+    const t = g0 + (g1 - g0) * Math.pow(k / 9, 1.25);
+    const pan = lerp(-0.55, 0.55, k / 9);
+    kora(t, m, 0.5 + 0.02 * k, { pan, t60: k === 9 ? 2.2 : 1.2, bright: 0.7, dur: k === 9 ? 2.2 : 1.3, rev: 0.25, dly: 0.2 });
+    place(music, t, bell(mtof(m + 12), { dur: 0.6, ratio: 2, index: 0.6, decay: 0.15, vel: 0.07 }), { pan, rev: 0.3 });
+  });
+  place(music, g1, bell(mtof(84), { dur: 1.4, ratio: 2, index: 1.1, decay: 0.45, idxDecay: 0.15, vel: 0.3, partial: 0.1 }), { pan: 0.1, rev: 0.35, dly: 0.2 });   // « ding » 94 %
+  SC.push([g0, 0.2]);
+}
 
 // 15.0 — Whoosh de sortie (la maquette part en zoom vers le bas).
 {
@@ -749,15 +825,21 @@ SC.push([13.4, 0.2]);
   }
 }
 
-// 16.6 — « Jërëjëf » : carillon chaleureux égrené + roulement sabar + confettis.
+// 16.0 — Le téléphone retrouvé s'allume (flash, zing), sa notification apparaît à 16.12.
+place(music, SYNC.phoneOn, bell(mtof(84), { dur: 0.5, ratio: 3, index: 0.7, decay: 0.12, vel: 0.18 }), { pan: -0.1, rev: 0.3 });
+place(sfx, SYNC.phoneOn + 0.12, tick(0.3), { pan: -0.05, fadeIn: 0.0005, fadeOut: 0.003 });
+
+// SYNC.jt — « Jërëjëf ! » : roulement sabar qui prépare l'explosion, puis carillon
+// chaleureux égrené + corps grave + confettis.  Sort ≈ 2 dB au-dessus du groove.
 {
+  const JT = SYNC.jt, up = db(2);
   [74, 77, 81, 84].forEach((m, k) =>
-    place(music, 16.6 + k * 0.045, bell(mtof(m), { dur: 2.0, ratio: 2.0, index: 1.4, decay: 0.7, idxDecay: 0.2, vel: 0.36 - k * 0.03, partial: 0.1 }), { pan: lerp(-0.4, 0.4, k / 3), rev: 0.45, dly: 0.2 }));
-  place(music, 16.6, bell(mtof(62), { dur: 1.6, ratio: 1.0, index: 0.6, decay: 0.5, vel: 0.22 }), { rev: 0.35 });      // corps chaud
-  [[16.48, 'pax', 0.5], [16.54, 'tan', 0.55], [16.6, 'gin', 0.8]].forEach(([t, ty, v]) => place(drums, t, sabar(ty, v), { pan: ty === 'pax' ? 0.3 : -0.1, rev: 0.15 }));
+    place(music, JT + k * 0.045, bell(mtof(m), { dur: 2.0, ratio: 2.0, index: 1.4, decay: 0.7, idxDecay: 0.2, vel: (0.36 - k * 0.03) * up, partial: 0.1 }), { pan: lerp(-0.4, 0.4, k / 3), rev: 0.45, dly: 0.2 }));
+  place(music, JT, bell(mtof(62), { dur: 1.6, ratio: 1.0, index: 0.6, decay: 0.5, vel: 0.22 * up }), { rev: 0.35 });      // corps chaud
+  [[JT - 0.12, 'pax', 0.5], [JT - 0.06, 'tan', 0.55], [JT, 'gin', 0.8 * up]].forEach(([t, ty, v]) => place(drums, t, sabar(ty, v), { pan: ty === 'pax' ? 0.3 : -0.1, rev: 0.15 }));
   for (let k = 0; k < 9; k++) {
     const m = [86, 89, 91, 93, 96][Math.floor(RNG() * 5)];
-    place(music, 16.68 + k * 0.07 + rr(0, 0.03), bell(mtof(m), { dur: 0.35, ratio: 2, index: 0.5, decay: 0.07, vel: rr(0.05, 0.1) }), { pan: rr(-0.8, 0.8), rev: 0.4 });
+    place(music, JT + 0.08 + k * 0.07 + rr(0, 0.03), bell(mtof(m), { dur: 0.35, ratio: 2, index: 0.5, decay: 0.07, vel: rr(0.05, 0.1) }), { pan: rr(-0.8, 0.8), rev: 0.4 });
   }
 }
 
@@ -769,6 +851,7 @@ place(sfx, 17.2, swell(0.6, { f0: 700, f1: 11000, q: 0.6, curve: 2.8, vel: 0.5 }
   [41, 48, 53, 57, 60, 65, 69, 72, 79].forEach((m, k) => kora(17.8 + k * 0.022, m, 0.42 - k * 0.015, { pan: lerp(-0.5, 0.5, k / 8), t60: 2.6, bright: 0.6, dur: 2.2, rev: 0.4 }));
   [81, 84, 89].forEach((m, k) => place(music, 17.82 + k * 0.05, bell(mtof(m), { dur: 2.2, ratio: 2, index: 1.0, decay: 0.8, idxDecay: 0.25, vel: 0.2 }), { pan: [-0.3, 0.3, 0][k], rev: 0.5, dly: 0.15 }));
   place(drums, 17.8, crash(0.35, 1.0, 2.2), { pan: 0.1, rev: 0.35, fadeIn: 0.001, fadeOut: 0.2 });
+  place(music, SYNC.logoDot, bell(mtof(89), { dur: 0.3, ratio: 2, index: 0.6, decay: 0.08, vel: 0.15 }), { pan: 0.15, rev: 0.3 });   // pop du point du logo
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
@@ -796,7 +879,7 @@ const duck = (bus, k) => { for (let i = 0; i < N; i++) { const g = 1 - k * scEnv
 duck(BUS.pad, 0.6); duck(BUS.bass, 0.85); duck(BUS.music, 0.25); duck(BUS.amb, 0.35);
 // « Focus » : le groove s'efface de quelques dB sous les cues clés (notification,
 // tap, carillon) pour qu'elles se détachent même sur un haut-parleur de téléphone.
-const FOCUS = [[9.27, 9.62, -2.5], [11.96, 12.85, -4.5], [16.56, 17.05, -3]];
+const FOCUS = [[9.27, 9.75, -2.5], [11.96, SYNC.gauge[1] + 0.05, -4.5], [SYNC.jt - 0.04, SYNC.jt + 0.45, -3]];
 function focusGain(t) {
   let g = 0;
   for (const [a, b, d] of FOCUS) {
@@ -804,9 +887,27 @@ function focusGain(t) {
     const u = t < a ? smooth((t - (a - 0.02)) / 0.02) : t > b ? 1 - smooth((t - b) / 0.15) : 1;
     g = Math.min(g, d * u);
   }
-  return db(g);
+  return g;
 }
-for (const k of ['drums', 'bass', 'pad']) { const bus = BUS[k]; for (let i = 0; i < N; i++) { const g = focusGain(i / SR); bus.L[i] *= g; bus.R[i] *= g; } }
+// Arc dynamique (dB, rampes douces de 0,25 s) : le groove respire entre les temps forts
+// (carte qui cherche, itinéraire) et laisse un vrai creux avant « Jërëjëf », pour que
+// drop, match et climax ressortent ; l'intro (avant l'impact) reste en retrait du drop.
+// [début, fin, dB, bus : d=drums b=bass p=pad m=music s=sfx a=amb]
+const ARC = [[0, 2.05, -1.5, 'dsa'], [9.85, 11.9, -2.5, 'dbp'], [13.9, 15.0, -2.5, 'dbp'], [15.5, SYNC.jt - 0.12, -2.5, 'd']];
+function arcGain(t, key) {
+  let g = 0;
+  for (const [a, b, d, buses] of ARC) {
+    if (!buses.includes(key)) continue;
+    const r = 0.25;
+    if (t < a - r || t > b + r) continue;
+    g += d * (t < a ? smooth((t - (a - r)) / r) : t > b ? 1 - smooth((t - b) / r) : 1);
+  }
+  return g;
+}
+for (const k of ['drums', 'bass', 'pad', 'music', 'sfx', 'amb']) {
+  const bus = BUS[k], key = k[0], foc = k === 'drums' || k === 'bass' || k === 'pad';
+  for (let i = 0; i < N; i++) { const t = i / SR, g = db((foc ? focusGain(t) : 0) + arcGain(t, key)); bus.L[i] *= g; bus.R[i] *= g; }
+}
 // Saturation douce des bus drums et basse.
 for (let i = 0; i < N; i++) {
   BUS.drums.L[i] = softclip(BUS.drums.L[i] * 1.1, 1.3) / 1.1; BUS.drums.R[i] = softclip(BUS.drums.R[i] * 1.1, 1.3) / 1.1;

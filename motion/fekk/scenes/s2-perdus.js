@@ -13,9 +13,10 @@
   // Hits musicaux (temps local) : 3.50, 3.95, 4.40, 4.75, 5.10
   const HITS = [0, 0.45, 0.9, 1.25, 1.6];
   const T_COLLAPSE = 1.9;         // 5.40 : le mur s'effondre, la carte arrive
-  const T_SUB = 2.22;             // « Chaque jour à Dakar. »
-  const T_Q = 2.44;               // question
-  const T_MARK = 2.66;            // marqueur jaune
+  const T_SUB = 2.25;             // « Chaque jour à Dakar. » (après la chute des lettres du mur)
+  const T_Q = 2.38;               // question (posée vers 6.10 absolu)
+  const T_MARK = 2.56;            // marqueur jaune
+  const T_TXT_OUT = 3.37;         // les textes, restés au-dessus de la vague verte, rentrent dans leurs masques
   const T_PIN = 2.84;             // l'épingle Fekk tombe
   const T_LAND = 3.02;            // atterrissage
   const T_FLOOD = 3.12;           // le cercle vert part de la pointe
@@ -345,6 +346,7 @@
         .s2-qline { position:relative; display:block; }
         .s2-qmask { display:inline-block; overflow:hidden; padding:0.22em 0.04em 0.16em; margin:-0.22em -0.04em -0.16em; vertical-align:top; }
         .s2-qw { display:inline-block; }
+        .s2-ql2 > .s2-qmask:last-child { margin-left:0.1em; } /* le marqueur déborde de 20 px : l'espace avant « ? » reste visible */
         .s2-hl-wrap { position:relative; display:inline-block; }
         .s2-hl .s2-hch { display:inline-block; }
         .s2-mark { position:absolute; overflow:visible; }
@@ -435,7 +437,7 @@
               <path d="M${mp(392, 506)[0] + 4} ${mp(392, 506)[1] + 2} L${mp(392, 506)[0] + 44} ${mp(392, 506)[1] + 24}" stroke="#F3E6CF" stroke-width="2" opacity="0.5"/>
               <text x="${mp(392, 506)[0] + 52}" y="${mp(392, 506)[1] + 34}" opacity="0.75">PLATEAU</text>
               <text x="${mp(500, 470)[0]}" y="${mp(500, 470)[1] + 6}" opacity="0.55" font-size="16">GORÉE</text>
-              <text x="${mp(560, 336)[0]}" y="${mp(560, 336)[1]}" opacity="0.45" font-style="italic" font-size="18">baie de Hann</text>
+              <text x="${mp(560, 336)[0]}" y="${mp(560, 336)[1]}" opacity="0.45" font-style="italic" font-size="18">BAIE DE HANN</text>
             </g>
           </g>
           <g transform="translate(${MAP.x} ${MAP.y}) scale(${MAP.k})">
@@ -509,7 +511,7 @@
         { lines: ['Téléphone.'], align: 'L', band: C.blue, shade: '#163F8F', ink: C.sand, cap: 190 },
         { lines: ['Carte', 'd’identité.'], align: 'R', band: C.green, shade: '#005C2B', ink: C.sand, cap: 150 },
         { lines: ['Clés.'], align: 'L', band: C.yellow, shade: '#C9B820', ink: C.ink, cap: 222 },
-        { lines: ['Portefeuille.'], align: 'R', band: C.sunset, shade: C.clay, ink: C.ink, cap: 150 },
+        { lines: ['Portefeuille.'], align: 'R', band: C.sunset, shade: C.clay, ink: C.ink, cap: 150, fk: 0.92, stkMin: 46 },
         { lines: ['Sac.'], align: 'L', band: C.red, shade: '#9E1016', ink: C.sand, cap: 236 },
       ];
       const XL = 120, XR = 960;               // bord gauche / droit du texte (zone sûre)
@@ -523,7 +525,7 @@
         const avail = (XR - XL) - st.w * 0.62;
         let wmax = 0;
         r.lines.forEach((l) => { meas.textContent = l; wmax = Math.max(wmax, meas.getBoundingClientRect().width); });
-        r.fs = Math.min(r.cap, Math.floor((avail / wmax) * 100));
+        r.fs = Math.floor(Math.min(r.cap, (avail / wmax) * 100) * (r.fk || 1));
         r.tw = (wmax * r.fs) / 100;
       });
       meas.remove();
@@ -579,7 +581,7 @@
         const w = st.w, h = w * ratio;
         let cx;
         if (r.align === 'L') cx = Math.min(XL + r.tw + 22 + w * 0.5, 1000 - w * 0.5);
-        else cx = Math.max(XR - r.tw - 22 - w * 0.5, 80 + w * 0.5);
+        else cx = Math.max(XR - r.tw - 22 - w * 0.5, (r.stkMin ?? 80) + w * 0.5);
         const cy = r.cy + [-6, 4, 6, 0, -4][i];
         const pxPerU = w / st.vb[2];
         const fid = `s2-die${i}`;
@@ -622,8 +624,8 @@
         const dir = r.align === 'L' ? -1 : 1;
         const fe = q(`#s2-mb${i} .s2-mbf`, root);
 
-        // Bandeau : flash blanc → couleur, entre par le côté du texte
-        S(band, { scaleX: 0, transformOrigin: r.align === 'L' ? '0% 50%' : '100% 50%', backgroundColor: '#FFFFFF' });
+        // Bandeau : flash (couleur du bandeau éclaircie vers sand) → couleur, entre par le côté du texte
+        S(band, { scaleX: 0, transformOrigin: r.align === 'L' ? '0% 50%' : '100% 50%', backgroundColor: gsap.utils.interpolate(r.band, C.sand, 0.45) });
         tl.to(band, { scaleX: 1, duration: 0.14, ease: 'power4.out' }, h);
         tl.to(band, { backgroundColor: r.band, duration: 0.07, ease: 'power1.in' }, h + 0.015);
 
@@ -642,7 +644,8 @@
         // lettres en cascade (overlap)
         const order = r.align === 'L' ? r.chars : r.chars.slice().reverse();
         S(r.chars, { opacity: 0 });
-        tl.fromTo(order, { opacity: 0, yPercent: 55, scaleY: 1.5, transformOrigin: '50% 100%' },
+        // (le mot est déjà présent, flou, dès la première image de la plaque)
+        tl.fromTo(order, { opacity: 0.55, yPercent: 55, scaleY: 1.5, transformOrigin: '50% 100%' },
           { opacity: 1, yPercent: 0, scaleY: 1, duration: 0.2, ease: 'back.out(2.4)', stagger: 0.014, immediateRender: false }, h + 0.005);
 
         // Traits de vitesse
@@ -690,11 +693,11 @@
           // Portefeuille : jaillit du bas, tourne
           tl.fromTo(s.el, { y: 700, rotation: 90, scale: 0.6 }, { y: 0, rotation: 0, scale: 1, duration: ti - h + 0.03, ease: 'power3.out', immediateRender: true }, h - 0.03);
         } else {
-          // Sac : lâché d'en haut
-          tl.fromTo(s.el, { y: -880, rotation: 24 }, { y: 0, rotation: 0, duration: ti - h + 0.03, ease: 'power2.in', immediateRender: true }, h - 0.03);
+          // Sac : jeté depuis la droite, sur sa propre rangée (ne passe pas devant « Portefeuille. »)
+          tl.fromTo(s.el, { x: 760, rotation: 40 }, { x: 0, rotation: 0, duration: ti - h + 0.03, ease: 'power2.in', immediateRender: true }, h - 0.03);
         }
         // Squash & stretch à l'impact
-        const horiz = i === 1 || i === 3;
+        const horiz = i === 1 || i === 3 || i === 4;
         tl.to(s.sq, horiz ? { scaleX: 0.84, scaleY: 1.14, duration: 0.05, ease: 'power2.out' } : { scaleX: 1.24, scaleY: 0.78, duration: 0.05, ease: 'power2.out' }, ti);
         tl.to(s.sq, horiz ? { scaleX: 1.08, scaleY: 0.94, duration: 0.08, ease: 'sine.inOut' } : { scaleX: 0.9, scaleY: 1.12, duration: 0.08, ease: 'sine.inOut' }, ti + 0.05);
         tl.to(s.sq, { scaleX: 1, scaleY: 1, duration: 0.3, ease: 'elastic.out(1,0.38)' }, ti + 0.13);
@@ -729,11 +732,11 @@
       // Lettres : petit saut d'anticipation puis chute en vrille
       ROWS.forEach((r, i) => {
         r.chars.forEach((ch) => {
-          const t0 = T_COLLAPSE + (4 - i) * 0.012 + rng() * 0.06;
+          const t0 = T_COLLAPSE + (4 - i) * 0.012 + rng() * 0.04;
           tl.to(ch, { yPercent: -16, duration: 0.06, ease: 'power2.out' }, t0);
           tl.to(ch, {
             yPercent: 0, y: 2300 + rng() * 600, x: (rng() - 0.5) * 360, rotation: (rng() - 0.5) * 220,
-            duration: 0.34 + rng() * 0.1, ease: 'power2.in',
+            duration: 0.26 + rng() * 0.08, ease: 'power2.in',
           }, t0 + 0.06);
         });
       });
@@ -785,7 +788,7 @@
       txt.appendChild(sub);
       const subSplit = new SplitText(q('.s2-sub-t', sub), { type: 'chars', charsClass: 's2-sch' });
       S(subSplit.chars, { yPercent: 120 });
-      tl.to(subSplit.chars, { yPercent: 0, duration: 0.34, ease: 'fekk.snap', stagger: 0.014 }, T_SUB);
+      tl.to(subSplit.chars, { yPercent: 0, duration: 0.34, ease: 'fekk.snap', stagger: 0.01 }, T_SUB);
       const live = q('.s2-live', sub), liveRing = q('.s2-live-ring', sub);
       S([live, liveRing], { scale: 0 });
       tl.to(live, { scale: 1, duration: 0.2, ease: 'back.out(3)' }, T_SUB - 0.04);
@@ -822,8 +825,8 @@
 
       const qWords = qa('.s2-qw', qEl);
       S(qWords, { yPercent: 115, rotation: 6, transformOrigin: '0% 100%' });
-      tl.to(qWords.slice(0, 4), { yPercent: 0, rotation: 0, duration: 0.32, ease: 'fekk.snap', stagger: 0.045 }, T_Q);
-      tl.to(qWords.slice(4), { yPercent: 0, rotation: 0, duration: 0.34, ease: 'fekk.snap', stagger: 0.06 }, T_Q + 0.14);
+      tl.to(qWords.slice(0, 4), { yPercent: 0, rotation: 0, duration: 0.32, ease: 'fekk.snap', stagger: 0.03 }, T_Q);
+      tl.to(qWords.slice(4), { yPercent: 0, rotation: 0, duration: 0.32, ease: 'fekk.snap', stagger: 0.04 }, T_Q + 0.08);
       // Marqueur jaune tracé + lettres qui passent en ink au passage du feutre
       S(markPath, { drawSVG: '0% 0%' });
       const MARK_D = 0.22;
@@ -901,13 +904,19 @@
         tl.to(lines, { drawSVG: '100% 100%', duration: 0.13, ease: 'power2.in' }, T_LAND + 0.07);
         tl.set(lines, { opacity: 0 }, T_LAND + 0.2);
       }
+      // Les textes restent au-dessus de la vague verte (lisibles jusqu'à ~6.90), puis rentrent dans leurs masques.
+      root.appendChild(txt);
       const full = FEKK.el(`<div class="s2-full" style="background:${C.green};opacity:0"></div>`);
       root.appendChild(full);
       tl.set(full, { opacity: 1 }, T_FULL);
-      // Pendant l'invasion, la question est poussée par la vague
+      // Pendant l'invasion, la question est légèrement poussée par la vague
       S(qEl, { transformOrigin: '50% 0%' });
-      tl.to(qEl, { y: '+=60', scale: 1.06, duration: T_FULL - T_FLOOD, ease: 'power2.in' }, T_FLOOD);
-      tl.to(sub, { scale: 1.08, duration: T_FULL - T_FLOOD, ease: 'power2.in' }, T_FLOOD);
+      tl.to(qEl, { y: '+=18', scale: 1.025, duration: T_FULL - T_FLOOD, ease: 'power2.in' }, T_FLOOD);
+      tl.to(sub, { scale: 1.04, duration: T_FULL - T_FLOOD, ease: 'power2.in' }, T_FLOOD);
+      tl.to(qWords, { yPercent: 115, duration: T_FULL - T_TXT_OUT, ease: 'power2.in', stagger: 0.004 }, T_TXT_OUT);
+      tl.to(subSplit.chars, { yPercent: 120, duration: T_FULL - T_TXT_OUT, ease: 'power2.in' }, T_TXT_OUT);
+      tl.to([live, liveRing], { scale: 0, duration: T_FULL - T_TXT_OUT, ease: 'power2.in' }, T_TXT_OUT);
+      tl.to(mark, { opacity: 0, duration: T_FULL - T_TXT_OUT, ease: 'power2.in' }, T_TXT_OUT);
 
       // garde la timeline exactement sur la durée de la scène
       tl.set({}, {}, END - START);

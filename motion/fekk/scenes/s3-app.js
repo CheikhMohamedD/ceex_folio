@@ -126,7 +126,9 @@
 .s3-step{width:46px;height:10px;border-radius:5px;background:rgba(255,255,255,.28);overflow:hidden;position:relative}
 .s3-step i{position:absolute;inset:0;background:${C.yellow};transform-origin:0 50%;transform:scaleX(0)}
 .s3-phone-exit{position:absolute;left:240px;top:470px;width:600px;height:1220px}
-.s3-phone-enter,.s3-phone-shake,.s3-phone-tilt{position:absolute;inset:0}
+.s3-phone-cam,.s3-phone-enter,.s3-phone-shake,.s3-phone-tilt{position:absolute;inset:0}
+.s3-phone-cam{transform-origin:0 0}
+.s3-titles{transform-origin:50% 100%}
 .s3-phone-shadow{position:absolute;inset:0;border-radius:90px;background:rgba(11,18,16,.3);transform:translate(30px,38px)}
 .s3-phone-body{position:absolute;inset:0;border-radius:90px;background:#0D0F12;box-shadow:inset 0 0 0 3px #30343C,inset 0 0 0 7px #0D0F12,inset 0 0 0 8px #1C1F25}
 .s3-sbtn{position:absolute;width:7px;background:#23262D;border-radius:4px}
@@ -139,7 +141,7 @@
 .s3-sicons{position:absolute;right:46px;top:24px;display:flex;gap:8px;align-items:center}
 .s3-home{position:absolute;left:216px;bottom:14px;width:140px;height:6px;border-radius:3px;background:#14201B;z-index:55}
 /* --- Déclarer --- */
-.s3-declare{background:#FBF8F2}
+.s3-declare{background:#FBF8F2;filter:brightness(1)}
 .s3-backbtn{position:absolute;left:26px;top:82px;width:52px;height:52px;border-radius:26px;background:#fff;border:2px solid #ECE3D3;display:flex;align-items:center;justify-content:center}
 .s3-h1{position:absolute;left:94px;top:86px;font-weight:800;font-size:31px;letter-spacing:-.02em}
 .s3-draft{position:absolute;right:26px;top:92px;font-size:15px;font-weight:700;color:${C.green};background:#E3F5EA;padding:7px 12px;border-radius:14px}
@@ -168,7 +170,7 @@
 .s3-pub-check{position:absolute;left:50%;top:50%;width:52px;height:52px;margin:-26px 0 0 -26px}
 .s3-legal{position:absolute;left:0;right:0;top:978px;text-align:center;font-size:16px;color:#968F82;font-weight:500}
 /* --- Carte --- */
-.s3-map{background:#BFE1EE}
+.s3-map{background:#BFE1EE;box-shadow:-16px 0 0 rgba(11,18,16,.16)}
 .s3-mapsvg{position:absolute;left:0;top:0;width:572px;height:1192px}
 .s3-search{position:absolute;left:22px;right:22px;top:76px;height:66px;border-radius:33px;background:#fff;box-shadow:0 5px 0 rgba(11,18,16,.08);display:flex;align-items:center;padding:0 10px 0 22px;gap:12px;font-size:20px;color:#8B8476;font-weight:500}
 .s3-search .s3-av{margin-left:auto}
@@ -181,35 +183,37 @@
 .s3-row{position:absolute;left:28px;right:28px;display:flex;align-items:center;gap:14px}
 .s3-ic56{width:58px;height:58px;border-radius:18px;display:flex;align-items:center;justify-content:center;flex:none}
 .s3-t1{font-size:23px;font-weight:750;letter-spacing:-.015em;color:#14201B}
-.s3-t2{font-size:17px;font-weight:550;color:#7C766B;margin-top:3px}
+.s3-t2{font-size:18px;font-weight:550;color:#7C766B;margin-top:3px}
 .s3-pill{margin-left:auto;height:38px;border-radius:19px;padding:0 14px;display:flex;align-items:center;gap:7px;font-size:16px;font-weight:700;white-space:nowrap}
 .s3-dot3{width:7px;height:7px;border-radius:4px;background:${C.green}}
 .s3-avs{display:flex}
 .s3-avs > div{margin-left:-12px;transform:scale(0)}
 .s3-avs > div:first-child{margin-left:0}
 .s3-count{font-size:21px;font-weight:750;color:#14201B;font-variant-numeric:tabular-nums}
-.s3-count small{display:block;font-size:16px;font-weight:550;color:#7C766B;margin-top:2px}
+.s3-count small{display:block;font-size:17px;font-weight:550;color:#7C766B;margin-top:2px}
 .s3-thumb{position:absolute;top:100px;width:178px;height:236px;border-radius:24px;overflow:hidden}
 .s3-thumb svg{position:absolute}
-.s3-thumb-tag{position:absolute;left:10px;bottom:10px;height:30px;border-radius:15px;padding:0 11px;font-size:14px;font-weight:750;display:flex;align-items:center;background:#fff;color:#14201B}
+.s3-thumb-tag{position:absolute;left:10px;bottom:10px;height:30px;border-radius:15px;padding:0 10px;font-size:17px;font-weight:750;display:flex;align-items:center;background:#fff;color:#14201B}
 .s3-gauge{position:absolute;left:206px;top:138px;width:160px;height:160px;border-radius:80px;background:#fff;box-shadow:0 0 0 8px #fff}
 .s3-gauge-txt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.s3-gauge-txt b{font-family:var(--display);font-weight:800;font-size:50px;letter-spacing:-.04em;line-height:1;color:#14201B;font-variant-numeric:tabular-nums}
-.s3-gauge-txt > span{font-size:13px;font-weight:700;color:#5E7A69;margin-top:2px;letter-spacing:.02em}
+.s3-gauge-txt b{font-family:var(--display);font-weight:800;font-size:48px;white-space:nowrap;letter-spacing:-.04em;line-height:1;color:#14201B;font-variant-numeric:tabular-nums}
+.s3-gauge-txt b small{font-size:30px;letter-spacing:0}
+.s3-gauge-txt > span{font-size:16px;font-weight:750;color:#3E6A52;margin-top:3px;letter-spacing:.05em;text-transform:uppercase}
+.s3-gglow{position:absolute;inset:-8px;border-radius:50%;border:7px solid ${C.mint};opacity:0}
 .s3-mchips{position:absolute;left:28px;right:28px;top:368px;display:flex;gap:8px;flex-wrap:nowrap}
-.s3-mchip{height:40px;border-radius:20px;padding:0 13px 0 9px;display:flex;align-items:center;gap:6px;background:#EEF7F1;color:#1E5A3A;font-size:16px;font-weight:700;white-space:nowrap}
-.s3-badge{position:absolute;left:28px;right:28px;height:58px;border-radius:18px;background:#E6F9EE;border:2px dashed #8EDDB0;display:flex;align-items:center;gap:10px;padding:0 16px;font-size:18px;font-weight:650;color:#1E5A3A;white-space:nowrap}
+.s3-mchip{height:42px;border-radius:21px;padding:0 13px 0 9px;display:flex;align-items:center;gap:6px;background:#EEF7F1;color:#1E5A3A;font-size:17.5px;font-weight:700;white-space:nowrap}
+.s3-badge{position:absolute;left:28px;right:28px;height:58px;border-radius:18px;background:#E6F9EE;border:2px dashed #8EDDB0;display:flex;align-items:center;gap:10px;padding:0 14px;font-size:19.5px;font-weight:650;color:#1E5A3A;white-space:nowrap}
 .s3-badge b{font-weight:800;letter-spacing:.12em;color:#0B1210;background:#fff;border-radius:8px;padding:2px 8px;margin-left:2px}
 .s3-cta{position:absolute;left:28px;width:516px;height:88px;border-radius:44px;background:${C.green};box-shadow:0 7px 0 #006631;display:flex;align-items:center;justify-content:center;gap:12px;color:#fff;font-size:27px;font-weight:750;letter-spacing:-.01em}
 .s3-cta-ring{position:absolute;left:28px;width:516px;height:88px;border-radius:44px;border:4px solid ${C.mint};opacity:0}
 /* --- Notification --- */
-.s3-notif{position:absolute;left:16px;right:16px;top:62px;height:176px;border-radius:32px;background:#fff;box-shadow:0 6px 0 rgba(11,18,16,.14),0 0 0 1.5px rgba(11,18,16,.05);z-index:58;padding:20px 22px;transform:translateY(-300px)}
+.s3-notif{position:absolute;left:16px;right:16px;top:62px;height:176px;border-radius:32px;background:#fff;box-shadow:0 6px 0 rgba(11,18,16,.14),0 0 0 1.5px rgba(11,18,16,.05);z-index:58;padding:18px 22px;transform:translateY(-300px);height:auto;min-height:176px}
 .s3-nhead{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:#8B8476;letter-spacing:.04em;text-transform:uppercase}
 .s3-nicon{width:34px;height:34px;border-radius:10px;background:${C.green};display:flex;align-items:center;justify-content:center}
 .s3-nicon svg{width:20px;height:26px}
 .s3-nhead span:last-child{margin-left:auto;text-transform:none;letter-spacing:0;font-weight:550}
-.s3-ntitle{font-size:24px;font-weight:800;margin-top:12px;letter-spacing:-.015em;color:#14201B}
-.s3-nbody{font-size:19.5px;font-weight:500;margin-top:5px;line-height:1.28;color:#3A433E}
+.s3-ntitle{font-size:26px;font-weight:800;margin-top:12px;letter-spacing:-.015em;color:#14201B}
+.s3-nbody{font-size:21.5px;font-weight:550;margin-top:5px;line-height:1.26;color:#3A433E}
 /* --- Splash --- */
 .s3-splash{position:absolute;left:0;top:0;width:572px;height:1192px;z-index:40}
 .s3-sword{position:absolute;left:0;right:0;top:700px;text-align:center;font-family:var(--display);font-weight:800;font-size:104px;letter-spacing:-.045em;color:${C.green};z-index:41;line-height:1}
@@ -261,7 +265,7 @@
           <path d="M0 -120A120 120 0 0 0 0 120Z" fill="${SH}" transform="translate(12 14)"/>
           <path d="M0 -120A120 120 0 0 0 0 120Z" fill="${C.mint}"/>
           <path d="M-20 -80A80 80 0 0 0 -20 80" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="10" stroke-dasharray="3 18" stroke-linecap="round"/></g></g>
-        <g class="s3-d s3-d8" transform="translate(905 470)"><g class="s3-dd">
+        <g class="s3-d s3-d8" transform="translate(1008 905)"><g class="s3-dd">
           <circle r="16" fill="${C.yellow}"/></g></g>
       </svg>`);
       root.appendChild(decoBack);
@@ -291,7 +295,7 @@
       root.appendChild(wipe);
 
       /* ================= TÉLÉPHONE ================= */
-      const phone = FEKK.el(`<div class="s3-phone-exit"><div class="s3-phone-enter"><div class="s3-phone-shake"><div class="s3-phone-tilt">
+      const phone = FEKK.el(`<div class="s3-phone-exit"><div class="s3-phone-cam"><div class="s3-phone-enter"><div class="s3-phone-shake"><div class="s3-phone-tilt">
         <div class="s3-phone-shadow"></div>
         <div class="s3-sbtn" style="left:-5px;top:250px;height:70px"></div>
         <div class="s3-sbtn" style="left:-5px;top:340px;height:110px"></div>
@@ -305,7 +309,7 @@
           <g class="s3-vibR" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity="0">
             <path d="M626 470 q18 40 0 80"/><path d="M652 450 q28 60 0 120"/></g>
         </svg>
-      </div></div></div></div>`);
+      </div></div></div></div></div>`);
       root.appendChild(phone);
       const screen = phone.querySelector('.s3-screen');
 
@@ -421,7 +425,7 @@
             <div class="s3-gauge"><svg viewBox="0 0 160 160" style="position:absolute;inset:0">
                 <circle cx="80" cy="80" r="66" fill="none" stroke="#E6F4EC" stroke-width="14"/>
                 <circle class="s3-garc" cx="80" cy="80" r="66" fill="none" stroke="${C.mint}" stroke-width="14" stroke-linecap="round" transform="rotate(-90 80 80)" stroke-dasharray="0 1000"/>
-              </svg><div class="s3-gauge-txt"><b><span class="s3-gnum">0</span>%</b><span>MATCH</span></div></div>
+              </svg><div class="s3-gglow"></div><div class="s3-gauge-txt"><b><span class="s3-gnum">0</span><small> %</small></b><span>Fiabilité</span></div></div>
             <div class="s3-mchips">
               <div class="s3-mchip">${ico('check', 18, C.green, 3)}Coque bleue</div>
               <div class="s3-mchip">${ico('check', 18, C.green, 3)}Samsung noir</div>
@@ -433,7 +437,7 @@
               <div class="s3-ic56" style="background:${C.green}">${ico('store', 30, '#fff', 2.2)}</div>
               <div><div class="s3-t1">Point relais Sandaga</div><div class="s3-t2">Ouvert jusqu’à 21h · 2,1 km · 12 min</div></div>
             </div>
-            <div class="s3-badge" style="top:122px">${ico('shield', 26, C.green, 2.2)}Remis en main propre · code <b>4821</b></div>
+            <div class="s3-badge" style="top:122px">${ico('shield', 26, C.green, 2.2)}Remise en main propre · code <b>4821</b></div>
             <div class="s3-cta-ring" style="top:210px"></div>
             <div class="s3-cta" style="top:210px">Récupérer mon objet${ico('arrow', 28, '#fff', 2.6)}</div>
           </div>
@@ -556,20 +560,20 @@
 
       /* ---------- Caméra de la carte (fonction pure du temps) ---------- */
       const camG = q('.s3-cam');
-      const CAM0 = { z: 0.98, fx: 300, fy: 512, sx: 286, sy: 548 };
-      const CAM1 = { z: 1.12, fx: 312, fy: 520, sx: 286, sy: 545 };
-      const CAM2 = { z: 2.5, fx: (cx0 + sx0) / 2 - 6, fy: (cy0 + sy0) / 2, sx: 286, sy: 392 };
-      const CAM3 = { z: 2.85, fx: (cx0 + sx0) / 2 - 4, fy: (cy0 + sy0) / 2, sx: 286, sy: 452 };
-      const CAM4 = { z: 3.0, fx: (cx0 + sx0) / 2 - 2, fy: (cy0 + sy0) / 2 + 2, sx: 286, sy: 452 };
+      const CAM0 = { z: 0.98, fx: 300, fy: 512, sx: 286, sy: 472 };
+      const CAM1 = { z: 1.16, fx: 312, fy: 520, sx: 286, sy: 466 };
+      const CAM2 = { z: 2.5, fx: (cx0 + sx0) / 2 - 6, fy: (cy0 + sy0) / 2, sx: 286, sy: 318 };
+      const CAM3 = { z: 2.85, fx: (cx0 + sx0) / 2 - 4, fy: (cy0 + sy0) / 2, sx: 286, sy: 415 };
+      const CAM4 = { z: 3.0, fx: (cx0 + sx0) / 2 - 2, fy: (cy0 + sy0) / 2 + 2, sx: 286, sy: 415 };
       const camAt = (t) => {
         const a = seg(t, 2.8, 5.0, 'sine.inOut');
         let c = {};
         for (const k in CAM0) c[k] = lerp(CAM0[k], CAM1[k], a);
         const b = seg(t, 5.0, 5.85, 'fekk.swift');
         for (const k in CAM0) c[k] = lerp(c[k], CAM2[k], b);
-        const d = seg(t, 6.42, 6.95, 'fekk.swift');
+        const d = seg(t, 6.78, 7.3, 'fekk.swift');
         for (const k in CAM0) c[k] = lerp(c[k], CAM3[k], d);
-        const e = seg(t, 6.95, 8.0, 'sine.inOut');
+        const e = seg(t, 7.3, 8.0, 'sine.inOut');
         for (const k in CAM0) c[k] = lerp(c[k], CAM4[k], e);
         return c;
       };
@@ -637,7 +641,7 @@
           <path d="M30 206 C46 200 66 212 84 228" stroke="${SKL}" stroke-width="5" stroke-linecap="round" fill="none"/>
         </g>
       </svg>`);
-      root.appendChild(hand);
+      phone.querySelector('.s3-phone-cam').appendChild(hand);
 
       const sandFull = FEKK.el('<div class="s3-sandfull"></div>');
       root.appendChild(sandFull);
@@ -730,7 +734,7 @@
       const fields = qa('.s3-declare .s3-field');
       const TYPE = [
         { str: 'Samsung noir, coque bleue', a: 1.12, b: 1.48, focus: [1.08, 1.56] },
-        { str: 'Colobane, près du marché', a: 1.62, b: 1.95, focus: [1.56, 1.96] },
+        { str: 'Colobane, arrêt des cars rapides', a: 1.6, b: 1.97, focus: [1.56, 1.96] },
         { str: 'Aujourd’hui, 18h47', a: 2.02, b: 2.24, focus: [1.96, 2.3] },
       ];
       TYPE.forEach((ty, i) => {
@@ -745,14 +749,15 @@
       tl.to('.s3-tog i', { scaleX: 1.25, duration: 0.08, yoyo: true, repeat: 1, transformOrigin: '50% 50%' }, 2.08);
 
       // Main : entrée, tap, sortie. Pointe de l'index = (62,12) du SVG.
-      const TAPX = 598, TAPY = 1382;
+      // Coordonnées locales au téléphone (la main vit dans le wrapper caméra) : centre de « Publier ».
+      const TAPX = 330, TAPY = 922;
       gsap.set(hand, { left: TAPX - 62, top: TAPY - 12, transformOrigin: '62px 12px' });
       tl.fromTo(hand, { x: 330, y: 620, rotation: -6, scale: 1.05 }, { x: 0, y: 0, rotation: -22, duration: 0.3, ease: 'power3.out' }, 2.0);
       tl.to(hand, { scale: 0.93, y: 8, duration: 0.07, ease: 'power2.in' }, 2.28);
       tl.to(hand, { scale: 1, y: -6, duration: 0.14, ease: 'power2.out' }, 2.35);
       tl.to(hand, { x: 300, y: 700, rotation: -8, duration: 0.34, ease: 'power3.in' }, 2.47);
       const pub = q('.s3-pub'), pubLbl = q('.s3-pub-lbl'), ripple = q('.s3-ripple');
-      gsap.set(ripple, { left: TAPX - 254 - 28, top: 46 });
+      gsap.set(ripple, { left: TAPX - 14, top: 46 });
       tl.to(pub, { scale: 0.96, duration: 0.07, ease: 'power2.in' }, 2.28);
       tl.to(pub, { scale: 1, duration: 0.3, ease: 'elastic.out(1.2, 0.45)' }, 2.35);
       tl.fromTo(ripple, { scale: 0, opacity: 1 }, { scale: 8, opacity: 0, duration: 0.42, ease: 'power2.out' }, 2.3);
@@ -765,12 +770,12 @@
 
       // ---- 2.80 : transition d'écran (slide + scale) ----
       tl.fromTo(mapScr, { xPercent: 100, scale: 1 }, { xPercent: 0, duration: 0.42, ease: 'fekk.swift' }, 2.8);
-      tl.to(declare, { xPercent: -32, scale: 0.9, filter: 'brightness(0.8)', duration: 0.42, ease: 'fekk.swift' }, 2.8);
+      tl.fromTo(declare, { xPercent: 0, filter: 'brightness(1)' }, { xPercent: -30, scale: 0.94, filter: 'brightness(0.86)', duration: 0.42, ease: 'fekk.swift', immediateRender: false }, 2.8);
       tl.set(declare, { display: 'none' }, 3.25);
       // Feuille, recherche, filtres
       const sheet = q('.s3-sheet');
       tl.fromTo(sheet, { y: 1192 }, { y: 1192, duration: 0.01 }, 0);
-      tl.to(sheet, { y: 880, duration: 0.45, ease: 'back.out(1.3)' }, 3.0);
+      tl.to(sheet, { y: 740, duration: 0.45, ease: 'back.out(1.3)' }, 3.0);
       tl.fromTo('.s3-search', { y: -140 }, { y: 0, duration: 0.4, ease: 'back.out(1.6)' }, 3.0);
       tl.fromTo('.s3-fchip', { y: -30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: 'back.out(2)', stagger: 0.04 }, 3.1);
       tl.fromTo('.s3-blk-match, .s3-blk-relay', { opacity: 0 }, { opacity: 0, duration: 0.01 }, 0);
@@ -783,7 +788,7 @@
       tl.to(ownerPin, { scaleX: 1.25, scaleY: 0.75, duration: 0.07, yoyo: true, repeat: 1, transformOrigin: '50% 100%' }, 3.3);
       // Radar : 4 pulsations depuis Colobane (r en unités carte)
       qa('.s3-rad').forEach((c, i) => {
-        tl.fromTo(c, { attr: { r: 6 }, opacity: 0.95 }, { attr: { r: 210 }, opacity: 0, duration: 1.3, ease: 'power1.out' }, 3.0 + i * 0.55);
+        tl.fromTo(c, { attr: { r: 6 }, opacity: 0.95 }, { attr: { r: 210 }, opacity: 0, duration: 1.3, ease: 'power1.out' }, 3.0 + i * 0.5);
       });
       // Épingles « objet trouvé » en stagger
       foundPins.forEach((p, i) => pinDrop(p, 3.3 + i * 0.16, 0.38));
@@ -814,36 +819,36 @@
       tl.to('.s3-lab', { opacity: 0.85, duration: 0.3 }, 5.1);
       [5.25, 5.85, 6.45, 7.05, 7.65].forEach((at) => tl.fromTo('.s3-relay-halo', { attr: { r: 14 }, opacity: 0.85 }, { attr: { r: 44 }, opacity: 0, duration: 0.6, ease: 'power1.out' }, at));
       // Feuille → carte de match
-      tl.to(sheet, { y: 548, duration: 0.45, ease: 'back.out(1.15)' }, 5.3);
+      tl.to(sheet, { y: 470, duration: 0.45, ease: 'back.out(1.15)' }, 5.3);
       tl.to('.s3-blk-search', { opacity: 0, y: 30, duration: 0.18 }, 5.3);
       tl.set('.s3-blk-search', { display: 'none' }, 5.5);
       tl.to('.s3-blk-match', { opacity: 1, duration: 0.15 }, 5.38);
       tl.fromTo('.s3-blk-match .s3-row', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 5.38);
       tl.fromTo('.s3-thumbL', { x: -260, rotation: -14 }, { x: 0, rotation: -3, duration: 0.5, ease: 'back.out(1.5)' }, 5.42);
       tl.fromTo('.s3-thumbR', { x: 260, rotation: 14 }, { x: 0, rotation: 3, duration: 0.5, ease: 'back.out(1.5)' }, 5.48);
-      tl.fromTo('.s3-gauge', { scale: 0, rotation: -90 }, { scale: 1, rotation: 0, duration: 0.45, ease: 'back.out(2)' }, 5.55);
-      tl.to('.s3-gauge', { scale: 1.1, duration: 0.1, yoyo: true, repeat: 1, ease: 'power1.out' }, 6.25);
+      tl.fromTo('.s3-gauge', { scale: 0, rotation: -90 }, { scale: 1, rotation: 0, duration: 0.42, ease: 'back.out(2)' }, 5.5);
+      tl.to('.s3-gauge', { scale: 1.12, duration: 0.1, yoyo: true, repeat: 1, ease: 'power1.out' }, 5.95);
       tl.fromTo('.s3-mchip', { y: 24, opacity: 0, scale: 0.8 }, { y: 0, opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(2.2)', stagger: 0.07 }, 6.0);
-      tl.to('.s3-thumbL', { y: -6, duration: 0.5, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 5.95);
-      tl.to('.s3-thumbR', { y: -6, duration: 0.5, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 6.05);
+      tl.to('.s3-thumbL', { y: -6, duration: 0.38, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 5.95);
+      tl.to('.s3-thumbR', { y: -6, duration: 0.36, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 6.0);
       // Notification remonte
-      tl.to(notif, { y: -320, duration: 0.3, ease: 'fekk.anticip' }, 6.38);
+      tl.to(notif, { y: -320, duration: 0.3, ease: 'fekk.anticip' }, 6.45);
 
       // ---- 6.40–8.00 : itinéraire + récupération ----
-      tl.to(sheet, { y: 716, duration: 0.42, ease: 'back.out(1.2)' }, 6.45);
-      tl.to('.s3-blk-match', { opacity: 0, y: 40, duration: 0.18 }, 6.42);
-      tl.set('.s3-blk-match', { display: 'none' }, 6.62);
-      tl.to('.s3-blk-relay', { opacity: 1, duration: 0.12 }, 6.55);
-      tl.fromTo('.s3-blk-relay .s3-row', { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 6.55);
-      tl.fromTo('.s3-badge', { scale: 0.6, opacity: 0, rotation: -4 }, { scale: 1, opacity: 1, rotation: 0, duration: 0.4, ease: 'back.out(2.5)' }, 6.72);
-      tl.fromTo('.s3-cta', { y: 40, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(1.8)' }, 6.62);
-      [7.05, 7.5, 7.95].forEach((at) => {
-        tl.to('.s3-cta', { scale: 1.045, duration: 0.12, yoyo: true, repeat: 1, ease: 'power1.out' }, at);
-        tl.fromTo('.s3-cta-ring', { scale: 1, opacity: 0.9 }, { scale: 1.16, opacity: 0, duration: 0.5, ease: 'power1.out' }, at);
-      });
+      // 94 % tenu jusqu'à 6.75 ; la feuille se replie pendant que le contenu relais monte en stagger
+      // (chevauchement avec la sortie : aucune frame de carte vide).
+      tl.to(qa('.s3-blk-match > *'), { opacity: 0, y: -18, duration: 0.12, ease: 'power2.in', stagger: 0.015 }, 6.75);
+      tl.set('.s3-blk-match', { display: 'none' }, 7.0);
+      tl.to(sheet, { y: 570, duration: 0.42, ease: 'back.out(1.2)' }, 6.78);
+      tl.to('.s3-blk-relay', { opacity: 1, duration: 0.01 }, 6.86);
+      tl.fromTo('.s3-blk-relay .s3-row', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 6.87);
+      tl.fromTo('.s3-badge', { y: 20, scale: 0.85, opacity: 0, rotation: -3 }, { y: 0, scale: 1, opacity: 1, rotation: 0, duration: 0.4, ease: 'back.out(2.2)' }, 6.92);
+      tl.fromTo('.s3-cta', { y: 20, opacity: 0, scale: 0.94 }, { y: 0, opacity: 1, scale: 1, duration: 0.36, ease: 'back.out(1.8)' }, 7.0);
+      const CTA_PULSES = [7.35, 7.8];
+      CTA_PULSES.forEach((at) => tl.to('.s3-cta', { scale: 1.045, duration: 0.12, yoyo: true, repeat: 1, ease: 'power1.out' }, at));
       tl.to(relayTag, { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(2.4)' }, 5.3);
       tl.to(labelEls[8].parentNode, { opacity: 0, duration: 0.12 }, 5.15);
-      tl.to(walker, { opacity: 1, duration: 0.15 }, 6.95);
+      tl.to(walker, { opacity: 1, duration: 0.15 }, 7.3);
 
       // ---- 8.00–8.50 : sortie vers sand ----
       tl.to(pExit, { y: -40, rotation: 3, duration: 0.1, ease: 'power2.out' }, 8.0);
@@ -858,7 +863,57 @@
       const GC = 2 * Math.PI * 66;
       const walkEl = walker;
       const pad = (n) => String(n).padStart(2, '0');
+      const ctaRing = q('.s3-cta-ring'), gglow = q('.s3-gglow');
+      const pCam = q('.s3-phone-cam'), titlesEl = titles;
+      const decoBEl = q('.s3-decoB'), decoFEl = q('.s3-decoF');
+      gsap.set([decoBEl, decoFEl], { transformOrigin: '540px 1080px' });
+
+      /* Caméra de la maquette (fonction pure du temps). s = échelle, top = y du haut de la maquette
+       * dans le cadre. La maquette reste centrée en x. Au repos : 1.12, haut à 470 (sous les titres).
+       * Pendant les push-ins, les titres (calque non zoomé) montent de LIFT px et se réduisent,
+       * et le haut de la maquette ne dépasse jamais 470 - lift. */
+      const LIFT = 110, REST = { s: 1.12, top: 470 };
+      const CAMK = [
+        // [début, fin, cible, ease]
+        [0.95, 1.3, { s: 1.36, top: 400 }, 'power2.inOut'],   // champs Description / Lieu / Date
+        [1.3, 1.95, { s: 1.4, top: 368 }, 'sine.inOut'],      // suit le focus vers le bas
+        [1.95, 2.22, { s: 1.2, top: 412 }, 'power2.inOut'],   // dézoom pour le tap sur Publier
+        [2.5, 2.85, REST, 'power2.inOut'],                    // retour avant la navigation
+        [3.4, 4.95, { s: 1.16, top: 462 }, 'sine.inOut'],     // lente poussée sur la carte
+        [5.0, 5.35, { s: 1.38, top: 462 }, 'power3.out'],     // notification
+        [5.4, 5.9, { s: 1.3, top: 352 }, 'power2.inOut'],     // glisse vers la jauge / carte de match
+        [5.9, 6.75, { s: 1.32, top: 352 }, 'sine.inOut'],
+        [6.75, 7.2, { s: 1.36, top: 352 }, 'power2.inOut'],   // point relais + code
+        [7.2, 8.0, { s: 1.38, top: 352 }, 'sine.inOut'],      // lente dérive
+      ];
+      const camPhone = (t) => {
+        let c = { s: REST.s, top: REST.top };
+        for (const [a, b, k, ease] of CAMK) {
+          const p = seg(t, a, b, ease);
+          if (p <= 0) break;
+          c = { s: lerp(c.s, k.s, p), top: lerp(c.top, k.top, p) };
+        }
+        return c;
+      };
+      const liftAt = (t) => LIFT * (seg(t, 0.9, 1.25, 'power2.inOut') - seg(t, 2.5, 2.85, 'power2.inOut') + seg(t, 5.2, 5.55, 'power2.inOut'));
+      const pulse = (t, starts, dur) => { for (const a of starts) { if (t >= a && t < a + dur) return (t - a) / dur; } return -1; };
       frame = (t) => {
+        // Caméra maquette + titres + parallaxe des formes wax
+        const lift = liftAt(t);
+        const cp = camPhone(t);
+        const top = Math.max(cp.top, 470 - lift);
+        pCam.style.transform = `translate(${(300 - 300 * cp.s).toFixed(2)}px, ${(top - 470).toFixed(2)}px) scale(${cp.s.toFixed(4)})`;
+        titlesEl.style.transform = `translateY(${(-lift).toFixed(2)}px) scale(${(1 - 0.12 * lift / LIFT).toFixed(4)})`;
+        const zr = cp.s / REST.s - 1;
+        decoBEl.style.transform = `scale(${(1 + 0.3 * zr).toFixed(4)})`;
+        decoFEl.style.transform = `scale(${(1 + 1.6 * zr).toFixed(4)})`;
+        // Anneau du CTA et halo de la jauge (pulsations)
+        const rp0 = pulse(t, CTA_PULSES, 0.5);
+        ctaRing.style.opacity = rp0 < 0 ? 0 : (0.9 * (1 - E('power1.out')(rp0))).toFixed(3);
+        ctaRing.style.transform = `scale(${rp0 < 0 ? 1 : (1 + 0.16 * E('power1.out')(rp0)).toFixed(4)})`;
+        const gp = pulse(t, [5.95], 0.55);
+        gglow.style.opacity = gp < 0 ? 0 : (0.95 * (1 - E('power2.out')(gp))).toFixed(3);
+        gglow.style.transform = `scale(${gp < 0 ? 1 : (1 + 0.45 * E('power2.out')(gp)).toFixed(4)})`;
         // Frappe des champs + curseur
         for (const ty of TYPE) {
           const p = seg(t, ty.a, ty.b);
@@ -878,16 +933,16 @@
         const nb = Math.round(1248 * seg(t, 3.05, 4.75, 'power2.out'));
         cnt.textContent = nb >= 1000 ? `${Math.floor(nb / 1000)} ${String(nb % 1000).padStart(3, '0')}` : String(nb);
         // Jauge 94 %
-        const g = seg(t, 5.6, 6.3, 'power2.out') * 0.94;
+        const g = seg(t, 5.58, 5.95, 'power3.out') * 0.94;
         gnum.textContent = String(Math.round(g * 100));
         garc.setAttribute('stroke-dasharray', `${(g * GC).toFixed(2)} 1000`);
         // Caméra + overlay
         applyCam(camAt(t));
         // Itinéraire (révélé par masque) + marcheur
-        const rp = seg(t, 6.5, 7.15, 'power2.inOut');
+        const rp = seg(t, 6.85, 7.6, 'power2.inOut');
         routeRev.setAttribute('stroke-dasharray', `${(rp * routeLen).toFixed(2)} ${routeLen + 10}`);
         q('.s3-route').setAttribute('stroke-dashoffset', (-(t * 9)).toFixed(2));
-        const wp = seg(t, 6.95, 8.0, 'sine.inOut') * 0.92;
+        const wp = seg(t, 7.3, 8.0, 'sine.inOut') * 0.92;
         const pt = routeRev.getPointAtLength(wp * routeLen);
         const c = camAt(t);
         const wx = c.sx + (pt.x - c.fx) * c.z, wy = c.sy + (pt.y - c.fy) * c.z;

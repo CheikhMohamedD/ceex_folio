@@ -193,7 +193,7 @@
         <circle cx="-14" cy="-5" r="9" fill="#E31B23"/><circle r="8" fill="#00853F"/><circle r="3.5" fill="#FDEF42"/>
         <path d="M24 0 q14 -14 26 0 q-14 14 -26 0z" fill="#00853F"/>
       </g>
-      <text x="438" y="252" text-anchor="middle" transform="skewX(-12) translate(52 0)" font-family="'Bricolage Grotesque Variable', sans-serif" font-weight="800" font-size="40" letter-spacing="-0.5" fill="#E31B23" stroke="#fff" stroke-width="7" stroke-linejoin="round" paint-order="stroke">Alhamdoulilah</text>
+      <text x="438" y="252" text-anchor="middle" transform="skewX(-12) translate(52 0)" font-family="'Bricolage Grotesque Variable', sans-serif" font-weight="800" font-size="40" letter-spacing="-1.2" fill="#E31B23" stroke="#fff" stroke-width="7" stroke-linejoin="round" paint-order="stroke">Alhamdoulilahi</text>
       <path d="M318 262 Q440 274 562 262" fill="none" stroke="#1E6FB0" stroke-width="3.5" stroke-linecap="round"/>
       ${diamonds}
       <path d="M58 300 l6 -10 l6 10 l-6 10z" fill="#fff"/>
@@ -824,8 +824,8 @@
       S([...sa.chars, ...sb.words, ...sc.chars], { opacity: 0 });
       S(la, { y: 0, scale: 1, transformOrigin: '50% 50%' });
       // Calage : « Un instant… » jaillit dès l'impact, se range AVANT que « et » n'entre (par le bas),
-      // et « perdu. » est posé vers 2.95 pour rester lisible jusqu'à la coupe ink (3.44).
-      const T_LA = 2.3, T_LA_UP = 2.5, LA_UP_D = 0.22, T_LB = 2.63, T_LC = 2.75, LC_ST = 0.02, LC_D = 0.11;
+      // et « perdu. » est posé vers 2.87 pour rester lisible (~0,57 s, phrase entière) jusqu'à la coupe ink (3.44).
+      const T_LA = 2.3, T_LA_UP = 2.46, LA_UP_D = 0.2, T_LB = 2.57, T_LC = 2.66, LC_ST = 0.02, LC_D = 0.11;
       // « Un instant… » : les lettres jaillissent du bas, en éventail
       tl.fromTo(sa.chars, { opacity: 0, yPercent: 90, rotation: (i) => (i % 2 ? 14 : -10), scaleY: 1.35 },
         { opacity: 1, yPercent: 0, rotation: 0, scaleY: 1, duration: 0.26, ease: 'back.out(2.2)', stagger: 0.018, immediateRender: false }, T_LA);
