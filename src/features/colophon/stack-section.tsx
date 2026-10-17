@@ -15,6 +15,8 @@ const STACK = [
   { key: "prisma", name: "Prisma", version: deps["@prisma/client"] },
   { key: "zod", name: "Zod", version: deps.zod },
   { key: "jspdf", name: "jsPDF", version: deps.jspdf },
+  { key: "gsap", name: "GSAP", version: deps.gsap },
+  { key: "three", name: "Three.js", version: deps.three },
   { key: "lucide", name: "Lucide", version: deps["lucide-react"] },
   { key: "fonts", name: "Fontsource", version: deps["@fontsource-variable/space-grotesk"] },
   { key: "vitest", name: "Vitest", version: devDeps.vitest },

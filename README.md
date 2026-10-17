@@ -2,10 +2,10 @@
 
 Le portfolio de Cheikh Diack, ingénieur full-stack et designer à Dakar.
 
-Le site se construit en cinq phases. Les trois premières sont dans le code : le design
+Le site se construit en cinq phases. Les quatre premières sont dans le code : le design
 system « Dossier » et sa page `/colophon` (phase 1), le site public en français et en
-anglais avec ses études de cas, ses services, son blog et son SEO (phase 2), et le
-contact à deux portes (phase 3). Le jalon de la phase 3, une vraie demande reçue de bout
+anglais avec ses études de cas, ses services, son blog et son SEO (phase 2), le contact
+à deux portes (phase 3), et le mouvement : GSAP et la scène Three.js du hero (phase 4). Le jalon de la phase 3, une vraie demande reçue de bout
 en bout, attend l'hébergement, la base et les clés décrites dans « Contact » plus bas.
 
 ## Démarrer
@@ -134,6 +134,26 @@ demandes, copie `.env.example` et renseigne :
 Sans base, les demandes restent en mémoire en développement (et en test, avec
 `CONTACT_STORE=memory`) ; en production, le formulaire annonce qu'il n'est pas encore
 branché et renvoie vers l'email et WhatsApp, toujours affichés.
+
+## Mouvement
+
+Les animations suivent la « Carte des animations » du canvas, sans jamais retarder le
+premier affichage ni cacher du contenu :
+
+- Les composants serveur posent des attributs `data-motion` ; `src/features/motion`
+  charge GSAP (ScrollTrigger, Flip, DrawSVG) une fois la page au repos et joue les moments
+  de chaque page. Chaque animation part de l'état final, déjà dans le HTML.
+- Les moments visibles dès le chargement (tampon « Disponible », mots sous GOTF, tampon
+  « Reçu ») et l'entrée des questions du parcours sont en CSS (`globals.css`).
+- L'ouverture d'un projet passe par les View Transitions de React : la vignette
+  s'agrandit jusqu'à l'en-tête de l'étude de cas.
+- La scène Three.js du hero (`src/features/hero-scene`) ne se charge que sur desktop :
+  1 024 px et plus, WebGL2, 4 cœurs, sans économiseur de données
+  (`src/lib/motion/conditions.ts`). Elle ne dessine que quand quelque chose bouge.
+- Avec « réduire les animations », rien ne se charge et rien ne bouge.
+
+GSAP (54 Ko compressés) et Three.js (133 Ko) restent hors du JavaScript initial mesuré
+par le budget.
 
 ## Sécurité
 

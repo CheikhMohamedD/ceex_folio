@@ -325,8 +325,10 @@
   .numbered {
     @apply mx-auto grid max-w-7xl gap-x-6 gap-y-4 px-4 sm:px-6 lg:grid-cols-[8.75rem_minmax(0,1fr)] lg:px-20;
   }
+  /* Large comme son texte (justify-self) : le coup de tampon (scale) ne déborde pas de
+     l'écran, ce qui ferait dézoomer la page sur mobile. */
   .numbered-mark {
-    @apply font-display text-[clamp(3rem,2.5rem+2vw,4.5rem)] leading-none font-bold text-stamp;
+    @apply justify-self-start font-display text-[clamp(3rem,2.5rem+2vw,4.5rem)] leading-none font-bold text-stamp;
   }
 }
 
@@ -369,4 +371,128 @@
   &:hover {
     text-decoration-thickness: 2.5px;
   }
+}
+
+/* Moments en CSS seul (« Carte des animations ») : ceux qui se jouent dès le chargement,
+   avant que GSAP n'arrive (il se charge une fois la page au repos). Rien ne bouge avec
+   « réduire les animations ». */
+@media (prefers-reduced-motion: no-preference) {
+  /* N° 3 et 17 : coup de tampon en 250 ms (tampon « Disponible », tampon « Reçu »). */
+  .motion-stamp {
+    animation: stamp-in 250ms cubic-bezier(0.2, 1.4, 0.4, 1) 150ms both;
+  }
+
+  /* N° 4 : Generalist, Owns, The, Future s'écrivent lettre par lettre, juste après le
+     tampon. Les lettres mono ont toutes la même largeur : un dévoilement par pas suffit. */
+  .motion-type {
+    animation: type-in calc(var(--chars, 8) * 45ms) steps(var(--chars, 8), end) both;
+    animation-delay: calc(450ms + var(--index, 0) * 220ms);
+  }
+
+  /* N° 16 : chaque nouvelle question du parcours guidé arrive par la droite, sans
+     déborder de l'écran (le formulaire rogne le glissement, pas l'anneau de focus). */
+  .guided[data-navigated] {
+    overflow-x: clip;
+    overflow-clip-margin: 8px;
+  }
+  .guided[data-navigated] [data-step]:not([hidden]) {
+    animation: step-in 280ms ease-out both;
+  }
+}
+
+@keyframes stamp-in {
+  from {
+    opacity: 0;
+    scale: 1.4;
+  }
+}
+
+@keyframes type-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+}
+
+@keyframes step-in {
+  from {
+    opacity: 0;
+    translate: 24px 0;
+  }
+}
+
+/* N° 1 : trait rouge sous la section en cours, déplacé par GSAP (moments.ts). */
+.section-mark {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background-color: var(--stamp);
+  pointer-events: none;
+}
+
+[data-mark="top"] > .section-mark {
+  top: 0;
+  bottom: auto;
+}
+
+/* N° 13 : ouverture d'un projet. La vignette s'agrandit jusqu'à l'en-tête de l'étude
+   (classe morph), le panneau sort par la droite, ou monte du bas sous 1 024 px (classe
+   panel). View Transitions de React : sans prise en charge, la page change simplement. */
+::view-transition-group(.morph) {
+  animation-duration: 450ms;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+::view-transition-new(.panel):only-child {
+  animation: panel-in 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@media (width < 64rem) {
+  ::view-transition-new(.panel):only-child {
+    animation-name: panel-up;
+  }
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    translate: 48px 0;
+  }
+}
+
+@keyframes panel-up {
+  from {
+    opacity: 0;
+    translate: 0 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* N° 2 : scène Three.js du hero (desktop), en fondu par-dessus le collage statique, qui
+   s'efface ensuite ; sans la scène, le collage reste tel quel. */
+.hero-scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 600ms ease;
+}
+
+[data-scene="on"] > .hero-scene {
+  opacity: 1;
+}
+
+[data-scene="on"] > [data-tile] {
+  opacity: 0;
+  transition: opacity 400ms ease 300ms;
 }

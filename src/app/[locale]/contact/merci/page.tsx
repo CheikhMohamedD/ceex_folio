@@ -26,7 +26,10 @@ export default async function ThanksPage({ params }: PageProps<"/[locale]/contac
     <div className="mx-auto flex max-w-7xl flex-col gap-10 px-4 pt-8 pb-24 sm:px-6 lg:px-20 lg:pt-12">
       <Masthead start={t("masthead")} />
       <div className="flex flex-col items-start gap-6">
-        <Stamp tone="success">{t("stamp")}</Stamp>
+        {/* N° 17 : le tampon « Reçu » s'applique (globals.css, « Moments »). */}
+        <Stamp tone="success" className="motion-stamp">
+          {t("stamp")}
+        </Stamp>
         <h1 className="max-w-[20ch] font-display text-section font-semibold">{t("title")}</h1>
         <p className="max-w-[60ch] text-body text-ink-soft">
           {t("text", { hours: SITE.responseHours })}

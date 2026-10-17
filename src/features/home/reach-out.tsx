@@ -82,6 +82,7 @@ export async function ReachOut() {
         </div>
 
         <Steps
+          motion
           label={t("steps.label")}
           current={0}
           orientation="responsive"

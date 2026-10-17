@@ -17,6 +17,8 @@ type StepsProps = {
   /** Point de rupture du mode responsive : 640 px (sm) ou 1 024 px (lg), pour 5 étapes. */
   breakpoint?: "sm" | "lg";
   category?: Category | "ink";
+  /** Points et tirets se tracent à l'entrée (moments, n° 18). */
+  motion?: boolean;
   className?: string;
 };
 
@@ -61,10 +63,11 @@ function stateOf(index: number, current: number): State {
   return index === current ? "current" : "upcoming";
 }
 
-function Dot({ state, className }: { state: State; className?: string }) {
+function Dot({ state, className, motion }: { state: State; className?: string; motion: boolean }) {
   return (
     <span
       aria-hidden
+      data-motion-dot={motion ? "" : undefined}
       className={cn(
         "block size-4 shrink-0 rounded-full",
         state === "done" && "bg-(--cat)",
@@ -88,6 +91,7 @@ export function Steps({
   orientation = "horizontal",
   breakpoint = "sm",
   category,
+  motion = false,
   className,
 }: StepsProps) {
   const t = useTranslations("ui.steps");
@@ -97,7 +101,7 @@ export function Steps({
 
   return (
     <div className={cn(categoryClass(category), className)}>
-      <ol aria-label={label} className={layout.list}>
+      <ol aria-label={label} data-motion={motion ? "steps" : undefined} className={layout.list}>
         {steps.map((step, index) => {
           const state = stateOf(index, current);
           return (
@@ -106,10 +110,11 @@ export function Steps({
               aria-current={state === "current" ? "step" : undefined}
               className={layout.item}
             >
-              <Dot state={state} className={layout.dot} />
+              <Dot state={state} className={layout.dot} motion={motion} />
               {index < last ? (
                 <span
                   aria-hidden
+                  data-motion-line={motion ? "" : undefined}
                   className={cn(
                     layout.line,
                     index < current ? "border-solid border-(--cat)" : "border-dashed border-ink",

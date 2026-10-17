@@ -390,8 +390,13 @@ export async function ComponentsSection() {
             title: tp("p3.title"),
             text: tp("p3.scope"),
           },
-          { date: t("demo.timeline.next"), title: tp("p4.title"), text: tp("p4.scope") },
-          { date: t("demo.timeline.then"), title: tp("p5.title"), text: tp("p5.scope") },
+          {
+            date: t("demo.timeline.public"),
+            dateTime: "2026-10-17",
+            title: tp("p4.title"),
+            text: tp("p4.scope"),
+          },
+          { date: t("demo.timeline.next"), title: tp("p5.title"), text: tp("p5.scope") },
         ]}
       />
     ),

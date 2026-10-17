@@ -32,7 +32,10 @@ export function Progress({ current, total = 9, label, className }: ProgressProps
         {Array.from({ length: total }, (_, index) => (
           <span
             key={index}
-            className={cn("h-2 rounded-[1px] border border-ink", index < value && "bg-ink")}
+            className={cn(
+              "h-2 rounded-[1px] border border-ink transition-colors duration-300",
+              index < value && "bg-ink",
+            )}
           />
         ))}
       </div>

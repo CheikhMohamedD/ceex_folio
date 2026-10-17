@@ -1,5 +1,5 @@
 import { Link } from "@/i18n/link";
-import type { ReactNode } from "react";
+import { ViewTransition, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { categoryClass, type Category } from "@/lib/design/categories";
 
@@ -24,6 +24,11 @@ type ProjectCardProps = {
   badge?: ReactNode;
   /** Visuel ; à défaut, des hachures papier. */
   media?: ReactNode;
+  /**
+   * Nom partagé avec l'en-tête de l'étude de cas : à l'ouverture, la vignette s'agrandit
+   * jusqu'à lui (View Transitions, moment n° 13).
+   */
+  transitionName?: string;
   className?: string;
 };
 
@@ -46,9 +51,28 @@ export function ProjectCard({
   featured = false,
   badge,
   media,
+  transitionName,
   className,
 }: ProjectCardProps) {
   const reference = [`N° ${number}`, type, ...(featured ? stack : [])].join(" · ");
+
+  const mediaBox = (
+    <div
+      className={cn(
+        "fiche-media",
+        featured
+          ? "aspect-[16/10] lg:aspect-auto lg:min-h-72"
+          : "aspect-[4/3] w-24 self-start sm:w-36",
+      )}
+    >
+      {media}
+      {badge ? (
+        <div data-motion="stamp" className="absolute top-3 left-3">
+          {badge}
+        </div>
+      ) : null}
+    </div>
+  );
 
   return (
     <article
@@ -61,17 +85,13 @@ export function ProjectCard({
         className,
       )}
     >
-      <div
-        className={cn(
-          "fiche-media",
-          featured
-            ? "aspect-[16/10] lg:aspect-auto lg:min-h-72"
-            : "aspect-[4/3] w-24 self-start sm:w-36",
-        )}
-      >
-        {media}
-        {badge ? <div className="absolute top-3 left-3">{badge}</div> : null}
-      </div>
+      {transitionName ? (
+        <ViewTransition name={transitionName} share="morph" default="none">
+          {mediaBox}
+        </ViewTransition>
+      ) : (
+        mediaBox
+      )}
 
       <div className="fiche-body">
         <p className="fiche-ref">
@@ -100,7 +120,12 @@ export function ProjectCard({
           {summary}
         </p>
         <div className="fiche-foot">
-          {figure ? <span className="pill">{figure}</span> : null}
+          {/* Le chiffre compte jusqu'à sa valeur, déjà écrite ici (moments.ts). */}
+          {figure ? (
+            <span data-motion="count" className="pill">
+              {figure}
+            </span>
+          ) : null}
           <span aria-hidden className="fiche-cta">
             {`${ctaLabel} →`}
           </span>

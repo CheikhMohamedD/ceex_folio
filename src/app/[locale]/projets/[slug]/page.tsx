@@ -1,5 +1,6 @@
 import { ArrowLeft, ArrowRight, CalendarDays, Hash, Layers, UserRound, Wrench } from "lucide-react";
 import type { Metadata } from "next";
+import { ViewTransition } from "react";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { ButtonLink } from "@/components/ui/button";
@@ -14,6 +15,7 @@ import { CASE_STUDY_SECTIONS, CaseStudyPanel } from "@/features/project/case-stu
 import { pageLocale } from "@/i18n/locale";
 import { Link } from "@/i18n/link";
 import { CATEGORY_ICON } from "@/lib/design/categories";
+import { projectTransition } from "@/lib/motion/transitions";
 import { alternates } from "@/lib/seo/alternates";
 import { caseStudySchema, JsonLd } from "@/lib/seo/json-ld";
 import { SITE } from "@/lib/site";
@@ -70,69 +72,75 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
         end={`${t("masthead", { number: study.number })} · ${tc(study.category)}`}
       />
 
-      <OpenFolder
-        as="article"
-        label={tc(study.category)}
-        icon={CATEGORY_ICON[study.category]}
-        category={study.category}
-        aria-labelledby="projet-titre"
-      >
-        <div className="flex flex-col gap-10">
-          <header className="grid gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:gap-12">
-            <div className="flex flex-col items-start gap-5">
-              {study.inProgress ? <Stamp tone="category">{t("inProgress")}</Stamp> : null}
-              <p className="meta text-ink-soft">
-                N° {study.number} · {study.meta.type}
-              </p>
-              <h1
-                id="projet-titre"
-                className="font-display text-[clamp(2.5rem,1.9rem+2.6vw,4.25rem)] leading-none font-bold"
-              >
-                {study.meta.title}
-              </h1>
-              <p className="max-w-[60ch] text-[clamp(1.0625rem,1rem+0.3vw,1.1875rem)] leading-relaxed text-ink-soft">
-                {study.meta.summary}
-              </p>
-            </div>
-            <section aria-label={t("facts.label")}>
-              <KeyFacts
-                category={study.category}
-                facts={[
-                  { icon: Layers, value: study.meta.type, label: t("facts.type") },
-                  { icon: UserRound, value: study.meta.role, label: t("facts.role") },
-                  { icon: CalendarDays, value: study.meta.year, label: t("facts.year") },
-                  ...(tools.length > 0
-                    ? [{ icon: Wrench, value: tools.join(" · "), label: t("facts.stack") }]
-                    : []),
-                  ...(study.meta.figure
-                    ? [{ icon: Hash, value: study.meta.figure, label: t("facts.figure") }]
-                    : []),
-                ]}
+      {/* Le panneau du projet sort par la droite, ou monte du bas sur mobile (globals.css). */}
+      <ViewTransition enter="panel" default="none">
+        <OpenFolder
+          as="article"
+          label={tc(study.category)}
+          icon={CATEGORY_ICON[study.category]}
+          category={study.category}
+          aria-labelledby="projet-titre"
+        >
+          <div className="flex flex-col gap-10">
+            <header className="grid gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:gap-12">
+              <div className="flex flex-col items-start gap-5">
+                {study.inProgress ? <Stamp tone="category">{t("inProgress")}</Stamp> : null}
+                <p className="meta text-ink-soft">
+                  N° {study.number} · {study.meta.type}
+                </p>
+                <h1
+                  id="projet-titre"
+                  className="font-display text-[clamp(2.5rem,1.9rem+2.6vw,4.25rem)] leading-none font-bold"
+                >
+                  {study.meta.title}
+                </h1>
+                <p className="max-w-[60ch] text-[clamp(1.0625rem,1rem+0.3vw,1.1875rem)] leading-relaxed text-ink-soft">
+                  {study.meta.summary}
+                </p>
+              </div>
+              <section aria-label={t("facts.label")}>
+                <KeyFacts
+                  category={study.category}
+                  facts={[
+                    { icon: Layers, value: study.meta.type, label: t("facts.type") },
+                    { icon: UserRound, value: study.meta.role, label: t("facts.role") },
+                    { icon: CalendarDays, value: study.meta.year, label: t("facts.year") },
+                    ...(tools.length > 0
+                      ? [{ icon: Wrench, value: tools.join(" · "), label: t("facts.stack") }]
+                      : []),
+                    ...(study.meta.figure
+                      ? [{ icon: Hash, value: study.meta.figure, label: t("facts.figure") }]
+                      : []),
+                  ]}
+                />
+              </section>
+            </header>
+
+            {/* La vignette de la fiche s'agrandit jusqu'ici (View Transitions, n° 13). */}
+            <ViewTransition name={projectTransition(study.slug)} share="morph" default="none">
+              <div
+                aria-hidden
+                className="aspect-[21/8] rounded-sheet border-[1.5px] border-ink hatch"
               />
-            </section>
-          </header>
+            </ViewTransition>
 
-          <div
-            aria-hidden
-            className="aspect-[21/8] rounded-sheet border-[1.5px] border-ink hatch"
-          />
-
-          <FolderTabs
-            label={t("tabs.label")}
-            tabs={CASE_STUDY_SECTIONS.map((section) => ({
-              id: section,
-              label: t(`tabs.${section}`),
-              category: study.category,
-            }))}
-            panels={Object.fromEntries(
-              CASE_STUDY_SECTIONS.map((section) => [
-                section,
-                <CaseStudyPanel key={section} Content={study.Content} section={section} />,
-              ]),
-            )}
-          />
-        </div>
-      </OpenFolder>
+            <FolderTabs
+              label={t("tabs.label")}
+              tabs={CASE_STUDY_SECTIONS.map((section) => ({
+                id: section,
+                label: t(`tabs.${section}`),
+                category: study.category,
+              }))}
+              panels={Object.fromEntries(
+                CASE_STUDY_SECTIONS.map((section) => [
+                  section,
+                  <CaseStudyPanel key={section} Content={study.Content} section={section} />,
+                ]),
+              )}
+            />
+          </div>
+        </OpenFolder>
+      </ViewTransition>
 
       <nav aria-label={t("nav.label")} className="grid gap-4 sm:grid-cols-2">
         {previousStudy ? (

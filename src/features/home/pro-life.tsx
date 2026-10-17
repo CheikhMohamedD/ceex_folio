@@ -6,6 +6,7 @@ import { Stamp } from "@/components/ui/stamp";
 import type { CaseStudy } from "@/content/projects/load";
 import { Link } from "@/i18n/link";
 import { categoryClass, type Category } from "@/lib/design/categories";
+import { projectTransition } from "@/lib/motion/transitions";
 import { NumberedSection } from "./numbered-section";
 
 const FILTERS = ["web", "mobile", "design"] as const satisfies readonly Category[];
@@ -39,6 +40,7 @@ export async function ProLife({ projects }: { projects: CaseStudy[] }) {
             summary={featured.meta.summary}
             figure={featured.meta.figure}
             href={`/projets/${featured.slug}`}
+            transitionName={projectTransition(featured.slug)}
             ctaLabel={t("readCase")}
             badge={
               <Stamp onImage tilt={-4}>
@@ -61,6 +63,7 @@ export async function ProLife({ projects }: { projects: CaseStudy[] }) {
               summary={project.meta.summary}
               figure={project.meta.figure}
               href={`/projets/${project.slug}`}
+              transitionName={projectTransition(project.slug)}
               ctaLabel={t("read")}
             />
           </li>

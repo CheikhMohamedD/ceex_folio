@@ -17,6 +17,7 @@ export async function Prez() {
       </p>
       <ul
         aria-label={t("skillsLabel")}
+        data-motion="rise"
         className="grid grid-cols-2 gap-3 *:flex *:flex-col *:gap-1.5 *:rounded-sheet *:border-[1.5px] *:border-ink *:bg-sheet *:p-4 sm:*:p-5 lg:grid-cols-4"
       >
         {SKILLS.map((skill) => (
@@ -36,7 +37,7 @@ export async function Prez() {
           <span lang="en">{t("contact")}</span>
           <ArrowRight size={20} strokeWidth={1.5} absoluteStrokeWidth aria-hidden />
         </Link>
-        <Annotation tilt={-2}>
+        <Annotation tilt={-2} underline>
           <span lang="en">{t("motto")}</span>
         </Annotation>
       </div>

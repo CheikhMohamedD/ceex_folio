@@ -570,6 +570,8 @@
         "prisma": "Demandes clients en PostgreSQL, par l'adaptateur pg ; client généré à l'installation",
         "zod": "Zod Mini : un schéma par formulaire, partagé par le navigateur et la Server Action, chargé à la demande",
         "jspdf": "Brief client en PDF, généré dans le navigateur au clic",
+        "gsap": "Les moments de la carte des animations : ScrollTrigger, Flip, DrawSVG ; chargé une fois la page au repos, jamais avec « réduire les animations »",
+        "three": "La scène du hero, sur desktop seulement (1 024 px, WebGL2, 4 cœurs) : Three.js direct, sans React Three Fiber",
         "lucide": "Icônes au trait de 1,5 px ; seules celles utilisées sont envoyées au navigateur",
         "fonts": "Polices servies par le site : aucun appel à Google",
         "vitest": "Tests unitaires : contrastes, miroir des tokens, composants",
@@ -578,9 +580,9 @@
         "eslint": "Règles Next.js, TypeScript et jsx-a11y, aucun avertissement toléré"
       },
       "notes": {
-        "runtime": "Node.js 24 LTS. En production, le site dépend de Next.js, React, next-intl, Lucide, des polices Fontsource, de clsx, tailwind-merge et Zod, et, pour le contact, de Prisma, pg et jsPDF.",
+        "runtime": "Node.js 24 LTS. En production, le site dépend de Next.js, React, next-intl, Lucide, des polices Fontsource, de clsx, tailwind-merge et Zod ; pour le contact, de Prisma, pg et jsPDF ; pour le mouvement, de GSAP et Three.js, chargés après l'affichage.",
         "exact": "Chaque dépendance est figée à sa version exacte. Au 16 octobre 2026, npm audit ne signale aucune faille dans les dépendances du site.",
-        "later": "GSAP et Three.js arrivent avec la phase 4, chargés après l'affichage ; Better Auth avec les Coulisses. Resend et Turnstile sont appelés par HTTP, sans paquet."
+        "later": "Better Auth arrive avec les Coulisses. Resend et Turnstile sont appelés par HTTP, sans paquet. L'ouverture d'un projet passe par les View Transitions de React, sans bibliothèque."
       }
     },
     "measures": {

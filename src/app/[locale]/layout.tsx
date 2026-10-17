@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteTabBar } from "@/components/layout/site-tab-bar";
+import { MotionLoader } from "@/features/motion/motion-loader";
 import { pageLocale } from "@/i18n/locale";
 import { routing } from "@/i18n/routing";
 import { SITE } from "@/lib/site";
@@ -61,6 +62,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
           <SiteFooter />
         </div>
         <SiteTabBar />
+        <MotionLoader locale={locale} />
       </body>
     </html>
   );

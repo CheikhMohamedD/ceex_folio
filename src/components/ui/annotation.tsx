@@ -50,6 +50,8 @@ type AnnotationProps = {
   arrow?: Arrow;
   /** Inclinaison en degrés. */
   tilt?: number;
+  /** Trait manuscrit sous le texte, qui se dessine à l'entrée (moments, n° 9). */
+  underline?: boolean;
   className?: string;
 };
 
@@ -62,7 +64,13 @@ type AnnotationProps = {
  * aucune page ne télécharge alors les 50 Ko de Caveat sur mobile, où ils retardaient
  * le premier affichage.
  */
-export function Annotation({ children, arrow, tilt = -3, className }: AnnotationProps) {
+export function Annotation({
+  children,
+  arrow,
+  tilt = -3,
+  underline = false,
+  className,
+}: AnnotationProps) {
   const before = arrow === "left";
   return (
     <span
@@ -74,7 +82,24 @@ export function Annotation({ children, arrow, tilt = -3, className }: Annotation
       style={{ rotate: `${tilt}deg` }}
     >
       {arrow && before ? <DrawnArrow direction={arrow} /> : null}
-      <span>{children}</span>
+      <span className={underline ? "relative" : undefined}>
+        {children}
+        {underline ? (
+          <svg
+            aria-hidden
+            data-motion="draw"
+            viewBox="0 0 200 10"
+            preserveAspectRatio="none"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            strokeLinecap="round"
+            className="absolute -bottom-2 left-0 h-2.5 w-full"
+          >
+            <path d="M2 6 C 40 2, 80 9, 120 5 S 180 3, 198 6" />
+          </svg>
+        ) : null}
+      </span>
       {arrow && !before ? <DrawnArrow direction={arrow} /> : null}
     </span>
   );

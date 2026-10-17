@@ -1,10 +1,22 @@
 "use client";
 
-import { useId, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
+import {
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type ReactNode,
+} from "react";
 import { clsx } from "clsx";
+import type * as MotionModule from "@/lib/motion/gsap";
 import { categoryClass, type Category } from "@/lib/design/categories";
 
 const PANEL = "rounded-sheet border-[1.5px] border-ink bg-sheet p-4 shadow-sheet sm:p-6";
+
+// Import de type seulement : GSAP n'entre pas dans le JavaScript des onglets.
+type Motion = typeof MotionModule;
+type FlipState = ReturnType<Motion["Flip"]["getState"]>;
 
 export type FolderTab = {
   id: string;
@@ -46,6 +58,45 @@ export function FolderTabs({
   const baseId = useId();
   const [active, setActive] = useState(defaultTab ?? tabs[0]?.id);
   const refs = useRef<Array<HTMLButtonElement | null>>([]);
+  const panel = useRef<HTMLDivElement>(null);
+  const motion = useRef<Motion | null>(null);
+  const flip = useRef<FlipState | null>(null);
+
+  // Mode filtre : GSAP se charge au premier survol ou focus des onglets (jamais avant),
+  // et seulement si le visiteur accepte les animations.
+  function prepareMotion() {
+    if (motion.current || children === undefined) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    void import("@/lib/motion/gsap").then((module) => {
+      motion.current = module;
+    });
+  }
+
+  function select(id: string) {
+    if (id === active) return;
+    if (motion.current && panel.current) {
+      flip.current = motion.current.Flip.getState(
+        panel.current.querySelectorAll("[data-category]"),
+      );
+    }
+    setActive(id);
+  }
+
+  // N° 10 : les fiches glissent vers leur nouvelle place, les autres s'effacent.
+  useLayoutEffect(() => {
+    const state = flip.current;
+    flip.current = null;
+    if (!state || !motion.current) return;
+    const { Flip, gsap } = motion.current;
+    Flip.from(state, {
+      duration: 0.4,
+      ease: "power2.inOut",
+      absolute: true,
+      onEnter: (elements) =>
+        gsap.fromTo(elements, { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1, duration: 0.3 }),
+      onLeave: (elements) => gsap.to(elements, { opacity: 0, scale: 0.96, duration: 0.2 }),
+    });
+  }, [active]);
 
   function onKeyDown(event: KeyboardEvent<HTMLButtonElement>, index: number) {
     const last = tabs.length - 1;
@@ -59,7 +110,7 @@ export function FolderTabs({
     event.preventDefault();
     const tab = tabs[next];
     if (!tab) return;
-    setActive(tab.id);
+    select(tab.id);
     refs.current[next]?.focus();
   }
 
@@ -68,6 +119,8 @@ export function FolderTabs({
       <div
         role="tablist"
         aria-label={label}
+        onPointerEnter={prepareMotion}
+        onFocus={prepareMotion}
         className="flex [scrollbar-width:none] gap-1.5 overflow-x-auto px-4 pt-1 [&::-webkit-scrollbar]:hidden"
       >
         {tabs.map((tab, index) => {
@@ -84,7 +137,7 @@ export function FolderTabs({
               aria-selected={selected}
               aria-controls={panels ? `${baseId}-panneau-${tab.id}` : `${baseId}-panneau`}
               tabIndex={selected ? 0 : -1}
-              onClick={() => setActive(tab.id)}
+              onClick={() => select(tab.id)}
               onKeyDown={(event) => onKeyDown(event, index)}
               className={clsx(
                 categoryClass(tab.category),
@@ -121,6 +174,7 @@ export function FolderTabs({
         ))
       ) : (
         <div
+          ref={panel}
           role="tabpanel"
           id={`${baseId}-panneau`}
           aria-labelledby={`${baseId}-onglet-${active}`}

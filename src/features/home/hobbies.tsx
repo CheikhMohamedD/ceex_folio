@@ -19,6 +19,7 @@ export async function Hobbies() {
       <div
         role="region"
         aria-label={t("label")}
+        data-motion="drift"
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
         className="-mx-4 snap-x snap-mandatory overflow-x-auto px-4 pb-2 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0"

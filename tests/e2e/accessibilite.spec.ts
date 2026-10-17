@@ -18,6 +18,9 @@ const PAGES = [
 
 for (const path of PAGES) {
   test(`${path} : aucune violation WCAG 2.2 AA (axe-core)`, async ({ page }) => {
+    // État final, sans élément à mi-fondu : les animations finissent toutes là (et le
+    // test de console ci-dessous les garde actives).
+    await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto(path);
     await page.evaluate(() => document.fonts.ready);
     const results = await new AxeBuilder({ page })

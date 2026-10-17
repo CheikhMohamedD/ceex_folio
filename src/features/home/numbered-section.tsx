@@ -31,7 +31,7 @@ export function NumberedSection({
       className={cn("border-t-[1.5px] border-ink py-16 lg:py-28", className)}
     >
       <div className="numbered">
-        <span aria-hidden className="numbered-mark">
+        <span aria-hidden data-motion="stamp" className="numbered-mark">
           {number}
         </span>
         <div className="flex min-w-0 flex-col gap-8">

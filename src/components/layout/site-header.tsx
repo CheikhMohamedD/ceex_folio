@@ -47,7 +47,8 @@ export function SiteHeader() {
         <div className="flex items-center gap-4 lg:gap-8">
           <nav
             aria-label={t("label")}
-            className="hidden items-center gap-4 font-display font-medium sm:flex lg:gap-8"
+            data-motion="sections"
+            className="relative hidden items-center gap-4 font-display font-medium sm:flex lg:gap-8"
           >
             {sections.map((section) => (
               <Link

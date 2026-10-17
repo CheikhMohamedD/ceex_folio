@@ -32,8 +32,11 @@ export function MobileTabBar({ label, items, variant = "fixed", className }: Mob
         className,
       )}
     >
+      {/* Trait rouge de la section en cours, posé en haut par les moments (n° 1). */}
       <ul
-        className="grid"
+        data-motion="sections"
+        data-mark="top"
+        className="relative grid"
         style={{ gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))` }}
       >
         {items.map((item) => (

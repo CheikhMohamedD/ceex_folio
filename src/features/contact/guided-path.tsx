@@ -130,6 +130,8 @@ export function GuidedPath({ locale, copy }: { locale: Locale; copy: GuidedCopy 
   const [errors, setErrors] = useState<FieldErrors<GuidedField>>({});
   const [fromRecap, setFromRecap] = useState(false);
   const [enhanced, setEnhanced] = useState(false);
+  // Une question n'arrive « par la droite » qu'après un changement d'écran (globals.css).
+  const [navigated, setNavigated] = useState(false);
   const form = useRef<HTMLFormElement>(null);
   const headings = useRef<Array<HTMLElement | null>>([]);
   const moved = useRef(false);
@@ -183,6 +185,7 @@ export function GuidedPath({ locale, copy }: { locale: Locale; copy: GuidedCopy 
 
   function go(target: number) {
     moved.current = true;
+    setNavigated(true);
     setStep(target);
   }
 
@@ -422,6 +425,7 @@ export function GuidedPath({ locale, copy }: { locale: Locale; copy: GuidedCopy 
       action={action}
       onSubmit={onSubmit}
       noValidate
+      data-navigated={navigated ? "" : undefined}
       className="guided relative flex flex-col gap-8"
     >
       {/* Sans JavaScript : toutes les questions (!important, comme la règle [hidden] de la
