@@ -1,0 +1,558 @@
+{
+  "meta": {
+    "title": "CEEXFolio · Cheikh Diack",
+    "titleTemplate": "%s · CEEXFolio",
+    "description": "Le portfolio de Cheikh Diack, ingénieur full-stack et designer à Dakar : plateformes web, ERP, applications mobiles et identités visuelles."
+  },
+  "nav": {
+    "skip": "Aller au contenu",
+    "home": "CEEXFolio, accueil",
+    "brand": "CEEXFolio",
+    "label": "Navigation principale",
+    "mobileLabel": "Navigation principale",
+    "prez": "Prez",
+    "proLife": "Pro life",
+    "hobbies": "Hobbies",
+    "reachOut": "Reach out"
+  },
+  "footer": {
+    "brand": "CEEXFolio",
+    "rights": "© 2026 Cheikh Diack",
+    "colophon": "Colophon",
+    "github": "GitHub"
+  },
+  "ui": {
+    "theme": {
+      "toggle": "Thème {current}, passer au thème {next}",
+      "system": "système",
+      "light": "clair",
+      "dark": "sombre"
+    },
+    "steps": {
+      "done": "étape terminée",
+      "current": "étape en cours",
+      "upcoming": "étape à venir"
+    }
+  },
+  "categories": {
+    "web": "Web",
+    "mobile": "Mobile",
+    "design": "Design",
+    "motion": "Motion"
+  },
+  "phases": {
+    "p1": {
+      "title": "Phase 1 · Design system",
+      "short": "Design system",
+      "scope": "Tokens « Dossier », 17 composants, page /colophon.",
+      "milestone": "Contrastes AA vérifiés, tout lisible à 360 px."
+    },
+    "p2": {
+      "title": "Phase 2 · Site public et SEO",
+      "short": "Site public et SEO",
+      "scope": "Accueil, 6 études de cas, données structurées, français et anglais.",
+      "milestone": "Pages indexées, Lighthouse dans le budget de performance."
+    },
+    "p3": {
+      "title": "Phase 3 · Contact",
+      "short": "Contact",
+      "scope": "Deux portes, email, brief PDF, score de qualification.",
+      "milestone": "Une vraie demande reçue de bout en bout."
+    },
+    "p4": {
+      "title": "Phase 4 · Mouvement et 3D",
+      "short": "Mouvement et 3D",
+      "scope": "GSAP : ScrollTrigger, Flip, SplitText ; puis le hero Three.js.",
+      "milestone": "LCP de 2,5 s et INP de 200 ms au plus, tenus sur mobile."
+    },
+    "p5": {
+      "title": "Phase 5 · Coulisses et Boussole",
+      "short": "Coulisses",
+      "scope": "Connexion GitHub, demandes, Cheikh 2.0 et Boussole.",
+      "milestone": "Tout autre compte refusé, Boussole utilisable au téléphone."
+    }
+  },
+  "home": {
+    "masthead": {
+      "start": "CEEXFolio · Dakar",
+      "end": "Phase 1 sur 5 · Design system"
+    },
+    "stamp": "En chantier",
+    "title": "Cheikh Diack, ingénieur full-stack et designer à Dakar.",
+    "lead": "Le portfolio se construit par étapes. La phase 1 pose le design system « Dossier » : couleurs, typographie et dix-sept composants, vérifiés pour le contraste et lisibles dès 360 px.",
+    "cta": {
+      "colophon": "Voir le colophon",
+      "github": "Mon profil GitHub"
+    },
+    "annotation": "le design system, en vrai",
+    "plan": {
+      "label": "Plan de livraison",
+      "title": "Cinq phases, cinq jalons",
+      "text": "Chaque phase se termine par un jalon vérifiable ; la suivante ne commence qu'une fois ce jalon atteint. Le contact passe avant la 3D, parce que c'est lui qui amène des clients."
+    },
+    "upcoming": {
+      "title": "Bientôt sur cette page",
+      "prez": "Qui je suis, ce que je fais et comment je travaille. Avec la phase 2.",
+      "proLife": "Six études de cas, de Seetalma à Atelier. Avec la phase 2.",
+      "hobbies": "Ce qui m'occupe hors du code : natation, anime et manga, lecture, sport. Avec la phase 2.",
+      "reachOut": "Deux portes : le contact direct, et un parcours guidé pour cadrer ton projet. Avec la phase 3."
+    }
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "masthead": "CEEXFolio · Erreur",
+    "stamp": "Introuvable",
+    "heading": "Cette page n'est pas dans le dossier.",
+    "text": "Le lien est peut-être ancien, ou la page arrive avec une prochaine phase.",
+    "back": "Retour à l'accueil"
+  },
+  "colophon": {
+    "meta": {
+      "title": "Colophon",
+      "description": "Le design system « Dossier » de CEEXFolio : palette, typographie, composants, et les mesures qui les vérifient."
+    },
+    "masthead": {
+      "start": "CEEXFolio · Colophon",
+      "end": "Dossier N° 00 · Design system · 2026"
+    },
+    "title": "Colophon",
+    "lead": "Comment ce site est fait. Le design system « Dossier » en vrai : chaque couleur avec son contraste calculé, chaque composant avec ses vrais contenus, et les mesures que la CI vérifie à chaque changement.",
+    "toc": "Sommaire",
+    "signature": {
+      "title": "CEEXFolio · Colophon",
+      "detail": "Phase 1 · Design system, octobre 2026"
+    },
+    "palette": {
+      "title": "Palette",
+      "intro": "Dix couleurs de base, en clair « Papier » et en sombre « Chambre noire ». Le thème suit le réglage de l'appareil ; le bouton en haut de page permet de le forcer.",
+      "caption": "Couleurs de base : valeurs claires et sombres, usage et contraste",
+      "columns": {
+        "token": "Token",
+        "light": "Clair",
+        "dark": "Sombre",
+        "usage": "Usage",
+        "contrast": "Contraste clair / sombre"
+      },
+      "usage": {
+        "paper": "Fond de page, avec le grain",
+        "sheet": "Feuilles, cartes et champs",
+        "kraft": "Onglets au repos, pastilles de chiffre",
+        "ink": "Texte, traits et pastilles",
+        "ink-soft": "Texte secondaire et légendes",
+        "rule": "Filets de tableau",
+        "stamp": "Annotations et grands chiffres, 24 px et plus",
+        "stamp-strong": "Liens, boutons, tampons, petit texte rouge",
+        "success": "Envoi réussi, statut disponible",
+        "error": "Erreurs de formulaire"
+      },
+      "decorative": "Décor, jamais de texte",
+      "surface": "Surface",
+      "rules": {
+        "stamp": "Le rouge stamp n'écrit que du texte de 24 px et plus ({stamp} sur le papier). En dessous, stamp-strong prend le relais ({strong}).",
+        "kraft": "Le kraft ne porte que de l'encre ({ratio} au moins) : jamais de texte gris dessus.",
+        "audit": "{passing, number} vérifications de contraste sur {total, number} passent le seuil AA : chaque paire du système, en clair et en sombre. Les tests bloquent toute régression."
+      }
+    },
+    "categories": {
+      "title": "Catégories de dossier",
+      "intro": "Une couleur par type de projet. Elle marque l'onglet de filtre, le point de la fiche et la languette du dossier ; le rouge du tampon reste aux statuts et aux liens.",
+      "projects": {
+        "web": "Seetalma, TTC ERP, Atelier",
+        "mobile": "Ferme Jambar, application fintech",
+        "design": "Safar 2026",
+        "motion": "En réserve, pour le motion Fekk"
+      },
+      "light": "Clair",
+      "dark": "Sombre",
+      "onColor": "Texte dessus",
+      "onPaper": "Sur le papier",
+      "rules": {
+        "home": "Sur l'accueil : un liseré de 4 px sur les onglets de filtre et un point devant la référence de chaque fiche.",
+        "dark": "En sombre, chaque couleur s'éclaircit et garde au moins {min} sur le papier.",
+        "wash": "Le lavis de la catégorie sert de fond aux citations et aux encadrés ; l'encre y reste lisible.",
+        "colorBlind": "La couleur n'est jamais seule : l'icône et le nom de la catégorie l'accompagnent toujours, pour les daltoniens comme pour les lecteurs d'écran."
+      }
+    },
+    "typography": {
+      "title": "Typographie",
+      "intro": "Trois familles et une main : Space Grotesk pour les titres, IBM Plex Sans pour le texte, IBM Plex Mono pour les métadonnées, Caveat pour les annotations. Les tailles sont fluides entre 360 et 1 440 px de large.",
+      "hero": {
+        "role": "Hero",
+        "spec": "Space Grotesk 700 · 80 à 224 px · capitales espacées"
+      },
+      "section": {
+        "role": "Titre de section",
+        "spec": "Space Grotesk 600 · 36 à 64 px",
+        "sample": "Pro life"
+      },
+      "card": {
+        "role": "Titre de fiche",
+        "spec": "Space Grotesk 600 · 20 à 28 px",
+        "sample": "Seetalma rend les objets à leurs propriétaires."
+      },
+      "body": {
+        "role": "Texte courant",
+        "spec": "IBM Plex Sans 400 · 17 à 18 px · 68 caractères au plus",
+        "sample": "Je conçois et je code des produits numériques depuis Dakar : plateformes web, ERP, applications mobiles et identités visuelles. Généraliste par choix, je relie le design, le code et le métier de mes clients."
+      },
+      "meta": {
+        "role": "Métadonnée",
+        "spec": "IBM Plex Mono 500 · 12 à 13 px · capitales, interlettrage de 8 %",
+        "sample": "N° 01 · Plateforme web · Next.js · Prisma"
+      },
+      "annotation": {
+        "role": "Annotation",
+        "spec": "Caveat 600 · 24 à 28 px · rouge stamp, deux par écran au plus",
+        "sample": "Generalist Owns The Future"
+      },
+      "accent": {
+        "role": "Mots d'accent",
+        "spec": "Les derniers mots d'un titre, trois au plus, en stamp ou dans la couleur de la catégorie ; jamais sous 24 px",
+        "before": "Je conçois et je",
+        "word": "code."
+      },
+      "credits": "Polices sous licence SIL Open Font License, servies par le site grâce à Fontsource : Space Grotesk de Florian Karsten, IBM Plex Sans et IBM Plex Mono de Mike Abbink et Bold Monday pour IBM, Caveat de Pablo Impallari."
+    },
+    "foundations": {
+      "title": "Fondations",
+      "intro": "Les mesures qui tiennent tout le reste : espacements, grille, formes, matières, filets et icônes.",
+      "spacing": {
+        "title": "Espacements",
+        "text": "Une échelle en base 4, de 4 à 128 px. Les sections sont espacées de 64 px sur mobile et de 128 px sur desktop.",
+        "label": "Échelle des espacements, en pixels"
+      },
+      "grid": {
+        "title": "Grille",
+        "text": "4 colonnes sous 640 px, 8 jusqu'à 1 024 px, 12 au-delà ; les paragraphes ne dépassent pas 68 caractères. Redimensionne la fenêtre : la grille ci-dessous suit.",
+        "mobile": "Ici : 4 colonnes · gouttière 16 px · marge 16 px",
+        "tablet": "Ici : 8 colonnes · gouttière 24 px · marge 24 px",
+        "desktop": "Ici : 12 colonnes · gouttière 24 px · marge 80 px"
+      },
+      "shapes": {
+        "title": "Formes et ombre",
+        "text": "Traits d'encre de 1,5 px, rayon de 2 px pour les feuilles et les images, 8 px pour le haut des onglets. Une seule ombre, nette et sans flou.",
+        "sheet": "Feuille",
+        "sheetSpec": "Rayon de 2 px, ombre de 6 px vers le bas : réservée aux feuilles surélevées.",
+        "tab": "Onglet",
+        "tabSpec": "Rayon de 8 px en haut ; kraft et grain au repos.",
+        "press": "Bouton",
+        "pressSpec": "Ombre de 4 px, 6 px au survol et au focus, 2 px à l'appui."
+      },
+      "materials": {
+        "title": "Matières",
+        "text": "Le grain est un bruit SVG de moins d'1 Ko : 5 % sur le papier et le kraft, 4 % en sombre. Il disparaît quand le visiteur demande plus de contraste.",
+        "paper": "Papier et grain",
+        "kraft": "Kraft : onglets au repos",
+        "hatch": "Hachures : image à venir",
+        "wash": "Lavis : citations et encadrés"
+      },
+      "rules": {
+        "title": "Filets",
+        "text": "Plein pour la structure, pointillé entre les lignes d'une liste, tirets pour ce qui reste à venir.",
+        "solid": "Plein, 1,5 px d'encre : cadres et structure",
+        "dotted": "Pointillé, 1 px ink-soft : lignes d'une liste",
+        "dashed": "Tirets, 1,5 px : ce qui reste à venir",
+        "fine": "Filet de 1 px : lignes de tableau",
+        "accent": "Filet d'accent de 40 × 3 px : il annonce un chapeau"
+      },
+      "icons": {
+        "title": "Icônes",
+        "text": "Lucide, au trait de 1,5 px comme l'encre : 20 px dans le texte, 24 px seules, 22 px dans une pastille ronde de 40 px. Toujours avec un mot ou un libellé accessible.",
+        "ink": "Pastille encre",
+        "category": "Pastille de catégorie",
+        "outline": "Pastille contour"
+      }
+    },
+    "components": {
+      "title": "Composants",
+      "intro": "Les dix-sept composants du système, avec les vrais contenus des maquettes. Chacun se teste ici : au clavier, au lecteur d'écran, à 360 comme à 1 440 px, en clair comme en sombre.",
+      "index": "Index des composants",
+      "items": {
+        "tabs": {
+          "name": "Onglets de dossier",
+          "role": "Navigation et filtres. L'onglet actif passe en papier blanc ; au repos, un liseré de 4 px porte la catégorie. Les flèches, Début et Fin changent d'onglet."
+        },
+        "tabBar": {
+          "name": "Barre d'onglets mobile",
+          "role": "Quatre entrées au pouce sous 640 px, des cibles de 56 px de haut. Un trait rouge marque la section en cours. Ici, un aperçu : la vraie barre vit en bas de l'écran."
+        },
+        "stamp": {
+          "name": "Tampon",
+          "role": "Statut ou catégorie, légèrement incliné. Le texte est petit, donc écrit en stamp-strong, jamais en stamp."
+        },
+        "card": {
+          "name": "Fiche",
+          "role": "Carte projet avec sa référence mono : point de catégorie, numéro, type. Toute la carte suit le lien du titre et se soulève au survol comme au focus."
+        },
+        "annotation": {
+          "name": "Annotation",
+          "role": "Note manuscrite avec une flèche dessinée. Deux par écran au plus."
+        },
+        "button": {
+          "name": "Bouton",
+          "role": "Principal en stamp-strong, secondaire au trait d'encre, 48 px de haut. L'ombre nette grandit au survol et au focus."
+        },
+        "field": {
+          "name": "Champ",
+          "role": "Trait d'encre, anneau stamp au focus clavier, 16 px de texte au moins. L'aide et l'erreur sont reliées au champ et lues par les lecteurs d'écran."
+        },
+        "progress": {
+          "name": "Progression",
+          "role": "Neuf segments pour le parcours guidé. La valeur est annoncée aux lecteurs d'écran."
+        },
+        "sheet": {
+          "name": "Feuille",
+          "role": "Papier surélevé par la seule ombre du système : nette, 6 px vers le bas."
+        },
+        "folder": {
+          "name": "Dossier ouvert",
+          "role": "Feuille à languette : l'onglet porte l'icône et le nom de la catégorie, le cadre prend sa couleur."
+        },
+        "masthead": {
+          "name": "Bandeau éditorial",
+          "role": "Ligne mono en tête de feuille, signature à pastille en pied."
+        },
+        "quote": {
+          "name": "Citation",
+          "role": "Grand guillemet décoratif en couleur, texte entre « » en Plex Sans 500, fond lavis."
+        },
+        "steps": {
+          "name": "Étapes",
+          "role": "Plein pour ce qui est fait, anneau pour l'étape en cours, tirets vers la suite. Verticales sous 640 px."
+        },
+        "callout": {
+          "name": "Encadré",
+          "role": "Boîte à languette d'étiquette : contour par défaut, lavis, ou plein une fois par page au plus. La note de terrain en est la version courte."
+        },
+        "facts": {
+          "name": "Faits clés",
+          "role": "Pastille de 40 px, valeur en Space Grotesk 600, légende en Plex Sans, pointillés entre les lignes."
+        },
+        "timeline": {
+          "name": "Frise",
+          "role": "Points de 12 px reliés en tirets, date en mono de couleur, texte court."
+        },
+        "table": {
+          "name": "Tableau",
+          "role": "En-têtes mono, filets fins, icône en première colonne. Sous 768 px, chaque ligne devient une carte."
+        }
+      },
+      "demo": {
+        "tabs": {
+          "label": "Filtrer les projets par catégorie",
+          "all": "Tous"
+        },
+        "projects": {
+          "seetalma": {
+            "title": "Seetalma",
+            "type": "Plateforme web",
+            "summary": "Retrouver un objet perdu à Dakar. Celui qui le trouve garde un détail que le propriétaire doit fournir : rien n'est remis sans vérification."
+          },
+          "ttc": {
+            "title": "TTC ERP",
+            "type": "ERP",
+            "summary": "De l'achat à la trésorerie, pour une société de négoce.",
+            "figure": "7 modules"
+          },
+          "jambar": {
+            "title": "Ferme Jambar",
+            "type": "App mobile",
+            "summary": "Ponte, aliment et ventes d'un poulailler, suivis depuis un téléphone.",
+            "figure": "1 000 poules"
+          },
+          "safar": {
+            "title": "Safar 2026",
+            "type": "Dashboard · identité",
+            "summary": "Organisation, affiches et badges d'un rassemblement.",
+            "figure": "250 participants"
+          },
+          "fintech": {
+            "title": "Application fintech",
+            "type": "App mobile",
+            "summary": "Réglages, conditions et carte des agences d'une app bancaire.",
+            "figure": "Multi-pays"
+          },
+          "atelier": {
+            "title": "Atelier"
+          },
+          "readCase": "Lire l'étude de cas",
+          "read": "Lire"
+        },
+        "tabBar": {
+          "label": "Aperçu de la barre d'onglets mobile"
+        },
+        "stamps": {
+          "featured": "À la une",
+          "caseStudy": "Étude de cas",
+          "available": "Disponible",
+          "failed": "Non envoyé"
+        },
+        "annotation": "écrit à la main, jamais sous 24 px",
+        "buttons": {
+          "primary": "Démarrer un projet",
+          "secondary": "Voir les projets"
+        },
+        "fields": {
+          "contact": "Email ou WhatsApp",
+          "contactHint": "Pour te répondre, et rien d'autre.",
+          "message": "Message",
+          "messageError": "Écris quelques mots sur ton projet."
+        },
+        "progress": {
+          "label": "Question 3 sur 9",
+          "question": "Quel est ton délai ?"
+        },
+        "sheet": {
+          "label": "Feuille surélevée",
+          "text": "Visionneuse, panneau, carte survolée : seules les feuilles au-dessus du papier portent l'ombre."
+        },
+        "folder": {
+          "meta": "Plateforme web · Next.js · Prisma",
+          "title": "Seetalma rend les objets à leurs propriétaires."
+        },
+        "masthead": {
+          "start": "CEEXFolio · Étude de cas",
+          "end": "Dossier N° 01 · Web",
+          "signature": "Étude de cas · Seetalma",
+          "detail": "Mise en ligne avec la phase 2"
+        },
+        "quote": {
+          "text": "Rien n'est remis sans vérification.",
+          "source": "Règle de Seetalma"
+        },
+        "steps": {
+          "label": "Après ta demande",
+          "send": "Tu envoies",
+          "sendText": "ta demande, par l'une des deux portes",
+          "answer": "Je réponds",
+          "answerText": "avec mes premières questions",
+          "talk": "On en parle",
+          "talkText": "de vive voix, puis la proposition"
+        },
+        "callout": {
+          "why": "Pourquoi ça compte",
+          "trust": "La confiance d'abord : aucun objet ne change de main sans preuve.",
+          "short": "Un parcours court : déclarer, vérifier, rendre.",
+          "handover": "La remise se fait entre deux personnes rassurées.",
+          "outline": "Contour",
+          "outlineText": "Fond sheet et trait d'encre : la version par défaut.",
+          "wash": "Lavis",
+          "washText": "Le lavis de la catégorie en fond ; l'encre y garde au moins {ratio}.",
+          "solid": "Plein",
+          "solidText": "La couleur de la catégorie, texte en sheet. Une fois par page au plus.",
+          "noteLabel": "Note de terrain",
+          "noteText": "Une idée courte qui renvoie vers sa page.",
+          "noteLink": "Voir les mesures"
+        },
+        "facts": {
+          "place": "Dakar",
+          "placeLabel": "Objets perdus et retrouvés, près de chez soi",
+          "secret": "1 détail secret",
+          "secretLabel": "Gardé par celui qui trouve, demandé au propriétaire",
+          "stack": "Next.js + Prisma",
+          "stackLabel": "Plateforme web, base PostgreSQL"
+        },
+        "timeline": {
+          "label": "Les premières phases de CEEXFolio",
+          "started": "16 octobre 2026",
+          "next": "Ensuite",
+          "then": "Puis"
+        },
+        "table": {
+          "caption": "Points de rupture de la grille",
+          "width": "Largeur",
+          "columns": "Colonnes",
+          "gutter": "Gouttière",
+          "margin": "Marge",
+          "phone": "Dès 360 px",
+          "tablet": "Dès 640 px",
+          "desktop": "Dès 1 024 px"
+        }
+      }
+    },
+    "stack": {
+      "title": "Stack",
+      "intro": "Ce qui construit ce site. Les versions sont lues dans package.json au moment de la construction : ce tableau ne peut pas prendre de retard.",
+      "caption": "Outils et versions du site",
+      "columns": {
+        "tool": "Outil",
+        "version": "Version",
+        "role": "Rôle"
+      },
+      "roles": {
+        "next": "App Router, pages générées à la construction, Turbopack",
+        "react": "Composants serveur par défaut : seuls le bouton de thème et les onglets de dossier s'exécutent dans le navigateur",
+        "typescript": "Mode strict, accès aux tableaux vérifiés",
+        "tailwind": "Tokens « Dossier » déclarés dans @theme, compilés par le plugin Turbopack, sans PostCSS",
+        "intl": "Textes en français rangés dans des fichiers de messages, vérifiés par TypeScript et traduits côté serveur",
+        "lucide": "Icônes au trait de 1,5 px ; seules celles utilisées sont envoyées au navigateur",
+        "fonts": "Polices servies par le site : aucun appel à Google",
+        "vitest": "Tests unitaires : contrastes, miroir des tokens, composants",
+        "playwright": "Tests de bout en bout à 360 et 1 440 px, en clair et en sombre",
+        "axe": "Audit d'accessibilité WCAG 2.2 AA de chaque page",
+        "eslint": "Règles Next.js, TypeScript et jsx-a11y, aucun avertissement toléré"
+      },
+      "notes": {
+        "runtime": "Node.js 24 LTS. En production, le site ne dépend que de Next.js, React, next-intl, Lucide, des polices Fontsource, de clsx et de tailwind-merge.",
+        "exact": "Chaque dépendance est figée à sa version exacte. Au 16 octobre 2026, npm audit ne signale aucune faille dans les dépendances du site.",
+        "later": "GSAP et Three.js arrivent avec la phase 4, chargés après l'affichage ; Prisma, Zod, Better Auth et Resend avec le contact et les Coulisses."
+      }
+    },
+    "measures": {
+      "title": "Mesures",
+      "intro": "Le jalon de la phase 1 se vérifie ici : contrastes, lecture à 360 px, poids du JavaScript, et ce que la CI contrôle à chaque pull request.",
+      "pending": "À mesurer",
+      "lighthouse": {
+        "title": "Lighthouse, page /colophon",
+        "measured": "Médiane de {runs, number} passages sur mobile simulé, mesurée le {date}.",
+        "pending": "Pas encore mesuré : npm run lighthouse, puis npm run lighthouse:record.",
+        "categories": {
+          "performance": "Performance",
+          "accessibility": "Accessibilité",
+          "best-practices": "Bonnes pratiques",
+          "seo": "SEO"
+        },
+        "seoNote": "Le score SEO reste volontairement bas jusqu'à la phase 2 : tant que le site est en chantier, il demande aux moteurs de ne pas l'indexer."
+      },
+      "budget": {
+        "title": "Budget et lisibilité",
+        "text": "Le JavaScript initial de l'accueil, hors GSAP et Three.js, sert de référence : chaque pull request peut l'augmenter de 10 % au plus.",
+        "measured": "JavaScript initial de l'accueil, compressé : {scripts, number} fichiers, mesurés le {date}",
+        "pendingLabel": "JavaScript initial de l'accueil : à mesurer avec npm run budget:record",
+        "tolerance": "+{percent, number} % au plus",
+        "toleranceLabel": "Hausse permise par pull request, vérifiée par npm run budget",
+        "contrast": "{passing, number} / {total, number}",
+        "contrastLabel": "Vérifications de contraste AA réussies, en clair et en sombre",
+        "width": "360 px",
+        "widthLabel": "Largeur testée : aucun débordement, aucun texte sous 12 px"
+      },
+      "ci": {
+        "label": "Contrôlé à chaque pull request",
+        "lint": "ESLint avec jsx-a11y, et TypeScript strict : aucun avertissement toléré.",
+        "unit": "Vitest : les {total, number} vérifications de contraste, le miroir des tokens et les composants.",
+        "e2e": "Playwright et axe-core : WCAG 2.2 AA, aucun débordement à 360 px, cibles tactiles de 44 px, thème gardé au rechargement.",
+        "performance": "Budget JavaScript de l'accueil et Lighthouse CI.",
+        "security": "CodeQL, Trivy et npm audit ; une SBOM CycloneDX à chaque version publiée."
+      },
+      "headers": {
+        "title": "En-têtes de sécurité",
+        "text": "Envoyés avec chaque page et définis en un seul endroit du code : ce tableau les lit à la source.",
+        "caption": "En-têtes HTTP de sécurité",
+        "columns": {
+          "name": "En-tête",
+          "role": "Rôle",
+          "value": "Valeur"
+        },
+        "roles": {
+          "csp": "N'autorise que les fichiers du site : ni script, ni police, ni image d'ailleurs ; pas d'iframe, pas de plugin.",
+          "frame": "Interdit d'afficher le site dans le cadre d'un autre.",
+          "sniff": "Empêche le navigateur de deviner le type d'un fichier.",
+          "referrer": "Ne transmet que le domaine aux autres sites.",
+          "permissions": "Coupe caméra, micro, géolocalisation, paiement, USB et ciblage publicitaire.",
+          "coop": "Isole la fenêtre des pages ouvertes depuis un autre site.",
+          "hsts": "Impose HTTPS pendant deux ans, sous-domaines compris."
+        }
+      }
+    }
+  }
+}

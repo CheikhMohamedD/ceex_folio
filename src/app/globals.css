@@ -1,0 +1,287 @@
+@import "tailwindcss" source("..");
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Design system « Dossier » de CEEXFolio.
+   Chaque couleur vaut light-dark(clair « Papier », sombre « Chambre noire ») :
+   le thème suit le système, ou data-theme="light" | "dark" sur <html>.
+   Le miroir TypeScript (src/lib/design/tokens.ts) est comparé à ce fichier
+   par les tests, qui vérifient aussi tous les contrastes WCAG.
+   ───────────────────────────────────────────────────────────────────────── */
+
+@custom-variant dark {
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme="light"]), :root:not([data-theme="light"]) *) {
+      @slot;
+    }
+  }
+  &:where([data-theme="dark"], [data-theme="dark"] *) {
+    @slot;
+  }
+}
+
+:root {
+  color-scheme: light dark;
+
+  /* Les dix tokens de base */
+  --paper: light-dark(#f2eee6, #14120f);
+  --sheet: light-dark(#fbf9f5, #1d1a16);
+  --kraft: light-dark(#d9c4a0, #3a3024);
+  --ink: light-dark(#1a1a1a, #eee7da);
+  --ink-soft: light-dark(#5a544a, #a99f90);
+  --rule: light-dark(#d8d0c2, #2e2922);
+  --stamp: light-dark(#c8502d, #e2714b);
+  --stamp-strong: light-dark(#a8401f, #e2714b);
+  --success: light-dark(#2e6b4e, #6fbf95);
+  --error: light-dark(#b3261e, #f08a80);
+
+  /* Catégories de dossier (ajout du 16 octobre 2026) */
+  --cat-web: light-dark(#24456e, #9db8dd);
+  --cat-mobile: light-dark(#1e5546, #8cc7b0);
+  --cat-design: light-dark(#6a3d63, #d0add9);
+  --cat-motion: light-dark(#7a4f12, #e0b26e);
+
+  /* Lavis : fonds d'encadré et de citation */
+  --wash: light-dark(#f0eeea, #2a2622);
+  --wash-web: light-dark(#e1e3e5, #2f3032);
+  --wash-mobile: light-dark(#e0e5e0, #2d322c);
+  --wash-design: light-dark(#eae2e3, #362f31);
+  --wash-motion: light-dark(#ece5da, #382f22);
+
+  /* Rôles dérivés */
+  --on-fill: light-dark(#fbf9f5, #14120f);
+  --focus: light-dark(#a8401f, #e2714b);
+  --lift: light-dark(rgb(26 26 26 / 0.14), rgb(0 0 0 / 0.5));
+  --hatch-a: light-dark(#f2ece0, #2a241c);
+  --hatch-b: light-dark(#ede3d1, #332a20);
+
+  /* Couleur de catégorie courante : rouge du tampon hors catégorie */
+  --cat: var(--stamp-strong);
+  --cat-wash: var(--wash);
+
+  /* Grain du papier : bruit SVG de 200 px, 5 % au plus */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* Plus de contraste demandé : pas de grain */
+@media (prefers-contrast: more), (forced-colors: active) {
+  :root[data-theme],
+  :root:not([data-theme]) {
+    --grain: none;
+  }
+}
+
+@theme inline {
+  --color-*: initial;
+  --color-paper: var(--paper);
+  --color-sheet: var(--sheet);
+  --color-kraft: var(--kraft);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-rule: var(--rule);
+  --color-stamp: var(--stamp);
+  --color-stamp-strong: var(--stamp-strong);
+  --color-success: var(--success);
+  --color-error: var(--error);
+  --color-cat-web: var(--cat-web);
+  --color-cat-mobile: var(--cat-mobile);
+  --color-cat-design: var(--cat-design);
+  --color-cat-motion: var(--cat-motion);
+  --color-wash: var(--wash);
+  --color-on-fill: var(--on-fill);
+  --color-focus: var(--focus);
+
+  --font-*: initial;
+  --font-display: var(--font-space-grotesk), "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-plex-sans), "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), "IBM Plex Mono", ui-monospace, monospace;
+  --font-hand: var(--font-caveat), "Caveat", cursive;
+  /* Police des citations : Plex Sans 500, IBM Plex Serif italique en option */
+  --font-quote: var(--font-plex-sans), "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+
+  /* Tailles fluides entre 360 px et 1440 px de large */
+  --text-hero: clamp(5rem, 2rem + 13.333vw, 14rem);
+  --text-hero--line-height: 0.85;
+  --text-hero--letter-spacing: 0.06em;
+  --text-section: clamp(2.25rem, 1.6667rem + 2.5926vw, 4rem);
+  --text-section--line-height: 1;
+  --text-card: clamp(1.25rem, 1.0833rem + 0.7407vw, 1.75rem);
+  --text-card--line-height: 1.15;
+  --text-body: clamp(1.0625rem, 1.0417rem + 0.0926vw, 1.125rem);
+  --text-body--line-height: 1.6;
+  --text-meta: clamp(0.75rem, 0.7292rem + 0.0926vw, 0.8125rem);
+  --text-meta--line-height: 1.4;
+  --text-annotation: clamp(1.5rem, 1.4167rem + 0.3704vw, 1.75rem);
+  --text-annotation--line-height: 1.1;
+  --text-quote: clamp(1.375rem, 1.25rem + 0.5556vw, 1.75rem);
+  --text-quote--line-height: 1.3;
+  --text-quote-mark: clamp(4.5rem, 4rem + 2.2222vw, 6rem);
+  --text-quote-mark--line-height: 0.8;
+
+  --radius-sheet: 2px;
+  --radius-tab: 8px;
+
+  /* Une seule ombre, nette : 6 px vers le bas, sans flou */
+  --shadow-sheet: 0 6px 0 var(--lift);
+  --shadow-press: 0 4px 0 var(--ink);
+  --shadow-press-hover: 0 6px 0 var(--ink);
+  --shadow-press-active: 0 2px 0 var(--ink);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    background-color: var(--paper);
+    background-image: var(--grain);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2.5px solid var(--focus);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background-color: var(--stamp-strong);
+    color: var(--on-fill);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .cat-web {
+    --cat: var(--cat-web);
+    --cat-wash: var(--wash-web);
+  }
+  .cat-mobile {
+    --cat: var(--cat-mobile);
+    --cat-wash: var(--wash-mobile);
+  }
+  .cat-design {
+    --cat: var(--cat-design);
+    --cat-wash: var(--wash-design);
+  }
+  .cat-motion {
+    --cat: var(--cat-motion);
+    --cat-wash: var(--wash-motion);
+  }
+  .cat-ink {
+    --cat: var(--ink);
+    --cat-wash: var(--wash);
+  }
+
+  /* Tableau (data-table.tsx) : cartes empilées sous 768 px, tableau au-delà. Ces classes
+     se répètent sur chaque cellule : écrites une fois ici, elles allègent le HTML. */
+  .dt {
+    @apply block w-full md:table md:border-collapse md:rounded-sheet md:border-[1.5px] md:border-ink md:bg-sheet;
+  }
+  .dt-head {
+    @apply sr-only md:not-sr-only md:table-header-group;
+  }
+  .dt-column {
+    @apply border-b-[1.5px] border-ink px-3.5 py-3 text-left meta text-ink-soft;
+  }
+  .dt-body {
+    @apply flex flex-col gap-3 md:table-row-group;
+  }
+  .dt-row {
+    @apply flex flex-col gap-1.5 rounded-sheet border-[1.5px] border-ink bg-sheet px-4 py-3 md:table-row md:rounded-none md:border-0 md:border-b md:border-rule md:bg-transparent md:p-0 md:last:border-b-0;
+  }
+  .dt-rowheader {
+    @apply block border-b border-dotted border-ink-soft pb-2 text-left meta md:table-cell md:border-0 md:px-3.5 md:py-3 md:align-middle;
+  }
+  .dt-cell {
+    @apply block min-w-0 text-sm leading-snug wrap-break-word md:table-cell md:px-3.5 md:py-3 md:align-middle md:text-[0.9375rem] md:leading-normal;
+  }
+  .dt-cell-strong {
+    @apply font-display text-[1.0625rem] font-semibold md:text-base;
+  }
+  .dt-label {
+    @apply mr-2 meta text-ink-soft md:hidden;
+  }
+}
+
+/* Métadonnée : IBM Plex Mono 500, capitales espacées */
+@utility meta {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: var(--text-meta);
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@utility grain {
+  background-image: var(--grain);
+}
+
+/* Emplacement d'image : hachures papier tant qu'il n'y a pas de visuel */
+@utility hatch {
+  background-image: repeating-linear-gradient(45deg, var(--hatch-a) 0 8px, var(--hatch-b) 8px 16px);
+}
+
+@utility hatch-reverse {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--hatch-a) 0 8px,
+    var(--hatch-b) 8px 16px
+  );
+}
+
+/* Lien de texte : souligné épais, rouge du tampon */
+@utility ink-link {
+  color: var(--stamp-strong);
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+
+  &:hover {
+    text-decoration-thickness: 2.5px;
+  }
+}

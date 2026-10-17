@@ -1,0 +1,30 @@
+# Mises à jour hebdomadaires, regroupées pour limiter le bruit. Chaque pull request
+# passe la CI complète : contrastes, axe-core, budget JavaScript, Lighthouse.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Africa/Dakar
+    open-pull-requests-limit: 5
+    groups:
+      next-react:
+        patterns:
+          ["next", "eslint-config-next", "react", "react-dom", "@types/react", "@types/react-dom"]
+      outillage:
+        dependency-type: development
+        update-types: [minor, patch]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Africa/Dakar
+    groups:
+      actions:
+        patterns: ["*"]

@@ -1,0 +1,15 @@
+node_modules
+.next
+out
+coverage
+playwright-report
+test-results
+.lighthouseci
+package-lock.json
+next-env.d.ts
+src/i18n/messages/*.d.json.ts
+motion
+Portfolio wireframe directions
+quality
+# Exports de maquettes posés à la racine
+/*.html
