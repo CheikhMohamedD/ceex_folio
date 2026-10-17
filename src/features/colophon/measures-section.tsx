@@ -10,13 +10,12 @@ import {
   Smartphone,
 } from "lucide-react";
 import { getFormatter, getTranslations } from "next-intl/server";
-import { Callout, Note } from "@/components/ui/callout";
+import { Callout } from "@/components/ui/callout";
 import { DataTable } from "@/components/ui/data-table";
 import { KeyFacts } from "@/components/ui/key-facts";
 import { contrastAudit } from "@/lib/design/tokens";
 import { JS_BUDGET, LIGHTHOUSE, LIGHTHOUSE_CATEGORIES } from "@/lib/quality";
 import { securityHeaders, type SecurityHeaderName } from "@/lib/security/headers";
-import { SITE } from "@/lib/site";
 import { ColophonSection, SubHeading } from "./colophon-section";
 
 const SCORE_ICON = {
@@ -146,15 +145,6 @@ export async function MeasuresSection() {
           }))}
         />
       </div>
-
-      <Note
-        label={t("source.label")}
-        href={SITE.repository}
-        linkLabel={t("source.link")}
-        icon={FileCode}
-      >
-        {t("source.text")}
-      </Note>
     </ColophonSection>
   );
 }

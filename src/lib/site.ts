@@ -2,5 +2,6 @@
 export const SITE = {
   name: "CEEXFolio",
   author: "Cheikh Diack",
-  repository: "https://github.com/CheikhMohamedD/ceex_folio",
+  /** Profil public ; le dépôt du site reste privé. */
+  github: "https://github.com/CheikhMohamedD",
 } as const;

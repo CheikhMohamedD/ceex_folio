@@ -19,7 +19,7 @@
     "brand": "CEEXFolio",
     "rights": "© 2026 Cheikh Diack",
     "colophon": "Colophon",
-    "source": "Code source"
+    "github": "GitHub"
   },
   "ui": {
     "theme": {
@@ -79,10 +79,10 @@
     },
     "stamp": "En chantier",
     "title": "Cheikh Diack, ingénieur full-stack et designer à Dakar.",
-    "lead": "Le portfolio se construit en public. La phase 1 pose le design system « Dossier » : couleurs, typographie et dix-sept composants, vérifiés pour le contraste et lisibles dès 360 px.",
+    "lead": "Le portfolio se construit par étapes. La phase 1 pose le design system « Dossier » : couleurs, typographie et dix-sept composants, vérifiés pour le contraste et lisibles dès 360 px.",
     "cta": {
       "colophon": "Voir le colophon",
-      "source": "Lire le code source sur GitHub"
+      "github": "Mon profil GitHub"
     },
     "annotation": "le design system, en vrai",
     "plan": {
@@ -552,11 +552,6 @@
           "coop": "Isole la fenêtre des pages ouvertes depuis un autre site.",
           "hsts": "Impose HTTPS pendant deux ans, sous-domaines compris."
         }
-      },
-      "source": {
-        "label": "Code source",
-        "text": "Tout ce qui est décrit ici se vérifie dans le dépôt.",
-        "link": "Ouvrir le dépôt sur GitHub"
       }
     }
   }

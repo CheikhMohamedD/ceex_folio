@@ -50,8 +50,8 @@ export default async function HomePage() {
               {t("annotation")}
             </Annotation>
           </div>
-          <a href={SITE.repository} className="inline-flex min-h-11 items-center ink-link">
-            {t("cta.source")}
+          <a href={SITE.github} className="inline-flex min-h-11 items-center ink-link">
+            {t("cta.github")}
           </a>
         </div>
       </section>

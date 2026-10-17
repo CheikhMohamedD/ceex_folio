@@ -13,8 +13,8 @@ export function SiteFooter() {
           <Link href="/colophon" className="inline-flex min-h-11 items-center ink-link">
             {t("colophon")}
           </Link>
-          <a href={SITE.repository} className="inline-flex min-h-11 items-center ink-link">
-            {t("source")}
+          <a href={SITE.github} className="inline-flex min-h-11 items-center ink-link">
+            {t("github")}
           </a>
         </p>
       </div>
