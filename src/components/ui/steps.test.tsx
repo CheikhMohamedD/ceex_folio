@@ -29,11 +29,11 @@ describe("Steps", () => {
     expect(screen.getByText("03 · On en parle")).toBeInTheDocument();
   });
 
-  it("prépare les deux orientations en mode responsive", () => {
+  it("n'écrit qu'une liste en mode responsive, en colonne puis en rangée", () => {
     renderWithIntl(<Steps label="Plan" steps={steps} current={0} orientation="responsive" />);
     const lists = screen.getAllByRole("list", { name: "Plan" });
-    expect(lists).toHaveLength(2);
-    expect(lists[0]).toHaveClass("sm:hidden");
-    expect(lists[1]).toHaveClass("hidden", "sm:grid");
+    expect(lists).toHaveLength(1);
+    expect(lists[0]).toHaveClass("flex-col", "sm:grid");
+    expect(screen.getAllByText("01 · Tu envoies")).toHaveLength(1);
   });
 });

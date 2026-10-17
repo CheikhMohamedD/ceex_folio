@@ -1,8 +1,8 @@
 {
   "route": "/",
-  "measuredAt": "2026-10-16",
-  "scripts": 6,
-  "rawBytes": 468691,
-  "gzipBytes": 139737,
+  "measuredAt": "2026-10-17",
+  "scripts": 8,
+  "rawBytes": 474489,
+  "gzipBytes": 142859,
   "tolerance": 0.1
 }

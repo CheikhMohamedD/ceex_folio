@@ -2,7 +2,8 @@
   "meta": {
     "title": "CEEXFolio · Cheikh Diack",
     "titleTemplate": "%s · CEEXFolio",
-    "description": "Le portfolio de Cheikh Diack, ingénieur full-stack et designer à Dakar : plateformes web, ERP, applications mobiles et identités visuelles."
+    "description": "Cheikh Diack, ingénieur full-stack et designer à Dakar : plateformes web, ERP, applications mobiles et identités visuelles, de l'idée à la mise en ligne.",
+    "ogLocale": "fr_FR"
   },
   "nav": {
     "skip": "Aller au contenu",
@@ -13,13 +14,22 @@
     "prez": "Prez",
     "proLife": "Pro life",
     "hobbies": "Hobbies",
-    "reachOut": "Reach out"
+    "reachOut": "Reach out",
+    "language": "Langue",
+    "switchTo": "English",
+    "switchToShort": "EN",
+    "switchLabel": "EN, lire ce site en anglais",
+    "services": "Services",
+    "blog": "Blog"
   },
   "footer": {
     "brand": "CEEXFolio",
     "rights": "© 2026 Cheikh Diack",
     "colophon": "Colophon",
-    "github": "GitHub"
+    "github": "GitHub",
+    "services": "Services",
+    "blog": "Blog",
+    "rss": "Flux RSS"
   },
   "ui": {
     "theme": {
@@ -73,29 +83,101 @@
     }
   },
   "home": {
-    "masthead": {
-      "start": "CEEXFolio · Dakar",
-      "end": "Phase 1 sur 5 · Design system"
+    "meta": {
+      "title": "Cheikh Diack, ingénieur full-stack et designer à Dakar"
     },
-    "stamp": "En chantier",
-    "title": "Cheikh Diack, ingénieur full-stack et designer à Dakar.",
-    "lead": "Le portfolio se construit par étapes. La phase 1 pose le design system « Dossier » : couleurs, typographie et dix-sept composants, vérifiés pour le contraste et lisibles dès 360 px.",
-    "cta": {
-      "colophon": "Voir le colophon",
-      "github": "Mon profil GitHub"
+    "hero": {
+      "label": "Accueil",
+      "stamp": "Disponible pour de nouveaux projets",
+      "gotf": "Generalist Owns The Future",
+      "letters": {
+        "g": "Generalist",
+        "o": "Owns",
+        "t": "The",
+        "f": "Future"
+      },
+      "title": "Cheikh Diack, ingénieur full-stack et designer à Dakar",
+      "lead": "Je conçois et je code des produits numériques, de l'idée à la mise en ligne.",
+      "start": "Démarrer un projet",
+      "projects": "Voir les projets",
+      "collage": "Les projets du dossier"
     },
-    "annotation": "le design system, en vrai",
-    "plan": {
-      "label": "Plan de livraison",
-      "title": "Cinq phases, cinq jalons",
-      "text": "Chaque phase se termine par un jalon vérifiable ; la suivante ne commence qu'une fois ce jalon atteint. Le contact passe avant la 3D, parce que c'est lui qui amène des clients."
+    "prez": {
+      "title": "Prez",
+      "text": "Je conçois et je code des produits numériques depuis Dakar : plateformes web, ERP, applications mobiles et identités visuelles. Généraliste par choix, je relie le design, le code et le métier de mes clients.",
+      "skills": {
+        "design": {
+          "title": "I design",
+          "detail": "Identités · UI"
+        },
+        "code": {
+          "title": "I code",
+          "detail": "Web · mobile"
+        },
+        "mockups": {
+          "title": "Mockups",
+          "detail": "Prototypes"
+        },
+        "video": {
+          "title": "Video edit",
+          "detail": "Montage"
+        }
+      },
+      "skillsLabel": "Ce que je fais",
+      "contact": "Contact me",
+      "motto": "« I have a computer and I use it. »"
     },
-    "upcoming": {
-      "title": "Bientôt sur cette page",
-      "prez": "Qui je suis, ce que je fais et comment je travaille. Avec la phase 2.",
-      "proLife": "Six études de cas, de Seetalma à Atelier. Avec la phase 2.",
-      "hobbies": "Ce qui m'occupe hors du code : natation, anime et manga, lecture, sport. Avec la phase 2.",
-      "reachOut": "Deux portes : le contact direct, et un parcours guidé pour cadrer ton projet. Avec la phase 3."
+    "proLife": {
+      "title": "Pro life",
+      "count": "{count, plural, one {# projet} other {# projets}}",
+      "filters": "Filtrer les projets",
+      "all": "Tous",
+      "featured": "À la une",
+      "readCase": "Lire l'étude de cas",
+      "read": "Lire",
+      "follow": "Suivre le projet",
+      "inProgress": "En conception",
+      "services": "Ce que je peux faire pour toi"
+    },
+    "hobbies": {
+      "title": "Hobbies",
+      "label": "Mes hobbies, en bande défilante",
+      "hint": "Fais défiler vers la gauche",
+      "items": {
+        "swim": "Swim",
+        "anime": "Anime / manga",
+        "read": "Read",
+        "sport": "Sport"
+      }
+    },
+    "reachOut": {
+      "title": "Reach out",
+      "question": "Comment veux-tu avancer ?",
+      "promise": "Réponse sous {hours, number} h · Dakar, heure GMT · Français ou anglais",
+      "direct": {
+        "label": "Porte 1 · Contact direct",
+        "title": "Je sais ce que je veux",
+        "text": "Pour un besoin précis, ou si tu as déjà un cahier des charges.",
+        "whatsapp": "Écrire sur WhatsApp",
+        "email": "Écrire un email",
+        "or": "ou directement"
+      },
+      "guided": {
+        "label": "Porte 2 · Parcours guidé",
+        "title": "Aide-moi à cadrer mon projet",
+        "text": "Pour une idée qui n'a pas encore de plan, de budget ou de délai.",
+        "soon": "Le parcours guidé arrive bientôt. D'ici là, écris-moi par la porte 1 : je t'aiderai à cadrer ton projet par message."
+      },
+      "steps": {
+        "label": "Trois étapes, tu es à la première",
+        "send": "Tu envoies ta demande, par l'une des deux portes.",
+        "reply": "Je te réponds sous {hours, number} h, avec mes premières questions.",
+        "talk": "On en parle de vive voix, puis je t'envoie une proposition.",
+        "sendTitle": "Ta demande",
+        "replyTitle": "Ma réponse",
+        "talkTitle": "L'échange"
+      },
+      "elsewhere": "Ailleurs"
     }
   },
   "notFound": {
@@ -202,7 +284,7 @@
       },
       "annotation": {
         "role": "Annotation",
-        "spec": "Caveat 600 · 24 à 28 px · rouge stamp, deux par écran au plus",
+        "spec": "Caveat 600 dès 640 px · 24 à 28 px · rouge stamp, deux par écran au plus ; Plex Sans italique sur mobile",
         "sample": "Generalist Owns The Future"
       },
       "accent": {
@@ -455,6 +537,7 @@
         "timeline": {
           "label": "Les premières phases de CEEXFolio",
           "started": "16 octobre 2026",
+          "public": "17 octobre 2026",
           "next": "Ensuite",
           "then": "Puis"
         },
@@ -512,7 +595,7 @@
           "best-practices": "Bonnes pratiques",
           "seo": "SEO"
         },
-        "seoNote": "Le score SEO reste volontairement bas jusqu'à la phase 2 : tant que le site est en chantier, il demande aux moteurs de ne pas l'indexer."
+        "seoNote": "Le site est indexé depuis la phase 2 : plan du site, robots.txt, liens hreflang entre le français et l'anglais, données structurées."
       },
       "budget": {
         "title": "Budget et lisibilité",
@@ -554,5 +637,137 @@
         }
       }
     }
+  },
+  "project": {
+    "back": "Retour à Pro life",
+    "masthead": "Dossier N° {number}",
+    "facts": {
+      "label": "En bref",
+      "role": "Rôle",
+      "year": "Année",
+      "stack": "Outils",
+      "type": "Type",
+      "figure": "Chiffre clé"
+    },
+    "tabs": {
+      "label": "Parties de l'étude de cas",
+      "overview": "Overview",
+      "process": "Process",
+      "result": "Result"
+    },
+    "nav": {
+      "label": "Autres projets",
+      "previous": "Projet précédent",
+      "next": "Projet suivant"
+    },
+    "cta": {
+      "title": "Un projet du même genre ?",
+      "text": "Décris-le en quelques lignes : je te réponds sous {hours, number} h.",
+      "action": "Démarrer un projet"
+    },
+    "inProgress": "Projet en conception",
+    "breadcrumb": "Projets"
+  },
+  "services": {
+    "meta": {
+      "title": "Services",
+      "description": "Création de site web, d'application mobile et d'identité visuelle à Dakar, par Cheikh Diack, ingénieur full-stack et designer."
+    },
+    "index": {
+      "masthead": "CEEXFolio · Services",
+      "title": "Ce que je peux faire pour toi",
+      "lead": "Trois façons de travailler ensemble, de l'idée à la mise en ligne. Chacune commence par un échange pour cadrer ton besoin."
+    },
+    "masthead": "Service",
+    "forWhom": "Pour qui",
+    "deliverables": "Ce que tu reçois",
+    "process": "Comment on avance",
+    "related": "Projets de ce type",
+    "cta": {
+      "title": "On en parle ?",
+      "text": "Décris ton projet en quelques lignes : je te réponds sous {hours, number} h.",
+      "action": "Démarrer un projet"
+    },
+    "other": "Les autres services",
+    "items": {
+      "site-web": {
+        "name": "Création de site web",
+        "short": "Site vitrine, plateforme ou outil en ligne, rapide et lisible sur tous les écrans.",
+        "description": "Création de site web à Dakar : site vitrine, plateforme ou outil en ligne, conçu et développé par Cheikh Diack.",
+        "intro": "Un site web qui charge vite, se lit sur un petit téléphone et que tu peux faire évoluer. Je le conçois et je le code, du premier écran à la mise en ligne.",
+        "forWhom": "Pour une entreprise, une association ou un indépendant qui veut présenter son activité, vendre en ligne ou remplacer un tableur par un vrai outil.",
+        "deliverables": {
+          "1": "Les maquettes des écrans principaux, validées avec toi",
+          "2": "Le site en ligne, lisible dès 360 px de large",
+          "3": "Le référencement de base : titres, descriptions, plan du site",
+          "4": "Une passation : comment modifier le contenu et à qui t'adresser"
+        },
+        "steps": {
+          "1": "Un échange pour cadrer le besoin, le public et le budget",
+          "2": "Les maquettes, puis tes retours",
+          "3": "Le développement, avec un aperçu en ligne à chaque étape",
+          "4": "La mise en ligne et la passation"
+        }
+      },
+      "application-mobile": {
+        "name": "Application mobile",
+        "short": "Une application Android et iOS pensée pour le terrain, même sans réseau.",
+        "description": "Création d'application mobile à Dakar : Android et iOS, hors ligne si besoin, par Cheikh Diack, ingénieur full-stack.",
+        "intro": "Une application qui sert vraiment, sur les téléphones de ceux qui l'utilisent : entrée de gamme, réseau fragile, mains occupées. Je la conçois et je la développe pour Android et iOS.",
+        "forWhom": "Pour une équipe de terrain, un commerce ou un service qui veut suivre son activité depuis un téléphone, ou offrir une application à ses clients.",
+        "deliverables": {
+          "1": "Le parcours et les écrans, testés avec un vrai utilisateur",
+          "2": "L'application Android et iOS, hors ligne si besoin",
+          "3": "Un tableau de bord ou une API si l'application en a besoin",
+          "4": "La publication sur les stores et la passation"
+        },
+        "steps": {
+          "1": "Un échange pour comprendre qui l'utilisera et dans quelles conditions",
+          "2": "Le prototype, puis un test en situation réelle",
+          "3": "Le développement par versions courtes",
+          "4": "La publication et le suivi des premières semaines"
+        }
+      },
+      "identite-visuelle": {
+        "name": "Identité visuelle",
+        "short": "Logo, couleurs, typographie et supports : une image cohérente partout.",
+        "description": "Création d'identité visuelle à Dakar : logo, couleurs, typographie, affiches et supports, par Cheikh Diack, designer.",
+        "intro": "Une identité qui te ressemble et qui tient partout : sur un écran, une affiche, un badge ou une carte de visite. Je la dessine et je prépare les fichiers pour chaque usage.",
+        "forWhom": "Pour une marque qui se lance, un événement, ou une activité qui veut une image plus claire et plus cohérente.",
+        "deliverables": {
+          "1": "Le logo et ses déclinaisons",
+          "2": "Les couleurs et la typographie, avec leurs règles d'usage",
+          "3": "Les premiers supports : affiches, réseaux sociaux, badges ou papeterie",
+          "4": "Les fichiers sources, prêts pour l'impression et le web"
+        },
+        "steps": {
+          "1": "Un échange sur ton activité, ton public et tes références",
+          "2": "Des pistes, puis le choix d'une direction",
+          "3": "L'affinage et les déclinaisons",
+          "4": "La livraison des fichiers et du guide d'usage"
+        }
+      }
+    }
+  },
+  "blog": {
+    "meta": {
+      "title": "Blog",
+      "description": "Les notes de Cheikh Diack sur le développement full-stack, le design et la construction de produits à Dakar."
+    },
+    "masthead": "CEEXFolio · Blog",
+    "title": "Blog",
+    "lead": "Ce que j'apprends en construisant : développement, design, et ce qui se passe entre les deux.",
+    "empty": "Les premiers articles arrivent bientôt.",
+    "read": "Lire l'article",
+    "back": "Tous les articles",
+    "published": "Publié le {date}",
+    "updated": "Mis à jour le {date}",
+    "rss": "S'abonner au flux RSS",
+    "draft": "Brouillon",
+    "rssTitle": "CEEXFolio · Blog de Cheikh Diack"
+  },
+  "seo": {
+    "jobTitle": "Ingénieur full-stack et designer",
+    "home": "Accueil"
   }
 }

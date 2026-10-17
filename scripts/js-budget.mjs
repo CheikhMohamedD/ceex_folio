@@ -15,7 +15,8 @@ import path from "node:path";
 import { gzipSync } from "node:zlib";
 
 const root = process.cwd();
-const htmlPath = path.join(root, ".next/server/app/index.html");
+// Accueil français (racine du site), généré sous [locale] = fr.
+const htmlPath = path.join(root, ".next/server/app/fr.html");
 const budgetPath = path.join(root, "quality/js-budget.json");
 const record = process.argv.includes("--record");
 

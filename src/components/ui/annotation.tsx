@@ -57,6 +57,10 @@ type AnnotationProps = {
  * Annotation : note manuscrite en Caveat 600, couleur stamp. Jamais sous 24 px,
  * pour que le rouge du tampon reste lisible (3,9:1, seuil du grand texte).
  * Deux annotations par écran au plus.
+ *
+ * Sous 640 px, la note passe en Plex Sans italique, en stamp-strong (texte courant) :
+ * aucune page ne télécharge alors les 50 Ko de Caveat sur mobile, où ils retardaient
+ * le premier affichage.
  */
 export function Annotation({ children, arrow, tilt = -3, className }: AnnotationProps) {
   const before = arrow === "left";
@@ -64,6 +68,7 @@ export function Annotation({ children, arrow, tilt = -3, className }: Annotation
     <span
       className={cn(
         "inline-flex items-center gap-2 font-hand text-annotation font-semibold text-stamp",
+        "max-sm:font-sans max-sm:text-body max-sm:font-medium max-sm:text-stamp-strong max-sm:italic",
         className,
       )}
       style={{ rotate: `${tilt}deg` }}

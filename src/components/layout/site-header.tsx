@@ -1,15 +1,17 @@
 import { Monitor, Moon, Sun } from "lucide-react";
-import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/link";
+import { useLocale, useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { nextThemeChoice, THEME_ORDER, type ThemeChoice } from "@/lib/theme";
+import { LocaleSwitch } from "./locale-switch";
 import { ThemeToggle } from "./theme-toggle";
 
 const THEME_ICON = { system: Monitor, light: Sun, dark: Moon } as const;
 
-/** En-tête : logo, sections de l'accueil dès 640 px, bouton de thème. */
+/** En-tête : logo, sections de l'accueil dès 640 px, langue et thème. */
 export function SiteHeader() {
   const t = useTranslations("nav");
+  const locale = useLocale();
   const tt = useTranslations("ui.theme");
   const themeLabels = Object.fromEntries(
     THEME_ORDER.map((choice) => [
@@ -64,7 +66,14 @@ export function SiteHeader() {
               {t("reachOut")}
             </Link>
           </nav>
-          <ThemeToggle labels={themeLabels} icons={themeIcons} />
+          <div className="flex items-center gap-2">
+            <LocaleSwitch
+              target={locale === "fr" ? "en" : "fr"}
+              short={t("switchToShort")}
+              label={t("switchLabel")}
+            />
+            <ThemeToggle labels={themeLabels} icons={themeIcons} />
+          </div>
         </div>
       </div>
     </header>

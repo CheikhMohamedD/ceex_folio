@@ -19,7 +19,9 @@
   }
 }
 
-:root {
+/* .scheme-dark redéclare les tokens sur un bloc : light-dark() y est réévalué en sombre. */
+:root,
+.scheme-dark {
   color-scheme: light dark;
 
   /* Les dix tokens de base */
@@ -58,22 +60,29 @@
   --cat: var(--stamp-strong);
   --cat-wash: var(--wash);
 
-  /* Grain du papier : bruit SVG de 200 px, 5 % au plus */
-  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* Grain du papier : bruit SVG de 5 % au plus. Tuile de 100 px à une octave : à l'œil,
+     le même papier qu'à 200 px et deux octaves, pour trois fois moins de rastérisation
+     avant le premier affichage. */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='1' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 :root[data-theme="light"] {
   color-scheme: light;
 }
+/* Bande sombre dans les deux thèmes (Reach out) : contrastes du thème sombre, sans grain. */
+.scheme-dark {
+  color-scheme: dark;
+  --grain: none;
+}
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='1' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='1' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 }
 
@@ -193,6 +202,14 @@
 }
 
 @layer components {
+  /* Onglets de dossier en mode filtre : l'onglet actif masque les autres catégories. */
+  .folder-filter[data-filter="web"] [data-category]:not([data-category="web"]),
+  .folder-filter[data-filter="mobile"] [data-category]:not([data-category="mobile"]),
+  .folder-filter[data-filter="design"] [data-category]:not([data-category="design"]),
+  .folder-filter[data-filter="motion"] [data-category]:not([data-category="motion"]) {
+    display: none;
+  }
+
   .cat-web {
     --cat: var(--cat-web);
     --cat-wash: var(--wash-web);
@@ -242,6 +259,74 @@
   }
   .dt-label {
     @apply mr-2 meta text-ink-soft md:hidden;
+  }
+
+  /* Primitives répétées sur l'accueil (bouton, fiche projet, onglet, barre mobile,
+     sections numérotées) : même principe que le tableau. Le HTML est envoyé deux fois,
+     en balises puis dans la charge RSC ; écrites ici, ces classes le font tenir dans le
+     premier aller-retour réseau (14 Ko), ce qui avance le LCP mobile. */
+  .btn {
+    @apply inline-flex min-h-12 items-center justify-center gap-2.5 rounded-sheet px-6 font-display text-[1.0625rem] leading-tight font-semibold transition-[translate,box-shadow,background-color] duration-150 ease-out motion-reduce:transition-none;
+  }
+  /* L'ombre nette passe de 4 à 6 px au survol, au focus et à l'appui : effet CSS seul. */
+  .btn-primary {
+    @apply bg-stamp-strong text-on-fill shadow-press hover:-translate-y-0.5 hover:shadow-press-hover focus-visible:-translate-y-0.5 focus-visible:shadow-press-hover active:translate-y-0.5 active:shadow-press-active;
+  }
+  .btn-secondary {
+    @apply border-[1.5px] border-ink text-ink hover:bg-sheet;
+  }
+
+  /* Fiche projet (project-card.tsx) : soulevée au survol et au focus de son lien. */
+  .fiche {
+    @apply relative flex rounded-sheet border-[1.5px] border-ink transition-[translate,box-shadow] duration-150 ease-out hover:-translate-y-0.5 hover:shadow-sheet has-[a:focus-visible]:-translate-y-0.5 has-[a:focus-visible]:shadow-sheet has-[a:focus-visible]:outline-[2.5px] has-[a:focus-visible]:outline-offset-[3px] has-[a:focus-visible]:outline-focus motion-reduce:transition-none;
+  }
+  .fiche-media {
+    @apply relative shrink-0 overflow-hidden rounded-sheet border-[1.5px] border-ink hatch;
+  }
+  .fiche-body {
+    @apply flex min-w-0 flex-1 flex-col justify-center gap-1.5;
+  }
+  .fiche-ref {
+    @apply flex items-start gap-2 meta text-ink-soft;
+  }
+  .fiche-foot {
+    @apply mt-1 flex flex-wrap items-center justify-between gap-2;
+  }
+  .fiche-cta {
+    @apply font-display text-[0.9375rem] font-semibold text-stamp-strong;
+  }
+  /* Lien étiré : toute la carte qui le contient (en position relative) devient cliquable. */
+  .stretched-link {
+    @apply after:absolute after:inset-0 focus-visible:outline-none;
+  }
+  /* Point de couleur de la catégorie, aligné sur la première ligne d'une référence mono. */
+  .cat-dot {
+    @apply mt-[0.3em] size-2 shrink-0 rounded-full bg-(--cat);
+  }
+  .pill {
+    @apply rounded-full border border-ink bg-kraft px-2.5 py-0.5 meta text-ink;
+  }
+
+  /* Onglet de dossier (folder-tabs.tsx) */
+  .folder-tab {
+    @apply relative inline-flex min-h-11 shrink-0 items-center gap-2 rounded-t-tab border-[1.5px] border-b-0 border-ink px-4 font-display text-[0.9375rem] font-semibold text-ink focus-visible:outline-offset-[-5px];
+  }
+
+  /* Barre d'onglets mobile (mobile-tab-bar.tsx) : cibles de 56 px de haut. */
+  .tabbar-link {
+    @apply relative flex min-h-14 flex-col items-center justify-center gap-1 px-1 pt-1 text-ink focus-visible:outline-offset-[-4px];
+  }
+  .tabbar-label {
+    @apply font-mono text-xs font-medium tracking-[0.06em] uppercase;
+  }
+
+  /* Section numérotée de l'accueil (numbered-section.tsx) : grand numéro rouge à gauche
+     dès 1 024 px. */
+  .numbered {
+    @apply mx-auto grid max-w-7xl gap-x-6 gap-y-4 px-4 sm:px-6 lg:grid-cols-[8.75rem_minmax(0,1fr)] lg:px-20;
+  }
+  .numbered-mark {
+    @apply font-display text-[clamp(3rem,2.5rem+2vw,4.5rem)] leading-none font-bold text-stamp;
   }
 }
 

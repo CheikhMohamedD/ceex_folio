@@ -1,5 +1,5 @@
 import { ArrowRight, NotebookPen, type LucideIcon } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/link";
 import { useId, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { categoryClass, type Category } from "@/lib/design/categories";

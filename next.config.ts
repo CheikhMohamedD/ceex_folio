@@ -1,5 +1,6 @@
 import path from "node:path";
 import type { NextConfig } from "next";
+import createMDX from "@next/mdx";
 import createNextIntlPlugin from "next-intl/plugin";
 import { securityHeaders } from "./src/lib/security/headers";
 
@@ -10,6 +11,8 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   reactStrictMode: true,
   poweredByHeader: false,
+  // Une seule page 404 pour les adresses inconnues : la mise en page racine dépend de la langue.
+  experimental: { globalNotFound: true, inlineCss: true },
   // Le dépôt contient d'autres projets (motion/fekk) : la racine est fixée ici.
   outputFileTracingRoot: path.join(__dirname),
   turbopack: {
@@ -33,4 +36,7 @@ const withNextIntl = createNextIntlPlugin({
   },
 });
 
-export default withNextIntl(nextConfig);
+// Études de cas et articles en MDX, importés par les pages (src/content).
+const withMDX = createMDX({});
+
+export default withNextIntl(withMDX(nextConfig));

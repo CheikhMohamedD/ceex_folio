@@ -3,20 +3,27 @@ import { getTranslations } from "next-intl/server";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteTabBar } from "@/components/layout/site-tab-bar";
+import { pageLocale } from "@/i18n/locale";
+import { routing } from "@/i18n/routing";
 import { SITE } from "@/lib/site";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
-import { fontVariables } from "./fonts";
-import "./globals.css";
+import { fontVariables } from "../fonts";
+import "../globals.css";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("meta");
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Promise<Metadata> {
+  const locale = await pageLocale(params);
+  const t = await getTranslations({ locale, namespace: "meta" });
   return {
+    metadataBase: new URL(SITE.url),
     title: { default: t("title"), template: t("titleTemplate") },
     description: t("description"),
     applicationName: SITE.name,
-    authors: [{ name: SITE.author }],
-    // Le site n'est pas encore lancé : pas d'indexation avant la phase 2.
-    robots: { index: false, follow: false },
+    authors: [{ name: SITE.author, url: SITE.github }],
+    openGraph: { siteName: SITE.name, locale: t("ogLocale"), type: "website" },
   };
 }
 
@@ -28,16 +35,18 @@ export const viewport: Viewport = {
   ],
 };
 
-export default async function RootLayout({ children }: LayoutProps<"/">) {
+export default async function LocaleLayout({ children, params }: LayoutProps<"/[locale]">) {
+  const locale = await pageLocale(params);
   const t = await getTranslations("nav");
 
   return (
-    <html lang="fr" className={fontVariables} suppressHydrationWarning>
+    <html lang={locale} className={fontVariables} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
       <body>
-        {/* Aucun composant client ne traduit : les textes restent côté serveur. */}
+        {/* Aucun composant client ne traduit : les textes et les liens localisés sont
+            calculés côté serveur, rien de next-intl ne part dans le navigateur. */}
         <a
           href="#contenu"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-sheet focus:bg-ink focus:px-4 focus:py-3 focus:text-on-fill"

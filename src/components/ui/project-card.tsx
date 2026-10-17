@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/link";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { categoryClass, type Category } from "@/lib/design/categories";
@@ -54,7 +54,7 @@ export function ProjectCard({
     <article
       className={cn(
         categoryClass(category),
-        "group relative flex rounded-sheet border-[1.5px] border-ink transition-[translate,box-shadow] duration-150 ease-out hover:-translate-y-0.5 hover:shadow-sheet has-[a:focus-visible]:-translate-y-0.5 has-[a:focus-visible]:shadow-sheet has-[a:focus-visible]:outline-[2.5px] has-[a:focus-visible]:outline-offset-[3px] has-[a:focus-visible]:outline-focus motion-reduce:transition-none",
+        "fiche",
         featured
           ? "flex-col gap-6 bg-sheet p-5 sm:p-6 lg:grid lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-7"
           : "gap-4 bg-paper p-4",
@@ -63,7 +63,7 @@ export function ProjectCard({
     >
       <div
         className={cn(
-          "relative shrink-0 overflow-hidden rounded-sheet border-[1.5px] border-ink hatch",
+          "fiche-media",
           featured
             ? "aspect-[16/10] lg:aspect-auto lg:min-h-72"
             : "aspect-[4/3] w-24 self-start sm:w-36",
@@ -73,11 +73,11 @@ export function ProjectCard({
         {badge ? <div className="absolute top-3 left-3">{badge}</div> : null}
       </div>
 
-      <div className="flex min-w-0 flex-1 flex-col justify-center gap-1.5">
-        <p className="flex items-start gap-2 meta text-ink-soft">
-          <span aria-hidden className="mt-[0.3em] size-2 shrink-0 rounded-full bg-(--cat)" />
+      <div className="fiche-body">
+        <p className="fiche-ref">
+          <span aria-hidden className="cat-dot" />
           <span>
-            <span className="sr-only">{categoryLabel} · </span>
+            <span className="sr-only">{`${categoryLabel} · `}</span>
             {reference}
           </span>
         </p>
@@ -87,7 +87,7 @@ export function ProjectCard({
             featured ? "text-[clamp(1.75rem,1.5rem+1vw,2.125rem)] leading-tight" : "text-card",
           )}
         >
-          <Link href={href} className="after:absolute after:inset-0 focus-visible:outline-none">
+          <Link href={href} className="stretched-link">
             {title}
           </Link>
         </h3>
@@ -99,17 +99,10 @@ export function ProjectCard({
         >
           {summary}
         </p>
-        <div className="mt-1 flex flex-wrap items-center justify-between gap-2">
-          {figure ? (
-            <span className="rounded-full border border-ink bg-kraft px-2.5 py-0.5 meta text-ink">
-              {figure}
-            </span>
-          ) : null}
-          <span
-            aria-hidden
-            className="font-display text-[0.9375rem] font-semibold text-stamp-strong"
-          >
-            {ctaLabel} →
+        <div className="fiche-foot">
+          {figure ? <span className="pill">{figure}</span> : null}
+          <span aria-hidden className="fiche-cta">
+            {`${ctaLabel} →`}
           </span>
         </div>
       </div>

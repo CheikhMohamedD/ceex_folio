@@ -34,6 +34,32 @@ FONTS = [
 # Flèches ← ↑ → ↓ : le texte du site en contient, le sous-ensemble latin seulement deux.
 EXTRA_UNICODES = "U+2190-2193"
 
+# Espace fine insécable (U+202F) de la typographie française, avant « : ; ? ! » et dans
+# les guillemets : aucune de ces polices ne la dessine. Sans elle, chaque occurrence
+# part chercher une police système, ce qui alourdit la mise en page. Elle reprend le
+# glyphe de l'espace fine (U+2009), ou à défaut de l'espace.
+NARROW_NBSP = 0x202F
+NARROW_NBSP_SOURCES = (0x2009, 0x0020)
+
+
+def add_narrow_nbsp(font: TTFont) -> None:
+    cmap = font.getBestCmap()
+    if NARROW_NBSP in cmap:
+        return
+    glyph = next(cmap[code] for code in NARROW_NBSP_SOURCES if code in cmap)
+    for table in font["cmap"].tables:
+        if table.isUnicode():
+            table.cmap[NARROW_NBSP] = glyph
+
+# Images de partage (next/og) : Satori ne lit ni le WOFF2 ni les polices variables,
+# d'où des TTF statiques, une graisse chacun.
+OG_FONTS = [
+    ("space-grotesk-700.ttf", "@fontsource-variable/space-grotesk",
+     "space-grotesk-latin-wght-normal.woff2", 700),
+    ("ibm-plex-mono-500.ttf", "@fontsource/ibm-plex-mono",
+     "ibm-plex-mono-latin-500-normal.woff2", None),
+]
+
 
 def unicodes(package_dir: Path) -> list[int]:
     ranges = json.loads((package_dir / "unicode.json").read_text())["latin"]
@@ -44,7 +70,7 @@ def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     for output, package, source, weights in FONTS:
         package_dir = ROOT / "node_modules" / package
-        font = TTFont(package_dir / "files" / source)
+        font = TTFont(package_dir / "files" / source, recalcTimestamp=False)
 
         options = subset.Options()
         options.layout_features = ["*"]  # garde les alternates de Caveat, le crénage, les ligatures
@@ -55,6 +81,7 @@ def main() -> None:
         subsetter.subset(font)
         if weights is not None:
             font = instancer.instantiateVariableFont(font, {"wght": weights})
+        add_narrow_nbsp(font)
 
         font.flavor = "woff2"
         font.save(OUT / output)
@@ -66,5 +93,20 @@ def main() -> None:
         print(f"{output}: {before / 1024:.1f} Ko -> {after / 1024:.1f} Ko")
 
 
+def og_fonts() -> None:
+    out = OUT / "og"
+    out.mkdir(parents=True, exist_ok=True)
+    for output, package, source, weight in OG_FONTS:
+        package_dir = ROOT / "node_modules" / package
+        font = TTFont(package_dir / "files" / source, recalcTimestamp=False)
+        if weight is not None:
+            font = instancer.instantiateVariableFont(font, {"wght": weight})
+        add_narrow_nbsp(font)
+        font.flavor = None
+        font.save(out / output)
+        print(f"og/{output}: {(out / output).stat().st_size / 1024:.1f} Ko")
+
+
 if __name__ == "__main__":
     main()
+    og_fonts()

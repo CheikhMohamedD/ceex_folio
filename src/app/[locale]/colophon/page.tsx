@@ -1,6 +1,8 @@
 import { FolderOpen } from "lucide-react";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
+import { pageLocale } from "@/i18n/locale";
 import { Masthead, Signature } from "@/components/ui/masthead";
 import { CategoriesSection } from "@/features/colophon/categories-section";
 import { ComponentsSection } from "@/features/colophon/components-section";
@@ -11,8 +13,13 @@ import { StackSection } from "@/features/colophon/stack-section";
 import { TypographySection } from "@/features/colophon/typography-section";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("colophon.meta");
-  return { title: t("title"), description: t("description") };
+  const t = await getTranslations({ locale: "fr", namespace: "colophon.meta" });
+  return {
+    title: t("title"),
+    description: t("description"),
+    // Le colophon n'existe qu'en français : la version anglaise du site y renvoie.
+    alternates: { canonical: "/colophon" },
+  };
 }
 
 const SECTIONS = [
@@ -26,7 +33,9 @@ const SECTIONS = [
 ] as const;
 
 /** Colophon : le design system « Dossier » en vrai, et les mesures qui le prouvent. */
-export default async function ColophonPage() {
+export default async function ColophonPage({ params }: PageProps<"/[locale]/colophon">) {
+  // Le colophon reste en français : sa version anglaise n'existe pas.
+  if ((await pageLocale(params)) !== "fr") notFound();
   const t = await getTranslations("colophon");
 
   return (

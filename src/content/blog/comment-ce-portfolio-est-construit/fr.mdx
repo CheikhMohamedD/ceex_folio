@@ -1,0 +1,25 @@
+export const metadata = {
+  title: "Comment ce portfolio est construit",
+  description:
+    "La stack, le design system « Dossier » et les contrôles qui vérifient chaque changement de CEEXFolio.",
+  date: "2026-10-17",
+  draft: true,
+};
+
+Brouillon d'exemple : relis-le, réécris-le avec ta voix, puis passe `draft` à `false` pour le publier.
+
+## Un dossier d'archives
+
+Le portfolio se lit comme un dossier : papier, onglets kraft, traits d'encre et tampons. Chaque projet prend la couleur de sa catégorie, et le rouge du tampon reste réservé aux actions.
+
+## La stack
+
+- **Next.js et React**, avec des pages générées à l'avance : rapides, et lisibles par les moteurs.
+- **Tailwind CSS**, avec les couleurs du design system déclarées une fois, en clair et en sombre.
+- **next-intl**, pour le français et l'anglais.
+
+## Les contrôles
+
+Chaque changement passe par la même chaîne : lint, types, tests unitaires, tests de bout en bout à 360 et 1 440 pixels de large, accessibilité vérifiée par axe-core, et Lighthouse. Une pull request rouge ne peut pas être fusionnée.
+
+Le détail est sur la page [Colophon](/colophon).

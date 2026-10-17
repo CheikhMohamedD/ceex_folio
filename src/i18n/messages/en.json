@@ -1,0 +1,291 @@
+{
+  "meta": {
+    "ogLocale": "en_US",
+    "title": "CEEXFolio · Cheikh Diack",
+    "titleTemplate": "%s · CEEXFolio",
+    "description": "Cheikh Diack, full-stack engineer and designer in Dakar: web platforms, ERP, mobile apps and visual identities, from idea to launch."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "masthead": "CEEXFolio · Error",
+    "stamp": "Not found",
+    "heading": "This page isn't in the folder.",
+    "text": "The link may be old, or the page is coming in a later phase.",
+    "back": "Back to the home page"
+  },
+  "nav": {
+    "skip": "Skip to content",
+    "home": "CEEXFolio, home",
+    "brand": "CEEXFolio",
+    "label": "Main navigation",
+    "mobileLabel": "Main navigation",
+    "prez": "Prez",
+    "proLife": "Pro life",
+    "hobbies": "Hobbies",
+    "reachOut": "Reach out",
+    "language": "Language",
+    "switchTo": "Français",
+    "switchToShort": "FR",
+    "switchLabel": "FR, read this site in French",
+    "services": "Services",
+    "blog": "Blog"
+  },
+  "footer": {
+    "brand": "CEEXFolio",
+    "rights": "© 2026 Cheikh Diack",
+    "colophon": "Colophon (in French)",
+    "github": "GitHub",
+    "services": "Services",
+    "blog": "Blog",
+    "rss": "RSS feed"
+  },
+  "ui": {
+    "theme": {
+      "toggle": "Theme {current}, switch to theme {next}",
+      "system": "system",
+      "light": "light",
+      "dark": "dark"
+    },
+    "steps": {
+      "done": "step done",
+      "current": "current step",
+      "upcoming": "upcoming step"
+    }
+  },
+  "home": {
+    "meta": {
+      "title": "Cheikh Diack, full-stack engineer and designer in Dakar"
+    },
+    "hero": {
+      "label": "Home",
+      "stamp": "Available for new projects",
+      "gotf": "Generalist Owns The Future",
+      "letters": {
+        "g": "Generalist",
+        "o": "Owns",
+        "t": "The",
+        "f": "Future"
+      },
+      "title": "Cheikh Diack, full-stack engineer and designer in Dakar",
+      "lead": "I design and build digital products, from idea to launch.",
+      "start": "Start a project",
+      "projects": "See the projects",
+      "collage": "Projects in the folder"
+    },
+    "prez": {
+      "title": "Prez",
+      "text": "I design and build digital products from Dakar: web platforms, ERP, mobile apps and visual identities. A generalist by choice, I connect design, code and my clients' business.",
+      "skills": {
+        "design": {
+          "title": "I design",
+          "detail": "Identities · UI"
+        },
+        "code": {
+          "title": "I code",
+          "detail": "Web · mobile"
+        },
+        "mockups": {
+          "title": "Mockups",
+          "detail": "Prototypes"
+        },
+        "video": {
+          "title": "Video edit",
+          "detail": "Editing"
+        }
+      },
+      "skillsLabel": "What I do",
+      "contact": "Contact me",
+      "motto": "“I have a computer and I use it.”"
+    },
+    "proLife": {
+      "title": "Pro life",
+      "count": "{count, plural, one {# project} other {# projects}}",
+      "filters": "Filter projects",
+      "all": "All",
+      "featured": "Featured",
+      "readCase": "Read the case study",
+      "read": "Read",
+      "follow": "Follow the project",
+      "inProgress": "In design",
+      "services": "What I can do for you"
+    },
+    "hobbies": {
+      "title": "Hobbies",
+      "label": "My hobbies, as a scrolling strip",
+      "hint": "Scroll to the left",
+      "items": {
+        "swim": "Swim",
+        "anime": "Anime / manga",
+        "read": "Read",
+        "sport": "Sport"
+      }
+    },
+    "reachOut": {
+      "title": "Reach out",
+      "question": "How do you want to move forward?",
+      "promise": "Reply within {hours, number} h · Dakar, GMT · French or English",
+      "direct": {
+        "label": "Door 1 · Direct contact",
+        "title": "I know what I want",
+        "text": "For a precise need, or if you already have a brief.",
+        "whatsapp": "Message on WhatsApp",
+        "email": "Send an email",
+        "or": "or directly"
+      },
+      "guided": {
+        "label": "Door 2 · Guided path",
+        "title": "Help me frame my project",
+        "text": "For an idea that doesn't have a plan, a budget or a deadline yet.",
+        "soon": "The guided path is coming soon. Until then, write to me through door 1: I'll help you frame your project by message."
+      },
+      "steps": {
+        "label": "Three steps, you are at the first",
+        "send": "You send your request, through either door.",
+        "reply": "I reply within {hours, number} h, with my first questions.",
+        "talk": "We talk it through, then I send you a proposal.",
+        "sendTitle": "Your request",
+        "replyTitle": "My reply",
+        "talkTitle": "The talk"
+      },
+      "elsewhere": "Elsewhere"
+    }
+  },
+  "project": {
+    "back": "Back to Pro life",
+    "masthead": "Folder No. {number}",
+    "facts": {
+      "label": "At a glance",
+      "role": "Role",
+      "year": "Year",
+      "stack": "Tools",
+      "type": "Type",
+      "figure": "Key figure"
+    },
+    "tabs": {
+      "label": "Parts of the case study",
+      "overview": "Overview",
+      "process": "Process",
+      "result": "Result"
+    },
+    "nav": {
+      "label": "Other projects",
+      "previous": "Previous project",
+      "next": "Next project"
+    },
+    "cta": {
+      "title": "A similar project?",
+      "text": "Describe it in a few lines: I reply within {hours, number} h.",
+      "action": "Start a project"
+    },
+    "inProgress": "Project in design",
+    "breadcrumb": "Projects"
+  },
+  "services": {
+    "meta": {
+      "title": "Services",
+      "description": "Websites, mobile apps and visual identities in Dakar, by Cheikh Diack, full-stack engineer and designer."
+    },
+    "index": {
+      "masthead": "CEEXFolio · Services",
+      "title": "What I can do for you",
+      "lead": "Three ways to work together, from idea to launch. Each one starts with a conversation to frame your need."
+    },
+    "masthead": "Service",
+    "forWhom": "Who it's for",
+    "deliverables": "What you get",
+    "process": "How we move forward",
+    "related": "Projects of this kind",
+    "cta": {
+      "title": "Shall we talk?",
+      "text": "Describe your project in a few lines: I reply within {hours, number} h.",
+      "action": "Start a project"
+    },
+    "other": "The other services",
+    "items": {
+      "site-web": {
+        "name": "Website",
+        "short": "A showcase site, platform or online tool, fast and readable on every screen.",
+        "description": "Website design and development in Dakar: showcase site, platform or online tool, by Cheikh Diack.",
+        "intro": "A website that loads fast, reads well on a small phone and that you can grow. I design it and build it, from the first screen to launch.",
+        "forWhom": "For a company, a non-profit or a freelancer who wants to present their work, sell online or replace a spreadsheet with a real tool.",
+        "deliverables": {
+          "1": "Mockups of the main screens, approved with you",
+          "2": "The live website, readable from 360 px wide",
+          "3": "Basic SEO: titles, descriptions, sitemap",
+          "4": "A handover: how to edit content and who to ask"
+        },
+        "steps": {
+          "1": "A conversation to frame the need, the audience and the budget",
+          "2": "The mockups, then your feedback",
+          "3": "Development, with an online preview at each step",
+          "4": "Launch and handover"
+        }
+      },
+      "application-mobile": {
+        "name": "Mobile app",
+        "short": "An Android and iOS app built for the field, even without a signal.",
+        "description": "Mobile app development in Dakar: Android and iOS, offline when needed, by Cheikh Diack, full-stack engineer.",
+        "intro": "An app that genuinely helps, on the phones of the people who use it: entry-level devices, patchy networks, busy hands. I design and build it for Android and iOS.",
+        "forWhom": "For a field team, a shop or a service that wants to track its activity from a phone, or offer an app to its customers.",
+        "deliverables": {
+          "1": "The flow and the screens, tested with a real user",
+          "2": "The Android and iOS app, offline when needed",
+          "3": "A dashboard or an API if the app needs one",
+          "4": "Store publication and handover"
+        },
+        "steps": {
+          "1": "A conversation to understand who will use it and in what conditions",
+          "2": "The prototype, then a test in real conditions",
+          "3": "Development in short versions",
+          "4": "Publication and follow-up for the first weeks"
+        }
+      },
+      "identite-visuelle": {
+        "name": "Visual identity",
+        "short": "Logo, colours, typography and materials: one consistent image everywhere.",
+        "description": "Visual identity design in Dakar: logo, colours, typography, posters and materials, by Cheikh Diack, designer.",
+        "intro": "An identity that looks like you and holds up everywhere: on a screen, a poster, a badge or a business card. I draw it and prepare the files for each use.",
+        "forWhom": "For a brand that's launching, an event, or a business that wants a clearer, more consistent image.",
+        "deliverables": {
+          "1": "The logo and its variations",
+          "2": "Colours and typography, with their usage rules",
+          "3": "The first materials: posters, social media, badges or stationery",
+          "4": "Source files, ready for print and the web"
+        },
+        "steps": {
+          "1": "A conversation about your business, your audience and your references",
+          "2": "Directions, then choosing one",
+          "3": "Refinement and variations",
+          "4": "Delivery of the files and the usage guide"
+        }
+      }
+    }
+  },
+  "blog": {
+    "meta": {
+      "title": "Blog",
+      "description": "Notes by Cheikh Diack on full-stack development, design and building products in Dakar."
+    },
+    "masthead": "CEEXFolio · Blog",
+    "title": "Blog",
+    "lead": "What I learn while building: development, design, and what happens in between.",
+    "empty": "The first posts are coming soon.",
+    "read": "Read the post",
+    "back": "All posts",
+    "published": "Published on {date}",
+    "updated": "Updated on {date}",
+    "rss": "Subscribe to the RSS feed",
+    "draft": "Draft",
+    "rssTitle": "CEEXFolio · Cheikh Diack's blog"
+  },
+  "seo": {
+    "jobTitle": "Full-stack engineer and designer",
+    "home": "Home"
+  },
+  "categories": {
+    "web": "Web",
+    "mobile": "Mobile",
+    "design": "Design",
+    "motion": "Motion"
+  }
+}
