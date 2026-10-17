@@ -2,10 +2,11 @@
 
 Le portfolio de Cheikh Diack, ingénieur full-stack et designer à Dakar.
 
-Le site se construit en cinq phases. La **phase 1** est en cours : le design system
-« Dossier », ses dix-sept composants et la page `/colophon`, qui les montre avec leurs
-contrastes calculés et les mesures de la CI. L'accueil est provisoire, et le site
-demande aux moteurs de ne pas l'indexer jusqu'à la phase 2.
+Le site se construit en cinq phases. Les trois premières sont dans le code : le design
+system « Dossier » et sa page `/colophon` (phase 1), le site public en français et en
+anglais avec ses études de cas, ses services, son blog et son SEO (phase 2), et le
+contact à deux portes (phase 3). Le jalon de la phase 3, une vraie demande reçue de bout
+en bout, attend l'hébergement, la base et les clés décrites dans « Contact » plus bas.
 
 ## Démarrer
 
@@ -38,6 +39,7 @@ système, donc un dossier `node_modules` copié depuis Linux ne marche pas sur m
 | `npm run lighthouse`        | Lighthouse CI sur l'accueil et `/colophon`, cinq passages              |
 | `npm run lighthouse:record` | Enregistre les scores de la dernière exécution                         |
 | `npm run check`             | Lint, types et tests unitaires d'un coup                               |
+| `npm run db:migrate`        | Applique les migrations Prisma à la base de `DATABASE_URL`             |
 
 Les tests de bout en bout tournent sur le site construit. La première fois,
 installe le navigateur de Playwright :
@@ -101,12 +103,45 @@ restent dans le dépôt, mais hors du lint, de TypeScript, de Prettier et de Tai
 - Tous les textes sont dans `src/i18n/messages/fr.json`. Les composants client n'en
   reçoivent que ce dont ils ont besoin, déjà traduit par le serveur.
 
+## Contact
+
+Deux portes mènent à une même demande, enregistrée par une Server Action :
+
+- **Porte 1**, dans Reach out : nom, email ou WhatsApp, message.
+- **Porte 2**, `/contact/parcours` : neuf questions, une par écran, un récapitulatif à
+  corriger, puis le brief PDF (jsPDF, généré dans le navigateur). Chaque demande reçoit un
+  score de qualification de 0 à 4 (`src/lib/contact/qualification.ts`).
+
+Le code suit l'architecture habituelle : schémas Zod partagés par le navigateur et la
+Server Action (`src/features/contact/schema.ts`), service testé avec des dépendances
+injectées (`service.ts`), et seul `src/server/` touche la base, Resend et Turnstile.
+
+Protection : champ piège, Cloudflare Turnstile (si ses clés sont définies), et
+5 envois par adresse IP et par heure (`CONTACT_RATE_LIMIT`), l'adresse n'étant gardée que
+sous forme d'empreinte HMAC. Une mention de confidentialité suit chaque formulaire
+(loi sénégalaise n° 2008-12, conservation de 12 mois).
+
+Aucune variable n'est nécessaire pour construire le site. Pour recevoir de vraies
+demandes, copie `.env.example` et renseigne :
+
+| Variable                                                 | Rôle                                                                 |
+| -------------------------------------------------------- | -------------------------------------------------------------------- |
+| `DATABASE_URL`                                           | PostgreSQL (Neon, Supabase…), puis `npm run db:migrate`              |
+| `RESEND_API_KEY`, `RESEND_FROM`                          | Notification à chaque demande, accusé de réception au client         |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY` | Turnstile ; la CSP n'ouvre `challenges.cloudflare.com` qu'avec elles |
+| `IP_HASH_SECRET`                                         | Clé de l'empreinte des adresses IP                                   |
+
+Sans base, les demandes restent en mémoire en développement (et en test, avec
+`CONTACT_STORE=memory`) ; en production, le formulaire annonce qu'il n'est pas encore
+branché et renvoie vers l'email et WhatsApp, toujours affichés.
+
 ## Sécurité
 
 - Les en-têtes HTTP sont définis dans `src/lib/security/headers.ts` et appliqués par
   `next.config.ts`. Les pages sont générées à la construction, donc sans nonce par
   requête : la CSP garde `'unsafe-inline'` pour les scripts que Next.js insère, et ferme
-  tout le reste (aucune origine externe, pas d'`eval` en production, pas d'iframe).
+  tout le reste (aucune origine externe, pas d'`eval` en production, pas d'iframe). Seule
+  exception : Turnstile, quand ses clés sont configurées.
 - La CI lance CodeQL, Trivy (dépendances et secrets), `npm audit` sur les dépendances de
   production, et produit une SBOM CycloneDX à chaque tag `v*`. Dependabot propose les
   mises à jour chaque lundi.

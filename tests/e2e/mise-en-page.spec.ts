@@ -9,6 +9,9 @@ const PAGES = [
   "/services",
   "/services/application-mobile",
   "/blog",
+  "/contact/parcours",
+  "/en/contact/parcours",
+  "/contact/merci",
 ];
 
 for (const path of PAGES) {

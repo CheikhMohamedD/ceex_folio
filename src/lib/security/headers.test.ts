@@ -15,6 +15,16 @@ describe("en-têtes de sécurité", () => {
     expect(csp).not.toMatch(/https?:/);
   });
 
+  it("n'ouvre que Cloudflare Turnstile, et seulement s'il est configuré", () => {
+    const csp = contentSecurityPolicy({ isDev: false, turnstile: true });
+    expect(csp).toContain("script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com");
+    expect(csp).toContain("frame-src https://challenges.cloudflare.com");
+    expect(csp.match(/https?:\/\/[^\s;]+/g)).toEqual([
+      "https://challenges.cloudflare.com",
+      "https://challenges.cloudflare.com",
+    ]);
+  });
+
   it("n'ouvre eval et le websocket qu'en développement", () => {
     const csp = contentSecurityPolicy({ isDev: true });
     expect(csp).toContain("'unsafe-eval'");

@@ -23,6 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entry("/services"),
     ...SERVICES.map((service) => entry(`/services/${service.slug}`)),
     ...PROJECTS.map((project) => entry(`/projets/${project.slug}`)),
+    entry("/contact/parcours"),
     entry("/blog"),
     { url: `${SITE.url}/colophon` },
   ];

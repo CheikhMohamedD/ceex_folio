@@ -158,15 +158,14 @@
         "label": "Porte 1 · Contact direct",
         "title": "Je sais ce que je veux",
         "text": "Pour un besoin précis, ou si tu as déjà un cahier des charges.",
-        "whatsapp": "Écrire sur WhatsApp",
-        "email": "Écrire un email",
         "or": "ou directement"
       },
       "guided": {
         "label": "Porte 2 · Parcours guidé",
         "title": "Aide-moi à cadrer mon projet",
         "text": "Pour une idée qui n'a pas encore de plan, de budget ou de délai.",
-        "soon": "Le parcours guidé arrive bientôt. D'ici là, écris-moi par la porte 1 : je t'aiderai à cadrer ton projet par message."
+        "start": "Commencer le parcours",
+        "details": "9 questions · 5 minutes · ton brief en PDF à la fin"
       },
       "steps": {
         "label": "Trois étapes, tu es à la première",
@@ -564,10 +563,13 @@
       },
       "roles": {
         "next": "App Router, pages générées à la construction, Turbopack",
-        "react": "Composants serveur par défaut : seuls le bouton de thème et les onglets de dossier s'exécutent dans le navigateur",
+        "react": "Composants serveur par défaut : seuls le thème, la langue, les onglets de dossier et les formulaires de contact s'exécutent dans le navigateur",
         "typescript": "Mode strict, accès aux tableaux vérifiés",
         "tailwind": "Tokens « Dossier » déclarés dans @theme, compilés par le plugin Turbopack, sans PostCSS",
         "intl": "Textes en français rangés dans des fichiers de messages, vérifiés par TypeScript et traduits côté serveur",
+        "prisma": "Demandes clients en PostgreSQL, par l'adaptateur pg ; client généré à l'installation",
+        "zod": "Zod Mini : un schéma par formulaire, partagé par le navigateur et la Server Action, chargé à la demande",
+        "jspdf": "Brief client en PDF, généré dans le navigateur au clic",
         "lucide": "Icônes au trait de 1,5 px ; seules celles utilisées sont envoyées au navigateur",
         "fonts": "Polices servies par le site : aucun appel à Google",
         "vitest": "Tests unitaires : contrastes, miroir des tokens, composants",
@@ -576,9 +578,9 @@
         "eslint": "Règles Next.js, TypeScript et jsx-a11y, aucun avertissement toléré"
       },
       "notes": {
-        "runtime": "Node.js 24 LTS. En production, le site ne dépend que de Next.js, React, next-intl, Lucide, des polices Fontsource, de clsx et de tailwind-merge.",
+        "runtime": "Node.js 24 LTS. En production, le site dépend de Next.js, React, next-intl, Lucide, des polices Fontsource, de clsx, tailwind-merge et Zod, et, pour le contact, de Prisma, pg et jsPDF.",
         "exact": "Chaque dépendance est figée à sa version exacte. Au 16 octobre 2026, npm audit ne signale aucune faille dans les dépendances du site.",
-        "later": "GSAP et Three.js arrivent avec la phase 4, chargés après l'affichage ; Prisma, Zod, Better Auth et Resend avec le contact et les Coulisses."
+        "later": "GSAP et Three.js arrivent avec la phase 4, chargés après l'affichage ; Better Auth avec les Coulisses. Resend et Turnstile sont appelés par HTTP, sans paquet."
       }
     },
     "measures": {
@@ -769,5 +771,152 @@
   "seo": {
     "jobTitle": "Ingénieur full-stack et designer",
     "home": "Accueil"
+  },
+  "contact": {
+    "fields": {
+      "name": "Ton nom",
+      "email": "Email",
+      "whatsapp": "WhatsApp",
+      "whatsappHint": "Avec l'indicatif, par exemple +221 77 123 45 67.",
+      "contactHint": "Un email ou un numéro WhatsApp suffit : c'est par là que je te réponds.",
+      "message": "Ton message",
+      "messageHint": "Ce que tu veux faire, et pour quand si tu le sais.",
+      "honeypot": "Ne remplis pas ce champ"
+    },
+    "errors": {
+      "required": "Ce champ est à remplir.",
+      "tooShort": "Quelques mots de plus, s'il te plaît.",
+      "tooLong": "C'est un peu long : raccourcis ce texte.",
+      "email": "Cet email ne semble pas complet, par exemple awa@exemple.sn.",
+      "whatsapp": "Ce numéro ne semble pas complet : indicatif et 8 chiffres au moins.",
+      "contactRequired": "Indique un email ou un numéro WhatsApp, pour que je puisse te répondre.",
+      "choice": "Choisis une réponse."
+    },
+    "formErrors": {
+      "captcha": "La vérification anti-robot n'a pas abouti. Réessaie dans un instant.",
+      "rateLimited": "Plusieurs demandes sont déjà parties d'ici dans l'heure. Réessaie plus tard, ou écris-moi directement.",
+      "unavailable": "Le formulaire n'est pas encore branché. Écris-moi par email ou sur WhatsApp : je réponds de la même façon.",
+      "invalid": "Certaines réponses sont à revoir : elles sont signalées en rouge."
+    },
+    "direct": {
+      "submit": "Envoyer mon message",
+      "sending": "Envoi en cours…"
+    },
+    "privacy": "Tes réponses servent uniquement à te répondre. Elles sont gardées 12 mois, puis effacées. Loi sénégalaise n° 2008-12 sur les données personnelles : pour les consulter ou les faire effacer, écris à {email}.",
+    "guided": {
+      "meta": {
+        "title": "Parcours guidé : cadrer ton projet",
+        "description": "Neuf questions, une par écran, pour décrire ton projet de site, d'application ou d'identité visuelle, avec ton budget et ton délai. Tu reçois ton brief en PDF."
+      },
+      "masthead": "CEEXFolio · Parcours guidé",
+      "title": "Aide-moi à cadrer mon projet",
+      "intro": "Neuf questions courtes, une par écran. Compte cinq minutes ; tu peux revenir en arrière à tout moment. À la fin, tu relis tes réponses et tu télécharges ton brief.",
+      "progress": "Question {current, number} sur {total, number}",
+      "recapProgress": "Récapitulatif",
+      "next": "Suivant",
+      "back": "Retour",
+      "backToRecap": "Revenir au récapitulatif",
+      "edit": "Modifier",
+      "editLabel": "Modifier : {question}",
+      "recapTitle": "Ton récapitulatif",
+      "recapIntro": "Relis tes réponses : tu peux encore les corriger avant l'envoi.",
+      "empty": "Pas de réponse",
+      "optional": "Facultatif",
+      "submit": "Envoyer ma demande",
+      "sending": "Envoi en cours…",
+      "sentStamp": "Demande envoyée",
+      "sentTitle": "Merci, c'est noté.",
+      "sentText": "Je te réponds sous {hours, number} h, par email ou sur WhatsApp. Garde ton brief : il résume ton projet en une page.",
+      "download": "Télécharger mon brief (PDF)",
+      "home": "Retour à l'accueil",
+      "noscript": "Sans JavaScript, les neuf questions s'affichent sur une seule page : réponds puis envoie en bas.",
+      "steps": {
+        "type": {
+          "question": "De quoi as-tu besoin ?"
+        },
+        "goal": {
+          "question": "Que doit faire ce projet, et quel problème règle-t-il ?",
+          "goal": "Ce que doit faire le projet",
+          "goalHint": "Une ou deux phrases suffisent.",
+          "problem": "Le problème qu'il règle"
+        },
+        "audience": {
+          "question": "Qui va l'utiliser ?",
+          "hint": "Tes clients, ton équipe, le grand public…"
+        },
+        "context": {
+          "question": "Où et comment sera-t-il utilisé ?",
+          "hint": "Sur téléphone ou sur ordinateur, au bureau ou sur le terrain, avec une bonne connexion ou non."
+        },
+        "constraints": {
+          "question": "Y a-t-il des contraintes déjà fixées ?",
+          "hint": "Un outil existant à garder, une date imposée, une charte graphique…"
+        },
+        "budget": {
+          "question": "Quel budget envisages-tu ?",
+          "hint": "Une fourchette suffit : elle m'aide à te proposer la bonne solution."
+        },
+        "deadline": {
+          "question": "Pour quand ?"
+        },
+        "success": {
+          "question": "À quoi verras-tu que c'est réussi ?",
+          "hint": "Par exemple : vingt commandes par mois, une équipe qui n'utilise plus Excel."
+        },
+        "contact": {
+          "question": "Comment te joindre ?"
+        }
+      }
+    },
+    "options": {
+      "projectType": {
+        "site": "Un site web",
+        "mobile": "Une application mobile",
+        "tool": "Un outil de gestion",
+        "identity": "Une identité visuelle",
+        "advice": "Un conseil"
+      },
+      "budgetRange": {
+        "lt500k": "Moins de 500 000 FCFA",
+        "500k-2m": "De 500 000 à 2 millions FCFA",
+        "2m-5m": "De 2 à 5 millions FCFA",
+        "gt5m": "Plus de 5 millions FCFA",
+        "unknown": "Je ne sais pas encore"
+      },
+      "deadline": {
+        "month": "Dans le mois",
+        "quarter": "D'ici trois mois",
+        "half": "D'ici six mois",
+        "unknown": "Pas de date fixée"
+      }
+    },
+    "thanks": {
+      "meta": {
+        "title": "Demande reçue"
+      },
+      "masthead": "CEEXFolio · Contact",
+      "stamp": "Reçu",
+      "title": "Ta demande est bien arrivée.",
+      "text": "Je te réponds sous {hours, number} h, par email ou sur WhatsApp. En attendant, les études de cas montrent comment je travaille.",
+      "home": "Retour à l'accueil",
+      "projects": "Voir les projets"
+    },
+    "email": {
+      "ackSubject": "CEEXFolio · Demande bien reçue",
+      "ackBody": "Bonjour {name},\n\nMerci pour ta demande. Je te réponds sous {hours, number} h, par email ou sur WhatsApp.\n\nCheikh Diack\nCEEXFolio · {site}",
+      "notifyDirect": "Nouvelle demande · contact direct · {name}",
+      "notifyGuided": "Nouvelle demande · parcours guidé · score {score, number}/4 · {name}",
+      "language": "Langue",
+      "score": "Score de qualification",
+      "channelDirect": "Contact direct",
+      "channelGuided": "Parcours guidé"
+    },
+    "brief": {
+      "title": "Brief de projet",
+      "subtitle": "Préparé avec le parcours guidé de CEEXFolio",
+      "date": "Le {date}",
+      "footer": "CEEXFolio · Cheikh Diack · {email} · WhatsApp {whatsapp}",
+      "fileName": "brief-ceexfolio.pdf"
+    }
   }
 }

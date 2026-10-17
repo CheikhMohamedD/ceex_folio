@@ -1,0 +1,55 @@
+// Base des demandes clients (phase 3). Les Coulisses (phase 5) y ajouteront leurs
+// modèles et les tables de Better Auth. Client généré dans src/generated/prisma,
+// hors du dépôt : `npm install` le régénère (script postinstall).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum RequestChannel {
+  DIRECT
+  GUIDED
+}
+
+enum RequestStatus {
+  NEW
+  QUALIFIED
+  IN_DISCUSSION
+  WON
+  LOST
+}
+
+/// Une demande reçue, quelle que soit la porte. Les champs du parcours guidé restent
+/// vides pour le contact direct, qui n'a qu'un message.
+model ClientRequest {
+  id                 String         @id @default(cuid())
+  channel            RequestChannel
+  locale             String         @db.VarChar(2)
+  name               String         @db.VarChar(80)
+  email              String?        @db.VarChar(254)
+  whatsapp           String?        @db.VarChar(30)
+  message            String?        @db.VarChar(2000)
+  projectType        String?        @db.VarChar(20)
+  goal               String?        @db.VarChar(600)
+  problem            String?        @db.VarChar(600)
+  audience           String?        @db.VarChar(400)
+  context            String?        @db.VarChar(400)
+  constraints        String?        @db.VarChar(400)
+  budgetRange        String?        @db.VarChar(20)
+  deadline           String?        @db.VarChar(20)
+  successCriterion   String?        @db.VarChar(400)
+  /// 0 à 4, calculé par lib/contact/qualification.ts ; vide pour le contact direct.
+  qualificationScore Int?
+  status             RequestStatus  @default(NEW)
+  /// Empreinte HMAC de l'adresse IP, pour la limite d'envois ; l'adresse n'est pas gardée.
+  ipHash             String?        @db.Char(64)
+  createdAt          DateTime       @default(now())
+
+  @@index([ipHash, createdAt])
+  @@index([status, createdAt])
+}

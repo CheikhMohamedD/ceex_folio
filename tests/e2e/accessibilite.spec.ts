@@ -10,6 +10,9 @@ const PAGES = [
   "/services",
   "/services/identite-visuelle",
   "/blog",
+  "/contact/parcours",
+  "/en/contact/parcours",
+  "/contact/merci",
   "/page-introuvable",
 ];
 

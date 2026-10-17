@@ -1,9 +1,14 @@
 import { CircleAlert } from "lucide-react";
 import { useId, type ComponentProps } from "react";
-import { cn } from "@/lib/cn";
+// clsx et non cn : le champ sert aussi dans les formulaires client, sans tailwind-merge.
+import { clsx } from "clsx";
 
 type Common = {
   label: string;
+  /** Libellé lu par les lecteurs d'écran seulement : la question au-dessus en tient lieu. */
+  hideLabel?: boolean;
+  /** Mention « Facultatif », à côté du libellé. */
+  optional?: string;
   hint?: string;
   error?: string;
   className?: string;
@@ -24,7 +29,7 @@ const control =
  * par aria-describedby.
  */
 export function Field(props: InputFieldProps | TextareaFieldProps) {
-  const { label, hint, error, className, multiline, ...controlProps } = props;
+  const { label, hideLabel, optional, hint, error, className, multiline, ...controlProps } = props;
   const id = useId();
   const hintId = `${id}-aide`;
   const errorId = `${id}-erreur`;
@@ -37,21 +42,25 @@ export function Field(props: InputFieldProps | TextareaFieldProps) {
   };
 
   return (
-    <div className={cn("flex flex-col gap-1.5", className)}>
-      <label htmlFor={id} className="font-display text-[0.9375rem] font-semibold">
+    <div className={clsx("flex flex-col gap-1.5", className)}>
+      <label
+        htmlFor={id}
+        className={clsx("font-display text-[0.9375rem] font-semibold", hideLabel && "sr-only")}
+      >
         {label}
+        {optional ? <span className="ml-2 meta text-ink-soft">{optional}</span> : null}
       </label>
       {multiline ? (
         <textarea
           {...(controlProps as ComponentProps<"textarea">)}
           {...a11y}
-          className={cn(control, "min-h-32 resize-y py-3")}
+          className={clsx(control, "min-h-32 resize-y py-3")}
         />
       ) : (
         <input
           {...(controlProps as ComponentProps<"input">)}
           {...a11y}
-          className={cn(control, "min-h-12")}
+          className={clsx(control, "min-h-12")}
         />
       )}
       {hint ? (

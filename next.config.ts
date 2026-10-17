@@ -5,6 +5,8 @@ import createNextIntlPlugin from "next-intl/plugin";
 import { securityHeaders } from "./src/lib/security/headers";
 
 const isDev = process.env.NODE_ENV === "development";
+// Turnstile protège les formulaires dès que sa clé publique est définie à la construction.
+const turnstile = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
@@ -25,7 +27,7 @@ const nextConfig: NextConfig = {
     },
   },
   async headers() {
-    return [{ source: "/(.*)", headers: securityHeaders({ isDev }) }];
+    return [{ source: "/(.*)", headers: securityHeaders({ isDev, turnstile }) }];
   },
 };
 

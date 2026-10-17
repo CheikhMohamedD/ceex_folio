@@ -128,15 +128,14 @@
         "label": "Door 1 · Direct contact",
         "title": "I know what I want",
         "text": "For a precise need, or if you already have a brief.",
-        "whatsapp": "Message on WhatsApp",
-        "email": "Send an email",
         "or": "or directly"
       },
       "guided": {
         "label": "Door 2 · Guided path",
         "title": "Help me frame my project",
         "text": "For an idea that doesn't have a plan, a budget or a deadline yet.",
-        "soon": "The guided path is coming soon. Until then, write to me through door 1: I'll help you frame your project by message."
+        "start": "Start the guided path",
+        "details": "9 questions · 5 minutes · your brief as a PDF at the end"
       },
       "steps": {
         "label": "Three steps, you are at the first",
@@ -287,5 +286,152 @@
     "mobile": "Mobile",
     "design": "Design",
     "motion": "Motion"
+  },
+  "contact": {
+    "fields": {
+      "name": "Your name",
+      "email": "Email",
+      "whatsapp": "WhatsApp",
+      "whatsappHint": "With the country code, for example +221 77 123 45 67.",
+      "contactHint": "An email or a WhatsApp number is enough: that is how I reply.",
+      "message": "Your message",
+      "messageHint": "What you want to build, and by when if you know.",
+      "honeypot": "Leave this field empty"
+    },
+    "errors": {
+      "required": "Please fill in this field.",
+      "tooShort": "A few more words, please.",
+      "tooLong": "That is a bit long: please shorten it.",
+      "email": "This email looks incomplete, for example awa@example.com.",
+      "whatsapp": "This number looks incomplete: country code and at least 8 digits.",
+      "contactRequired": "Add an email or a WhatsApp number so that I can reply.",
+      "choice": "Please pick an answer."
+    },
+    "formErrors": {
+      "captcha": "The anti-robot check did not go through. Please try again in a moment.",
+      "rateLimited": "Several requests already left from here this hour. Please try later, or write to me directly.",
+      "unavailable": "The form is not connected yet. Write to me by email or on WhatsApp: I reply the same way.",
+      "invalid": "Some answers need another look: they are marked in red."
+    },
+    "direct": {
+      "submit": "Send my message",
+      "sending": "Sending…"
+    },
+    "privacy": "Your answers are only used to reply to you. They are kept for 12 months, then deleted. Under Senegal's personal data law (no. 2008-12), you can ask to see or delete them at {email}.",
+    "guided": {
+      "meta": {
+        "title": "Guided path: frame your project",
+        "description": "Nine questions, one per screen, to describe your website, app or visual identity project, with your budget and deadline. You get your brief as a PDF."
+      },
+      "masthead": "CEEXFolio · Guided path",
+      "title": "Help me frame my project",
+      "intro": "Nine short questions, one per screen. Allow five minutes; you can go back at any time. At the end, you review your answers and download your brief.",
+      "progress": "Question {current, number} of {total, number}",
+      "recapProgress": "Summary",
+      "next": "Next",
+      "back": "Back",
+      "backToRecap": "Back to the summary",
+      "edit": "Edit",
+      "editLabel": "Edit: {question}",
+      "recapTitle": "Your summary",
+      "recapIntro": "Read your answers again: you can still change them before sending.",
+      "empty": "No answer",
+      "optional": "Optional",
+      "submit": "Send my request",
+      "sending": "Sending…",
+      "sentStamp": "Request sent",
+      "sentTitle": "Thank you, it's noted.",
+      "sentText": "I reply within {hours, number} h, by email or on WhatsApp. Keep your brief: it sums up your project on one page.",
+      "download": "Download my brief (PDF)",
+      "home": "Back to the home page",
+      "noscript": "Without JavaScript, the nine questions show on a single page: answer them, then send at the bottom.",
+      "steps": {
+        "type": {
+          "question": "What do you need?"
+        },
+        "goal": {
+          "question": "What should this project do, and what problem does it solve?",
+          "goal": "What the project should do",
+          "goalHint": "One or two sentences are enough.",
+          "problem": "The problem it solves"
+        },
+        "audience": {
+          "question": "Who will use it?",
+          "hint": "Your customers, your team, the general public…"
+        },
+        "context": {
+          "question": "Where and how will it be used?",
+          "hint": "On a phone or a computer, at the office or in the field, with a good connection or not."
+        },
+        "constraints": {
+          "question": "Are there constraints already set?",
+          "hint": "An existing tool to keep, a fixed date, brand guidelines…"
+        },
+        "budget": {
+          "question": "What budget do you have in mind?",
+          "hint": "A range is enough: it helps me suggest the right solution."
+        },
+        "deadline": {
+          "question": "By when?"
+        },
+        "success": {
+          "question": "How will you know it worked?",
+          "hint": "For example: twenty orders a month, a team that no longer uses Excel."
+        },
+        "contact": {
+          "question": "How can I reach you?"
+        }
+      }
+    },
+    "options": {
+      "projectType": {
+        "site": "A website",
+        "mobile": "A mobile app",
+        "tool": "A management tool",
+        "identity": "A visual identity",
+        "advice": "Advice"
+      },
+      "budgetRange": {
+        "lt500k": "Under 500,000 FCFA",
+        "500k-2m": "500,000 to 2 million FCFA",
+        "2m-5m": "2 to 5 million FCFA",
+        "gt5m": "Over 5 million FCFA",
+        "unknown": "I don't know yet"
+      },
+      "deadline": {
+        "month": "Within a month",
+        "quarter": "Within three months",
+        "half": "Within six months",
+        "unknown": "No date set"
+      }
+    },
+    "thanks": {
+      "meta": {
+        "title": "Request received"
+      },
+      "masthead": "CEEXFolio · Contact",
+      "stamp": "Received",
+      "title": "Your request arrived safely.",
+      "text": "I reply within {hours, number} h, by email or on WhatsApp. Meanwhile, the case studies show how I work.",
+      "home": "Back to the home page",
+      "projects": "See the projects"
+    },
+    "email": {
+      "ackSubject": "CEEXFolio · Request received",
+      "ackBody": "Hello {name},\n\nThank you for your request. I reply within {hours, number} h, by email or on WhatsApp.\n\nCheikh Diack\nCEEXFolio · {site}",
+      "notifyDirect": "New request · direct contact · {name}",
+      "notifyGuided": "New request · guided path · score {score, number}/4 · {name}",
+      "language": "Language",
+      "score": "Qualification score",
+      "channelDirect": "Direct contact",
+      "channelGuided": "Guided path"
+    },
+    "brief": {
+      "title": "Project brief",
+      "subtitle": "Prepared with the CEEXFolio guided path",
+      "date": "{date}",
+      "footer": "CEEXFolio · Cheikh Diack · {email} · WhatsApp {whatsapp}",
+      "fileName": "ceexfolio-brief.pdf"
+    }
   }
 }

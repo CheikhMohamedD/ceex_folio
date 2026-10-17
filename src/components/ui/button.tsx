@@ -1,14 +1,11 @@
 import { Link, type LinkProps } from "@/i18n/link";
 import type { ComponentProps } from "react";
 import { cn } from "@/lib/cn";
+import { buttonClasses, type ButtonVariant } from "./button-classes";
 
-type Variant = "primary" | "secondary";
+type Variant = ButtonVariant;
 
-// Classes .btn et .btn-* : globals.css, couche components (les utilitaires passés en
-// className gardent la priorité).
-export function buttonClasses(variant: Variant = "primary", className?: string): string {
-  return cn("btn", `btn-${variant}`, className);
-}
+export { buttonClasses };
 
 type ButtonProps = ComponentProps<"button"> & { variant?: Variant };
 

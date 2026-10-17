@@ -36,6 +36,9 @@ export default defineConfig({
   webServer: {
     command: `npm run start -- --port ${PORT}`,
     url: baseURL,
+    // Les formulaires de contact enregistrent en mémoire : aucune base en CI. Toutes les
+    // requêtes viennent de la même adresse : la limite d'envois est relevée pour les tests.
+    env: { CONTACT_STORE: "memory", CONTACT_RATE_LIMIT: "1000" },
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
   },

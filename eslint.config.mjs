@@ -87,6 +87,7 @@ export default defineConfig([
   },
   globalIgnores([
     ".next/**",
+    "src/generated/**",
     "out/**",
     "build/**",
     "coverage/**",

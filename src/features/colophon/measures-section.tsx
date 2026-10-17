@@ -86,7 +86,10 @@ export async function MeasuresSection() {
     },
   ];
 
-  const headers = securityHeaders({ isDev: false });
+  const headers = securityHeaders({
+    isDev: false,
+    turnstile: Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY),
+  });
 
   return (
     <ColophonSection id="mesures" number="07" title={t("title")} intro={<p>{t("intro")}</p>}>

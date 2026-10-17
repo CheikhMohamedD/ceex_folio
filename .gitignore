@@ -17,6 +17,9 @@
 /blob-report
 /.lighthouseci
 
+# client Prisma, régénéré par npm install (postinstall)
+/src/generated/
+
 # next.js
 /.next/
 /out/

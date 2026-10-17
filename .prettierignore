@@ -8,6 +8,7 @@ test-results
 package-lock.json
 next-env.d.ts
 src/i18n/messages/*.d.json.ts
+src/generated
 motion
 Portfolio wireframe directions
 quality

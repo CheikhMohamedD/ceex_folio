@@ -6,7 +6,14 @@
  * `script-src` garde 'unsafe-inline' pour les scripts que Next.js insère dans le HTML
  * (et pour le script de thème). Tout le reste est fermé : aucune source externe,
  * pas d'eval en production, pas d'iframe, pas de plugin.
+ *
+ * Seule exception, quand Turnstile est configuré (clé publique définie à la
+ * construction) : son script et son iframe, servis par challenges.cloudflare.com.
  */
+const TURNSTILE_ORIGIN = "https://challenges.cloudflare.com";
+
+type PolicyOptions = { isDev: boolean; turnstile?: boolean };
+
 export type SecurityHeaderName =
   | "Content-Security-Policy"
   | "X-Frame-Options"
@@ -18,14 +25,16 @@ export type SecurityHeaderName =
 
 export type SecurityHeader = { key: SecurityHeaderName; value: string };
 
-export function contentSecurityPolicy({ isDev }: { isDev: boolean }): string {
+export function contentSecurityPolicy({ isDev, turnstile = false }: PolicyOptions): string {
+  const external = turnstile ? [TURNSTILE_ORIGIN] : [];
   const directives: Record<string, string[]> = {
     "default-src": ["'self'"],
-    "script-src": ["'self'", "'unsafe-inline'", ...(isDev ? ["'unsafe-eval'"] : [])],
+    "script-src": ["'self'", "'unsafe-inline'", ...(isDev ? ["'unsafe-eval'"] : []), ...external],
     "style-src": ["'self'", "'unsafe-inline'"],
     "img-src": ["'self'", "data:", "blob:"],
     "font-src": ["'self'"],
     "connect-src": ["'self'", ...(isDev ? ["ws:"] : [])],
+    ...(turnstile ? { "frame-src": external } : {}),
     "object-src": ["'none'"],
     "base-uri": ["'self'"],
     "form-action": ["'self'"],
@@ -36,9 +45,9 @@ export function contentSecurityPolicy({ isDev }: { isDev: boolean }): string {
   return parts.join("; ");
 }
 
-export function securityHeaders({ isDev }: { isDev: boolean }): SecurityHeader[] {
+export function securityHeaders(options: PolicyOptions): SecurityHeader[] {
   return [
-    { key: "Content-Security-Policy", value: contentSecurityPolicy({ isDev }) },
+    { key: "Content-Security-Policy", value: contentSecurityPolicy(options) },
     { key: "X-Frame-Options", value: "DENY" },
     { key: "X-Content-Type-Options", value: "nosniff" },
     { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
