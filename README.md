@@ -95,7 +95,9 @@ restent dans le dépôt, mais hors du lint, de TypeScript, de Prettier et de Tai
   affichage, sans flash.
 - Pour changer une couleur, modifie `globals.css` **et** `src/lib/design/tokens.ts` : les
   tests refusent un miroir faux ou un contraste sous le seuil.
-- Les polices sont servies par le site (Fontsource) : aucun appel à Google.
+- Les polices sont servies par le site (Fontsource) : aucun appel à Google. Elles sont allégées
+  dans `src/app/fonts/` (sans hinting, graisses 400 à 700) : après une mise à jour d'un paquet
+  `@fontsource`, relance `python3 scripts/subset-fonts.py` (il demande `fonttools` et `brotli`).
 - Tous les textes sont dans `src/i18n/messages/fr.json`. Les composants client n'en
   reçoivent que ce dont ils ont besoin, déjà traduit par le serveur.
 
