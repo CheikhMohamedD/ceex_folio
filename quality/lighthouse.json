@@ -1,0 +1,19 @@
+{
+  "measuredAt": "2026-10-16",
+  "formFactor": "mobile",
+  "runs": 5,
+  "pages": {
+    "/": {
+      "performance": 0.99,
+      "accessibility": 1,
+      "best-practices": 1,
+      "seo": 0.6
+    },
+    "/colophon": {
+      "performance": 0.95,
+      "accessibility": 1,
+      "best-practices": 1,
+      "seo": 0.6
+    }
+  }
+}
