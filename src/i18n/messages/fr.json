@@ -534,11 +534,9 @@
           "stackLabel": "Plateforme web, base PostgreSQL"
         },
         "timeline": {
-          "label": "Les premières phases de CEEXFolio",
+          "label": "Les cinq phases de CEEXFolio",
           "started": "16 octobre 2026",
-          "public": "17 octobre 2026",
-          "next": "Ensuite",
-          "then": "Puis"
+          "public": "17 octobre 2026"
         },
         "table": {
           "caption": "Points de rupture de la grille",
@@ -563,13 +561,13 @@
       },
       "roles": {
         "next": "App Router, pages générées à la construction, Turbopack",
-        "react": "Composants serveur par défaut : seuls le thème, la langue, les onglets de dossier et les formulaires de contact s'exécutent dans le navigateur",
+        "react": "Composants serveur par défaut : seuls le thème, la langue, les onglets de dossier, les formulaires de contact et les outils des Coulisses s'exécutent dans le navigateur",
         "typescript": "Mode strict, accès aux tableaux vérifiés",
         "tailwind": "Tokens « Dossier » déclarés dans @theme, compilés par le plugin Turbopack, sans PostCSS",
         "intl": "Textes en français rangés dans des fichiers de messages, vérifiés par TypeScript et traduits côté serveur",
-        "prisma": "Demandes clients en PostgreSQL, par l'adaptateur pg ; client généré à l'installation",
+        "prisma": "Demandes clients, Cheikh 2.0 et Boussole en PostgreSQL, par l'adaptateur pg ; client généré à l'installation",
         "zod": "Zod Mini : un schéma par formulaire, partagé par le navigateur et la Server Action, chargé à la demande",
-        "jspdf": "Brief client en PDF, généré dans le navigateur au clic",
+        "jspdf": "Brief client et dossier de cadrage de Cheikh 2.0 en PDF, générés dans le navigateur au clic",
         "gsap": "Les moments de la carte des animations : ScrollTrigger, Flip, DrawSVG ; chargé une fois la page au repos, jamais avec « réduire les animations »",
         "three": "La scène du hero, sur desktop seulement (1 024 px, WebGL2, 4 cœurs) : Three.js direct, sans React Three Fiber",
         "lucide": "Icônes au trait de 1,5 px ; seules celles utilisées sont envoyées au navigateur",
@@ -577,12 +575,13 @@
         "vitest": "Tests unitaires : contrastes, miroir des tokens, composants",
         "playwright": "Tests de bout en bout à 360 et 1 440 px, en clair et en sombre",
         "axe": "Audit d'accessibilité WCAG 2.2 AA de chaque page",
-        "eslint": "Règles Next.js, TypeScript et jsx-a11y, aucun avertissement toléré"
+        "eslint": "Règles Next.js, TypeScript et jsx-a11y, aucun avertissement toléré",
+        "auth": "Connexion GitHub des Coulisses, sessions en base : un seul identifiant GitHub accepté, revérifié par le proxy, à la création de la session et dans chaque page"
       },
       "notes": {
-        "runtime": "Node.js 24 LTS. En production, le site dépend de Next.js, React, next-intl, Lucide, des polices Fontsource, de clsx, tailwind-merge et Zod ; pour le contact, de Prisma, pg et jsPDF ; pour le mouvement, de GSAP et Three.js, chargés après l'affichage.",
-        "exact": "Chaque dépendance est figée à sa version exacte. Au 16 octobre 2026, npm audit ne signale aucune faille dans les dépendances du site.",
-        "later": "Better Auth arrive avec les Coulisses. Resend et Turnstile sont appelés par HTTP, sans paquet. L'ouverture d'un projet passe par les View Transitions de React, sans bibliothèque."
+        "runtime": "Node.js 24 LTS. En production, le site dépend de Next.js, React, next-intl, Lucide, des polices Fontsource, de clsx, tailwind-merge et Zod ; pour le contact, de Prisma, pg et jsPDF ; pour les Coulisses, de Better Auth ; pour le mouvement, de GSAP et Three.js, chargés après l'affichage.",
+        "exact": "Chaque dépendance est figée à sa version exacte. Au 17 octobre 2026, npm audit ne signale aucune faille dans les dépendances du site.",
+        "later": "Resend et Turnstile sont appelés par HTTP, sans paquet. L'ouverture d'un projet passe par les View Transitions de React, sans bibliothèque."
       }
     },
     "measures": {
@@ -919,6 +918,466 @@
       "date": "Le {date}",
       "footer": "CEEXFolio · Cheikh Diack · {email} · WhatsApp {whatsapp}",
       "fileName": "brief-ceexfolio.pdf"
+    }
+  },
+  "connexion": {
+    "meta": {
+      "title": "Connexion"
+    },
+    "masthead": "Coulisses · Espace privé",
+    "title": "Les Coulisses",
+    "text": "Un espace de travail privé. La connexion passe par GitHub, et seul le compte de son propriétaire y entre.",
+    "button": "Continuer avec GitHub",
+    "pending": "Redirection vers GitHub…",
+    "refused": {
+      "meta": {
+        "title": "Connexion impossible"
+      },
+      "title": "Connexion impossible",
+      "text": "Cet espace est privé.",
+      "home": "Retour à l'accueil",
+      "retry": "Réessayer"
+    }
+  },
+  "coulisses": {
+    "meta": {
+      "title": "Coulisses",
+      "titleTemplate": "%s · Coulisses"
+    },
+    "nav": {
+      "label": "Coulisses",
+      "dashboard": "Tableau de bord",
+      "requests": "Demandes",
+      "cheikh": "Cheikh 2.0",
+      "compass": "Boussole",
+      "signOut": "Se déconnecter"
+    },
+    "masthead": "Coulisses · {name}",
+    "form": {
+      "saving": "Enregistrement…",
+      "saved": "Enregistré.",
+      "errors": {
+        "invalid": "Vérifie les champs : une valeur manque ou dépasse la taille permise.",
+        "notFound": "Cette fiche n'existe plus : elle a été supprimée entre-temps."
+      },
+      "deleteConfirm": "Confirmer la suppression",
+      "optional": "Facultatif"
+    },
+    "dashboard": {
+      "meta": {
+        "title": "Tableau de bord"
+      },
+      "title": "Tableau de bord",
+      "lead": "Trois indicateurs sur un seul écran : ta feuille de route, les demandes nouvelles et ton projet actif.",
+      "roadmap": {
+        "label": "Feuille de route",
+        "value": "{done} / {total} tâches",
+        "link": "Ouvrir Cheikh 2.0"
+      },
+      "requests": {
+        "label": "Demandes nouvelles",
+        "value": "{count, plural, =0 {Aucune} one {# nouvelle} other {# nouvelles}}",
+        "total": "{count, plural, =0 {Aucune demande reçue} one {# demande reçue en tout} other {# demandes reçues en tout}}",
+        "link": "Ouvrir la boîte"
+      },
+      "active": {
+        "label": "Projet actif",
+        "none": "Aucun projet actif",
+        "noneHint": "Choisis-le dans la Boîte à projets : un seul à la fois.",
+        "step": "Étape {step} sur {total} : {name}",
+        "link": "Ouvrir la Boussole"
+      },
+      "ritual": {
+        "title": "Le rituel du vendredi",
+        "text": "15 minutes chaque vendredi : qu'ai-je livré cette semaine ? À qui l'ai-je montré ? Quel est le prochain pas concret ? Si la réponse à la première question est « rien », la semaine suivante ne commence pas de nouveau projet."
+      }
+    },
+    "requests": {
+      "meta": {
+        "title": "Demandes"
+      },
+      "title": "Boîte des demandes",
+      "lead": "Chaque demande envoyée depuis le site, par l'une ou l'autre porte. Le score de qualification dit lesquelles méritent ton temps en premier.",
+      "filters": {
+        "label": "Filtrer par statut",
+        "all": "Toutes"
+      },
+      "status": {
+        "NEW": "Nouvelle",
+        "QUALIFIED": "Qualifiée",
+        "IN_DISCUSSION": "En discussion",
+        "WON": "Gagnée",
+        "LOST": "Perdue"
+      },
+      "channel": {
+        "DIRECT": "Contact direct",
+        "GUIDED": "Parcours guidé"
+      },
+      "empty": "Aucune demande pour l'instant.",
+      "emptyFiltered": "Aucune demande avec ce statut.",
+      "score": "Qualification {score} / 4",
+      "received": "Reçue le {date}",
+      "locale": "Écrite en {locale, select, en {anglais} other {français}}",
+      "write": "Écrire à {name}",
+      "whatsapp": "WhatsApp",
+      "details": "Voir le brief complet",
+      "fields": {
+        "message": "Message",
+        "projectType": "Type de projet",
+        "goal": "Objectif",
+        "problem": "Problème",
+        "audience": "Pour qui",
+        "context": "Où et comment",
+        "constraints": "Contraintes",
+        "budgetRange": "Budget",
+        "deadline": "Délai",
+        "successCriterion": "Critère de réussite"
+      },
+      "statusForm": {
+        "label": "Statut de la demande",
+        "submit": "Mettre à jour"
+      },
+      "limit": "Les 200 demandes les plus récentes sont affichées."
+    },
+    "cheikh": {
+      "meta": {
+        "title": "Cheikh 2.0"
+      },
+      "version": {
+        "from": "v1.0",
+        "to": "v2.0",
+        "build": "build : 10 oct. 2026",
+        "maintainer": "mainteneur : Cheikh"
+      },
+      "title": "Cheikh 2.0",
+      "lead": "Les notes de version de ta prochaine mise à jour. On liste les bugs, on applique les correctifs, puis on livre. Remplis, coche, reviens chaque vendredi : tout est enregistré, sur tous tes appareils.",
+      "toc": {
+        "label": "Sections",
+        "bugs": "Bugs connus",
+        "loop": "La boucle",
+        "prompt": "Prompt complet",
+        "gate": "Le sas des projets",
+        "history": "Historique",
+        "roadmap": "30 jours"
+      },
+      "bugs": {
+        "eyebrow": "Changelog",
+        "title": "Bugs connus et correctifs",
+        "lead": "Chaque défaut observé dans nos échanges, avec le patch qui le corrige. Les deux premiers sont des déductions : ils restent à confirmer.",
+        "patch": "Patch",
+        "hypothesis": "hypothèse",
+        "severity": {
+          "crit": "critique",
+          "high": "élevée",
+          "low": "moyenne"
+        },
+        "items": {
+          "1": {
+            "title": "Lancer plus vite que finir",
+            "patch": "Un seul projet actif à la fois. Les autres vont au parking jusqu'à la prochaine livraison."
+          },
+          "2": {
+            "title": "La technique avant le marché",
+            "patch": "Passer le sas des projets : utilisateur réel et payeur identifiés avant de choisir une stack."
+          },
+          "3": {
+            "title": "Demandes trop courtes",
+            "patch": "Toujours donner le quoi, le pourquoi, le pour qui et le critère de réussite. Le générateur plus bas le fait pour toi."
+          },
+          "4": {
+            "title": "Questions laissées sans réponse",
+            "patch": "Répondre à chaque question de Claude, même par « passe ». Sans retour, ses hypothèses ne se corrigent jamais."
+          },
+          "5": {
+            "title": "Régler l'outil au lieu de construire",
+            "patch": "20 minutes de réglage maximum par session, puis on produit un livrable concret."
+          },
+          "6": {
+            "title": "Sauts de sujet",
+            "patch": "Une conversation, un objectif. Un nouveau sujet ouvre une nouvelle conversation."
+          },
+          "7": {
+            "title": "Ambition formulée en grand, pas en concret",
+            "patch": "Traduire chaque ambition en un utilisateur, une date et un chiffre."
+          }
+        }
+      },
+      "loop": {
+        "eyebrow": "Le flow",
+        "title": "La boucle du bâtisseur",
+        "lead": "Le chemin d'une idée jusqu'à un vrai utilisateur. Chaque étape corrige un des bugs ci-dessus.",
+        "branch": {
+          "no": "Non",
+          "fix": "Corrige",
+          "back": "Retour"
+        },
+        "steps": {
+          "1": {
+            "title": "Une idée ou un besoin arrive",
+            "text": "Note-la tout de suite, sans la démarrer."
+          },
+          "2": {
+            "title": "Sert-elle mon projet actif ?",
+            "text": "Passe-la par le sas des projets : 4 questions, 2 minutes.",
+            "side": "Parking dans la Boussole. On y revient après la prochaine livraison."
+          },
+          "3": {
+            "title": "Cadrer la demande",
+            "text": "Quoi, pourquoi, pour qui, où, contraintes, critère de réussite.",
+            "side": "BUG-03 · BUG-07"
+          },
+          "4": {
+            "title": "Demander à Claude",
+            "text": "Une conversation dédiée. Termine par « Qu'est-ce que je n'ai pas vu ? ».",
+            "side": "BUG-06"
+          },
+          "5": {
+            "title": "Répondre à ses questions",
+            "text": "Même par « passe ». C'est là que le résultat devient le tien.",
+            "side": "BUG-04"
+          },
+          "6": {
+            "title": "Livrer la plus petite version testable",
+            "text": "Ce qui tient en deux semaines, pas la vision complète.",
+            "side": "BUG-01 · BUG-05"
+          },
+          "7": {
+            "title": "La mettre entre les mains d'une vraie personne",
+            "text": "Un client, un gérant, un collègue. Observe-le l'utiliser sans l'aider.",
+            "side": "BUG-02"
+          },
+          "8": {
+            "title": "Écouter, puis itérer",
+            "text": "Ce que tu as appris devient la prochaine demande.",
+            "side": "à l'étape 3 avec le retour utilisateur"
+          }
+        }
+      },
+      "prompt": {
+        "eyebrow": "Outil 1",
+        "title": "Générateur de prompt complet",
+        "lead": "Remplis les six champs, copie le prompt ou exporte le dossier PDF avec ses diagrammes, puis colle le prompt dans Claude. Chaque export enregistre la fiche dans ton historique. Le score indique si ta demande est assez claire pour éviter les suppositions.",
+        "fields": {
+          "goal": {
+            "label": "Quoi",
+            "hint": "Le livrable précis",
+            "short": "Quoi",
+            "placeholder": "Ex. : L'écran de saisie de la ponte quotidienne, par bâtiment"
+          },
+          "problem": {
+            "label": "Pourquoi",
+            "hint": "Le problème qu'il règle",
+            "short": "Pourquoi",
+            "placeholder": "Ex. : Tout est noté sur papier : on ne connaît pas la production réelle de chaque bâtiment"
+          },
+          "audience": {
+            "label": "Pour qui",
+            "hint": "Une personne réelle, son rôle",
+            "short": "Pour qui",
+            "placeholder": "Ex. : Le gérant de la Ferme Jambar"
+          },
+          "context": {
+            "label": "Où et dans quel contexte",
+            "hint": "Lieu, appareil, conditions d'usage",
+            "short": "Où et contexte",
+            "placeholder": "Ex. : Au poulailler, sur un téléphone Android d'entrée de gamme, souvent sans réseau"
+          },
+          "constraints": {
+            "label": "Contraintes",
+            "hint": "Stack, délai, budget",
+            "short": "Contraintes",
+            "placeholder": "Ex. : React Native + Expo, fonctionne hors ligne, saisie en moins de 30 secondes"
+          },
+          "successCriterion": {
+            "label": "C'est réussi si…",
+            "hint": "Un critère vérifiable",
+            "short": "C'est réussi si",
+            "placeholder": "Ex. : Le gérant l'utilise seul pendant 7 jours de suite"
+          }
+        },
+        "labels": {
+          "goal": "OBJECTIF",
+          "problem": "POURQUOI",
+          "audience": "POUR QUI",
+          "context": "OÙ / CONTEXTE",
+          "constraints": "CONTRAINTES",
+          "successCriterion": "C'EST RÉUSSI SI"
+        },
+        "missing": "[à préciser]",
+        "closing": {
+          "1": "Avant de commencer, pose-moi les questions nécessaires si quelque chose manque.",
+          "2": "Livre exactement ce que je demande, puis propose les extras séparément.",
+          "3": "À la fin, dis-moi ce que je n'ai pas vu."
+        },
+        "output": "Prompt à coller",
+        "score": "Clarté {score}/6",
+        "clear": "Vider",
+        "copy": "Copier le prompt",
+        "copied": "Prompt copié. Colle-le dans une nouvelle conversation.",
+        "copyFallback": "Texte sélectionné : copie-le avec Cmd+C ou Ctrl+C.",
+        "export": "Enregistrer et exporter le PDF",
+        "exporting": "Enregistrement et génération du dossier PDF…",
+        "exported": "Fiche enregistrée, dossier {file} exporté.",
+        "exportFailed": "La fiche est enregistrée, mais la génération du PDF a échoué. Retélécharge-la depuis l'historique.",
+        "saveFailed": "La fiche n'a pas pu être enregistrée. Copie le prompt à la place.",
+        "incomplete": "Les champs vides deviendront des suppositions de Claude. Remplis-les tous pour exporter le dossier PDF."
+      },
+      "gate": {
+        "eyebrow": "Outil 2",
+        "title": "Le sas des nouveaux projets",
+        "lead": "Avant d'ouvrir un nouveau dépôt, réponds honnêtement. Le verdict te dit s'il faut construire, valider, réduire ou garer l'idée. Il part avec la fiche à l'export.",
+        "name": {
+          "label": "Nom de l'idée",
+          "placeholder": "Ex. : website builder Atelier"
+        },
+        "questions": {
+          "1": "Sert-elle mon projet actif, ou je décide sciemment de la mettre à sa place ?",
+          "2": "Ai-je identifié un utilisateur réel, quelqu'un que je peux nommer ?",
+          "3": "Sais-je qui paiera, ou quel gain mesurable elle apporte ?",
+          "4": "Une première version testable tient-elle en deux semaines ?"
+        },
+        "yes": "Oui",
+        "no": "Non",
+        "reset": "Recommencer",
+        "verdicts": {
+          "NONE": {
+            "title": "En attente",
+            "text": "Réponds aux quatre questions pour obtenir le verdict."
+          },
+          "PARK": {
+            "title": "Parking",
+            "text": "Note l'idée dans la Boussole et reviens-y après ta prochaine livraison. Ton projet actif passe d'abord."
+          },
+          "VALIDATE": {
+            "title": "Valider d'abord",
+            "text": "Pas encore de code. Parle à 5 utilisateurs potentiels et trouve qui paierait avant de choisir une stack."
+          },
+          "CUT": {
+            "title": "Réduire",
+            "text": "L'idée est bonne mais trop grosse. Coupe jusqu'à obtenir une version testable en deux semaines, puis repasse le sas."
+          },
+          "GO": {
+            "title": "Go",
+            "text": "Construis la plus petite version, mets-la devant ton utilisateur dans deux semaines maximum."
+          }
+        }
+      },
+      "history": {
+        "eyebrow": "Mémoire",
+        "title": "Historique des fiches",
+        "lead": "Chaque export enregistre sa fiche avec le verdict du sas. Une idée au parking part dans la Boussole en un clic.",
+        "empty": "Aucune fiche pour l'instant : la première arrive avec ton premier export.",
+        "created": "Exportée le {date}",
+        "download": "Retélécharger le PDF",
+        "park": "Garer dans la Boussole",
+        "parked": "Dans la Boussole",
+        "openCompass": "Voir la Boîte à projets",
+        "downloading": "Génération du dossier PDF…",
+        "downloadFailed": "La génération du PDF a échoué. Réessaie dans un instant."
+      },
+      "roadmap": {
+        "eyebrow": "Feuille de route",
+        "title": "30 jours pour passer en 2.0",
+        "lead": "Quatre semaines, une étape par semaine. Tes cases cochées sont enregistrées : tu les retrouves sur ton téléphone comme sur ton ordinateur.",
+        "progress": "{done} / {total} tâches",
+        "reset": "Tout décocher",
+        "weeks": {
+          "1": {
+            "label": "Semaine 1 · Hygiène",
+            "title": "Mieux demander"
+          },
+          "2": {
+            "label": "Semaine 2 · Focus",
+            "title": "Choisir un seul projet"
+          },
+          "3": {
+            "label": "Semaine 3 · Livrer",
+            "title": "Sortir la première version"
+          },
+          "4": {
+            "label": "Semaine 4 · Apprendre",
+            "title": "Écouter et décider"
+          }
+        }
+      }
+    },
+    "compass": {
+      "meta": {
+        "title": "Boussole"
+      },
+      "title": "La Boussole du Fondateur",
+      "lead": "Tes rêves, et la boîte où chaque projet attend son tour : du parking de Cheikh 2.0 jusqu'à la livraison, sur le parcours de création en neuf étapes.",
+      "dreams": {
+        "eyebrow": "Module 1",
+        "title": "Rêves",
+        "lead": "Ce que tu veux voir exister, et à quel horizon. Les projets de la boîte s'y rattachent.",
+        "form": {
+          "title": "Ton rêve",
+          "description": "Ce qu'il change",
+          "horizon": "Horizon",
+          "submit": "Ajouter le rêve"
+        },
+        "horizons": {
+          "1Y": "Dans un an",
+          "3Y": "Dans trois ans",
+          "10Y": "Dans dix ans",
+          "LIFE": "Une vie"
+        },
+        "projects": "{count, plural, =0 {Aucun projet relié} one {# projet relié} other {# projets reliés}}",
+        "empty": "Aucun rêve noté pour l'instant.",
+        "delete": "Supprimer ce rêve",
+        "deleteHint": "Ses projets restent dans la boîte, sans rêve."
+      },
+      "projects": {
+        "eyebrow": "Module 2",
+        "title": "Boîte à projets",
+        "lead": "Triés par priorité, faisabilité × impact. Un seul projet actif à la fois : c'est lui qu'affiche le tableau de bord.",
+        "add": "Ajouter un projet",
+        "form": {
+          "title": "Projet",
+          "feasibility": "Faisabilité, de 1 à 5",
+          "impact": "Impact, de 1 à 5",
+          "step": "Étape du parcours",
+          "dream": "Rêve relié",
+          "noDream": "Aucun",
+          "valueChain": "Activités de la chaîne de valeur ITIL 4",
+          "submit": "Ajouter le projet",
+          "save": "Enregistrer"
+        },
+        "priority": "Priorité {value}/25",
+        "scores": "Faisabilité {feasibility}/5 · Impact {impact}/5",
+        "step": "Étape {step}/{total} : {name}",
+        "dream": "Rêve : {title}",
+        "active": "Projet actif",
+        "makeActive": "En faire le projet actif",
+        "clearActive": "Ne plus le suivre",
+        "fromSheet": "Sorti du parking de Cheikh 2.0",
+        "edit": "Modifier",
+        "delete": "Supprimer ce projet",
+        "empty": "La boîte est vide : ajoute un projet, ou gare une idée depuis le sas de Cheikh 2.0."
+      },
+      "itil": {
+        "title": "Le parcours de création",
+        "steps": {
+          "1": "Idée notée",
+          "2": "Cadrage",
+          "3": "Passage au sas",
+          "4": "Planifier",
+          "5": "Concevoir",
+          "6": "Construire",
+          "7": "Mettre en service",
+          "8": "Fournir et soutenir",
+          "9": "Améliorer"
+        }
+      },
+      "valueChain": {
+        "plan": "Planifier",
+        "improve": "Améliorer",
+        "engage": "Engager",
+        "design-transition": "Concevoir et assurer la transition",
+        "obtain-build": "Obtenir/Construire",
+        "deliver-support": "Fournir et soutenir"
+      }
     }
   }
 }

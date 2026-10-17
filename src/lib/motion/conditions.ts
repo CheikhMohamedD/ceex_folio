@@ -20,6 +20,14 @@ export const MIN_CORES = 4;
 /** Densité de pixels maximale du rendu 3D. */
 export const MAX_PIXEL_RATIO = 1.5;
 
+/**
+ * Les Coulisses (et leur connexion) sont des outils de travail : aucune animation, et
+ * GSAP n'y est même pas chargé.
+ */
+export function isMotionFree(pathname: string): boolean {
+  return /^\/(?:fr\/)?(?:coulisses|connexion)(?:\/|$)/.test(pathname);
+}
+
 /** GSAP : tout sauf « réduire les animations ». */
 export function canAnimate(environment: Pick<Environment, "reducedMotion">): boolean {
   return !environment.reducedMotion;

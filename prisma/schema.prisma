@@ -1,6 +1,6 @@
-// Base des demandes clients (phase 3). Les Coulisses (phase 5) y ajouteront leurs
-// modèles et les tables de Better Auth. Client généré dans src/generated/prisma,
-// hors du dépôt : `npm install` le régénère (script postinstall).
+// Demandes clients (phase 3), puis les Coulisses (phase 5) : les tables de Better Auth,
+// Cheikh 2.0 et la Boussole. Client généré dans src/generated/prisma, hors du dépôt :
+// `npm install` le régénère (script postinstall).
 
 generator client {
   provider = "prisma-client"
@@ -52,4 +52,159 @@ model ClientRequest {
 
   @@index([ipHash, createdAt])
   @@index([status, createdAt])
+}
+
+// ── Better Auth ────────────────────────────────────────────────────────────────
+// Tables de Better Auth (vérifiées avec getSchema de better-auth/db). Seul ton compte
+// GitHub peut en créer une ligne : voir src/server/auth.ts.
+
+model User {
+  id            String    @id
+  name          String
+  email         String    @unique
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @default(now()) @updatedAt
+  /// Identifiant numérique GitHub, comparé à ALLOWED_GITHUB_ID (un pseudo peut changer).
+  githubId      String?
+  sessions      Session[]
+  accounts      Account[]
+
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+}
+
+// ── Cheikh 2.0 ─────────────────────────────────────────────────────────────────
+
+enum FramingVerdict {
+  NONE
+  PARK
+  VALIDATE
+  CUT
+  GO
+}
+
+/// Une fiche de cadrage : les six champs du générateur (tous remplis, comme pour l'export
+/// d'origine), le passage au sas des projets et son verdict.
+model FramingSheet {
+  id               String          @id @default(cuid())
+  /// Quoi : le livrable précis.
+  goal             String          @db.VarChar(600)
+  /// Pourquoi : le problème qu'il règle.
+  problem          String          @db.VarChar(600)
+  /// Pour qui : une personne réelle, son rôle.
+  audience         String          @db.VarChar(400)
+  /// Où et dans quel contexte.
+  context          String          @db.VarChar(400)
+  constraints      String          @db.VarChar(400)
+  /// C'est réussi si… : un critère vérifiable.
+  successCriterion String          @db.VarChar(400)
+  /// Nom de l'idée passée au sas ; facultatif, comme dans l'outil d'origine.
+  gateName         String?         @db.VarChar(80)
+  /// Réponses aux quatre questions du sas, dans l'ordre : true, false ou null.
+  gateAnswers      Json
+  verdict          FramingVerdict  @default(NONE)
+  /// Projet de la Boussole créé depuis le parking, le cas échéant.
+  compassProjectId String?         @unique
+  compassProject   CompassProject? @relation(fields: [compassProjectId], references: [id], onDelete: SetNull)
+  createdAt        DateTime        @default(now())
+
+  @@index([createdAt])
+}
+
+/// Une des douze tâches de la feuille de route sur 30 jours, créées à la première
+/// ouverture (lib/cheikh/roadmap.ts) ; la clé unique évite tout doublon.
+model RoadmapTask {
+  id        String    @id @default(cuid())
+  /// Semaine 1 à 4.
+  week      Int
+  label     String    @db.VarChar(200)
+  position  Int       @default(0)
+  done      Boolean   @default(false)
+  doneAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@unique([week, position])
+}
+
+// ── Boussole ───────────────────────────────────────────────────────────────────
+
+model Dream {
+  id          String           @id @default(cuid())
+  title       String           @db.VarChar(120)
+  description String?          @db.VarChar(1000)
+  /// Échéance du rêve : un an, trois ans, dix ans, une vie.
+  horizon     String           @db.VarChar(20)
+  createdAt   DateTime         @default(now())
+  projects    CompassProject[]
+}
+
+/// Un projet de la Boîte à projets, sur le parcours de création en 9 étapes.
+model CompassProject {
+  id                   String        @id @default(cuid())
+  title                String        @db.VarChar(120)
+  /// 1 à 5.
+  feasibilityScore     Int
+  /// 1 à 5.
+  impactScore          Int
+  /// Étape du parcours de création, 1 à 9.
+  itilStep             Int           @default(1)
+  /// Activités de la chaîne de valeur ITIL 4 concernées.
+  valueChainActivities String[]
+  /// Le projet affiché sur le tableau de bord ; un seul à la fois.
+  active               Boolean       @default(false)
+  dreamId              String?
+  dream                Dream?        @relation(fields: [dreamId], references: [id], onDelete: SetNull)
+  framingSheet         FramingSheet?
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+
+  @@index([active])
 }

@@ -13,6 +13,8 @@ const PAGES = [
   "/contact/parcours",
   "/en/contact/parcours",
   "/contact/merci",
+  "/connexion",
+  "/connexion/refus",
   "/page-introuvable",
 ];
 

@@ -73,11 +73,18 @@ après `npm run budget:record` ou `npm run lighthouse:record`, reconstruis le si
 
 ```
 src/
-  app/                  routes : accueil provisoire, /colophon, page 404, icône
+  app/                  routes : site public (FR et EN), contact, /colophon, Coulisses, API d'authentification
   components/ui/        les dix-sept composants « Dossier »
   components/layout/    en-tête, pied de page, barre d'onglets mobile, bouton de thème
   features/colophon/    les sections de /colophon
-  i18n/                 next-intl : français seulement pour l'instant, messages typés
+  features/contact/     les deux portes du contact
+  features/coulisses/   l'enveloppe des Coulisses, connexion et formulaires
+  features/inbox/       la boîte des demandes
+  features/cheikh-2-0/  générateur, sas, historique, feuille de route
+  features/compass/     la Boussole : Rêves et Boîte à projets
+  server/               le seul accès à la base, à Better Auth, Resend et Turnstile
+  i18n/                 next-intl : français et anglais, messages typés
+  lib/                  fonctions pures et testées : design, contact, motion, PDF, Cheikh 2.0, Boussole, auth
   lib/design/           tokens, calcul des contrastes, catégories de dossier
   lib/security/         en-têtes HTTP, CSP comprise
 tests/e2e/              Playwright et axe-core
@@ -155,6 +162,50 @@ premier affichage ni cacher du contenu :
 GSAP (54 Ko compressés) et Three.js (133 Ko) restent hors du JavaScript initial mesuré
 par le budget.
 
+## Coulisses
+
+L'espace privé, en français seulement, jamais indexé (noindex, `robots.txt`, absent du
+plan du site) et sans aucun lien public : `/connexion`, puis quatre pages.
+
+- **`/coulisses`** : le rituel du vendredi sur un écran (feuille de route, demandes
+  nouvelles, projet actif).
+- **`/coulisses/demandes`** : les demandes des deux portes, filtrées par statut ; le
+  statut suit le cycle Nouvelle, Qualifiée, En discussion, Gagnée, Perdue.
+- **`/coulisses/cheikh-2-0`** : l'outil d'origine, passé du navigateur à la base. Bugs,
+  boucle du bâtisseur, générateur de prompt (six champs, score de clarté), sas des projets
+  (quatre questions, verdict), dossier PDF de sept pages (`src/lib/pdf/framing.ts`, même
+  moteur que le brief client), historique des fiches et feuille de route sur 30 jours.
+  Une idée au parking part dans la Boussole en un clic.
+- **`/coulisses/boussole`** : les Rêves et la Boîte à projets (faisabilité × impact, un
+  seul projet actif, parcours de création en neuf étapes, chaîne de valeur ITIL 4).
+
+Seul ton identifiant GitHub **numérique** entre, vérifié à trois niveaux :
+
+1. **Proxy** (`src/proxy.ts`) : sans cookie, redirection vers `/connexion` sans requête en
+   base ; avec un cookie, la session est relue et l'identifiant comparé.
+2. **Better Auth** (`src/server/auth.ts`) : `validateUserInfo` refuse tout profil GitHub
+   dont l'identifiant n'est pas `ALLOWED_GITHUB_ID`, avant toute création de compte ; un
+   crochet refuse toute session qui ne serait pas reliée à ce compte ; aucune liaison de
+   compte par email.
+3. **`requireOwner()`** (`src/server/owner.ts`) au début de chaque page et de chaque
+   Server Action.
+
+Tout refus, et toute erreur de connexion, mène à `/connexion/refus`, une page neutre.
+Seule `/connexion` laisse un formulaire partir vers `github.com` (`form-action` de la
+CSP). Les Coulisses n'ont aucune animation.
+
+| Variable                                   | Rôle                                                                   |
+| ------------------------------------------ | ---------------------------------------------------------------------- |
+| `BETTER_AUTH_SECRET`                       | Signature des cookies de session (`openssl rand -base64 32`)           |
+| `BETTER_AUTH_URL`                          | Adresse publique ; par défaut `NEXT_PUBLIC_SITE_URL`                   |
+| `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` | Application OAuth GitHub, retour sur `<site>/api/auth/callback/github` |
+| `ALLOWED_GITHUB_ID`                        | Ton identifiant numérique : `https://api.github.com/users/<pseudo>`    |
+
+Sans l'une d'elles (ou sans `DATABASE_URL`), personne n'entre et `/api/auth` répond 404.
+La CI vérifie tout ce qui se voit de l'extérieur (`tests/e2e/coulisses.spec.ts`) ; le
+parcours du propriétaire se vérifie avec une base de test : `npm run db:migrate`, puis une
+session semée en base pour un compte GitHub dont l'identifiant est `ALLOWED_GITHUB_ID`.
+
 ## Sécurité
 
 - Les en-têtes HTTP sont définis dans `src/lib/security/headers.ts` et appliqués par
@@ -182,13 +233,13 @@ par le budget.
 
 ## Les cinq phases
 
-| Phase | Contenu                                                   | Jalon                                                      |
-| ----- | --------------------------------------------------------- | ---------------------------------------------------------- |
-| 1     | Design system « Dossier », 17 composants, `/colophon`     | Contrastes AA vérifiés, tout lisible à 360 px              |
-| 2     | Site public et SEO : accueil, six études de cas, FR et EN | Pages indexées, Lighthouse dans le budget                  |
-| 3     | Contact : deux portes, email, brief PDF                   | Une vraie demande reçue de bout en bout                    |
-| 4     | Mouvement et 3D : GSAP, puis le hero Three.js             | LCP de 2,5 s et INP de 200 ms au plus, tenus sur mobile    |
-| 5     | Coulisses et Boussole                                     | Tout autre compte refusé, Boussole utilisable au téléphone |
+| Phase | Contenu                                                      | Jalon                                                      |
+| ----- | ------------------------------------------------------------ | ---------------------------------------------------------- |
+| 1     | Design system « Dossier », 17 composants, `/colophon`        | Contrastes AA vérifiés, tout lisible à 360 px              |
+| 2     | Site public et SEO : accueil, six études de cas, FR et EN    | Pages indexées, Lighthouse dans le budget                  |
+| 3     | Contact : deux portes, email, brief PDF                      | Une vraie demande reçue de bout en bout                    |
+| 4     | Mouvement et 3D : GSAP, puis le hero Three.js                | LCP de 2,5 s et INP de 200 ms au plus, tenus sur mobile    |
+| 5     | Coulisses : connexion GitHub, demandes, Cheikh 2.0, Boussole | Tout autre compte refusé, Boussole utilisable au téléphone |
 
 ## Licence
 

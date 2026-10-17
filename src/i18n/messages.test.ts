@@ -36,8 +36,11 @@ function invalidMessages(locale: "fr" | "en", messages: Tree): string[] {
   return errors;
 }
 
-/** Le colophon (et le plan des phases qu'il montre) n'existe qu'en français. */
-const FRENCH_ONLY = ["colophon.", "phases."];
+/**
+ * Le colophon (et le plan des phases qu'il montre) n'existe qu'en français, comme les
+ * Coulisses et leur page de connexion, réservées à leur propriétaire.
+ */
+const FRENCH_ONLY = ["colophon.", "phases.", "connexion.", "coulisses."];
 
 describe("messages français", () => {
   const entries = flatten(fr as Tree);
@@ -60,7 +63,7 @@ describe("messages anglais", () => {
     expect(invalidMessages("en", en as Tree)).toEqual([]);
   });
 
-  it("traduisent chaque clé du site, colophon excepté", () => {
+  it("traduisent chaque clé du site, colophon et Coulisses exceptés", () => {
     const missing = [...frKeys].filter(
       (key) => !enKeys.has(key) && !FRENCH_ONLY.some((prefix) => key.startsWith(prefix)),
     );

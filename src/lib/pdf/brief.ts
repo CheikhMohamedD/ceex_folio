@@ -1,7 +1,7 @@
 /**
  * Brief client en PDF, généré dans le navigateur avec jsPDF. jsPDF n'est chargé
  * qu'au clic sur « Télécharger » : il ne pèse rien sur le parcours lui-même.
- * Même moteur, plus tard, pour la fiche de cadrage des Coulisses.
+ * Même moteur pour le dossier de cadrage des Coulisses (framing.ts).
  */
 export type BriefSection = { label: string; value: string };
 
@@ -23,12 +23,13 @@ const BOTTOM = PAGE.height - 24;
 
 /**
  * Les polices standard du PDF ne connaissent que l'encodage WinAnsi : les espaces fines
- * de la typographie française deviennent des espaces, les flèches des tirets, et tout
- * autre caractère hors de cet encodage disparaît plutôt que de s'afficher en charabia.
+ * de la typographie française deviennent des espaces insécables (le « ? » ne part pas
+ * seul à la ligne), les flèches des tirets, et tout autre caractère hors de cet encodage
+ * disparaît plutôt que de s'afficher en charabia.
  */
 export function toWinAnsi(text: string): string {
   return text
-    .replace(/[   ]/g, " ")
+    .replace(/[   ]/g, " ")
     .replace(/[→⇒]/g, "->")
     .replace(/[←⇐]/g, "<-")
     .replace(/[^\n\x20-\x7e -ÿŒœŠšŸŽžƒˆ˜–—‘-‚“-„†-•…‰‹›€™]/g, "");

@@ -4,11 +4,11 @@ import { toWinAnsi } from "./brief";
 describe("toWinAnsi", () => {
   it("garde le français, ses guillemets et l'euro", () => {
     const text = "Œuvre « déjà » prête, l’été : 5 000 € — c’est ça…";
-    expect(toWinAnsi(text)).toBe(text.replace(/ /g, " "));
+    expect(toWinAnsi(text)).toBe(text.replace(/ /g, " "));
   });
 
-  it("remplace les espaces fines et les flèches", () => {
-    expect(toWinAnsi("Budget : 2 M → OK")).toBe("Budget : 2 M -> OK");
+  it("rend les espaces fines insécables et remplace les flèches", () => {
+    expect(toWinAnsi("Budget : 2 M → OK")).toBe("Budget : 2 M -> OK");
   });
 
   it("retire ce que les polices standard ne savent pas dessiner", () => {

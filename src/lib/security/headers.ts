@@ -7,12 +7,15 @@
  * (et pour le script de thème). Tout le reste est fermé : aucune source externe,
  * pas d'eval en production, pas d'iframe, pas de plugin.
  *
- * Seule exception, quand Turnstile est configuré (clé publique définie à la
- * construction) : son script et son iframe, servis par challenges.cloudflare.com.
+ * Deux exceptions. Quand Turnstile est configuré (clé publique définie à la
+ * construction) : son script et son iframe, servis par challenges.cloudflare.com. Et
+ * sur /connexion seulement : le formulaire « Continuer avec GitHub » mène à
+ * github.com, ce que form-action doit permettre (même sans JavaScript).
  */
 const TURNSTILE_ORIGIN = "https://challenges.cloudflare.com";
+const GITHUB_ORIGIN = "https://github.com";
 
-type PolicyOptions = { isDev: boolean; turnstile?: boolean };
+type PolicyOptions = { isDev: boolean; turnstile?: boolean; githubSignIn?: boolean };
 
 export type SecurityHeaderName =
   | "Content-Security-Policy"
@@ -25,7 +28,11 @@ export type SecurityHeaderName =
 
 export type SecurityHeader = { key: SecurityHeaderName; value: string };
 
-export function contentSecurityPolicy({ isDev, turnstile = false }: PolicyOptions): string {
+export function contentSecurityPolicy({
+  isDev,
+  turnstile = false,
+  githubSignIn = false,
+}: PolicyOptions): string {
   const external = turnstile ? [TURNSTILE_ORIGIN] : [];
   const directives: Record<string, string[]> = {
     "default-src": ["'self'"],
@@ -37,7 +44,7 @@ export function contentSecurityPolicy({ isDev, turnstile = false }: PolicyOption
     ...(turnstile ? { "frame-src": external } : {}),
     "object-src": ["'none'"],
     "base-uri": ["'self'"],
-    "form-action": ["'self'"],
+    "form-action": ["'self'", ...(githubSignIn ? [GITHUB_ORIGIN] : [])],
     "frame-ancestors": ["'none'"],
   };
   const parts = Object.entries(directives).map(([name, values]) => `${name} ${values.join(" ")}`);

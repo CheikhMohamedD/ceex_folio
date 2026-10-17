@@ -25,6 +25,13 @@ describe("en-têtes de sécurité", () => {
     ]);
   });
 
+  it("ne laisse partir un formulaire vers GitHub que depuis la page de connexion", () => {
+    expect(contentSecurityPolicy({ isDev: false })).toContain("form-action 'self';");
+    const csp = contentSecurityPolicy({ isDev: false, githubSignIn: true });
+    expect(csp).toContain("form-action 'self' https://github.com;");
+    expect(csp.match(/https?:\/\/[^\s;]+/g)).toEqual(["https://github.com"]);
+  });
+
   it("n'ouvre eval et le websocket qu'en développement", () => {
     const csp = contentSecurityPolicy({ isDev: true });
     expect(csp).toContain("'unsafe-eval'");

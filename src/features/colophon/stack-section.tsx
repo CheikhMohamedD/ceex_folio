@@ -13,6 +13,7 @@ const STACK = [
   { key: "tailwind", name: "Tailwind CSS", version: devDeps.tailwindcss },
   { key: "intl", name: "next-intl", version: deps["next-intl"] },
   { key: "prisma", name: "Prisma", version: deps["@prisma/client"] },
+  { key: "auth", name: "Better Auth", version: deps["better-auth"] },
   { key: "zod", name: "Zod", version: deps.zod },
   { key: "jspdf", name: "jsPDF", version: deps.jspdf },
   { key: "gsap", name: "GSAP", version: deps.gsap },

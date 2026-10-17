@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { canAnimate, canRunHeroScene, type Environment } from "./conditions";
+import { canAnimate, canRunHeroScene, isMotionFree, type Environment } from "./conditions";
 
 const desktop: Environment = {
   width: 1440,
@@ -31,5 +31,19 @@ describe("canAnimate", () => {
   it("n'anime rien quand le visiteur demande moins d'animations", () => {
     expect(canAnimate({ reducedMotion: true })).toBe(false);
     expect(canAnimate({ reducedMotion: false })).toBe(true);
+  });
+});
+
+describe("isMotionFree", () => {
+  it("n'anime ni les Coulisses ni leur connexion", () => {
+    for (const path of ["/coulisses", "/coulisses/boussole", "/fr/coulisses", "/connexion", "/connexion/refus"]) {
+      expect(isMotionFree(path)).toBe(true);
+    }
+  });
+
+  it("anime le reste du site", () => {
+    for (const path of ["/", "/en", "/projets/seetalma", "/contact/merci", "/coulisses-du-site"]) {
+      expect(isMotionFree(path)).toBe(false);
+    }
   });
 });

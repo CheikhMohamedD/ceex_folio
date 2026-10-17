@@ -27,7 +27,17 @@ const nextConfig: NextConfig = {
     },
   },
   async headers() {
-    return [{ source: "/(.*)", headers: securityHeaders({ isDev, turnstile }) }];
+    return [
+      // Toutes les pages sauf /connexion, dont le formulaire part vers GitHub.
+      {
+        source: "/((?!connexion$|connexion/).*)",
+        headers: securityHeaders({ isDev, turnstile }),
+      },
+      {
+        source: "/connexion/:path*",
+        headers: securityHeaders({ isDev, turnstile, githubSignIn: true }),
+      },
+    ];
   },
 };
 

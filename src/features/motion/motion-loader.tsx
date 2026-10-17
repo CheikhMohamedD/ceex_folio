@@ -2,18 +2,19 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
-import { canAnimate, whenIdle } from "@/lib/motion/conditions";
+import { canAnimate, isMotionFree, whenIdle } from "@/lib/motion/conditions";
 
 /**
  * Charge GSAP une fois la page au repos, puis joue les moments de chaque page et les
- * défait au changement de page. Avec « réduire les animations », ne charge rien.
+ * défait au changement de page. Avec « réduire les animations », ou dans les Coulisses,
+ * ne charge rien.
  */
 export function MotionLoader({ locale }: { locale: string }) {
   const pathname = usePathname();
 
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!canAnimate({ reducedMotion })) return;
+    if (!canAnimate({ reducedMotion }) || isMotionFree(pathname)) return;
     let cancelled = false;
     let undo: (() => void) | undefined;
     const cancelIdle = whenIdle(() => {
