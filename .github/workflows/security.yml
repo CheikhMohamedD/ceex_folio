@@ -54,6 +54,9 @@ jobs:
           scan-ref: .
           scanners: vuln,secret
           severity: HIGH,CRITICAL
+          # En SARIF, l'action ignore `severity` sauf avec cette option : sans elle, la
+          # moindre alerte modérée bloquait (fast-uri, fin octobre 2026).
+          limit-severities-for-sarif: true
           ignore-unfixed: true
           format: sarif
           output: trivy.sarif
