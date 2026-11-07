@@ -66,6 +66,20 @@ jobs:
           sarif_file: trivy.sarif
           category: trivy
 
+      # Le SARIF ne se lit que dans l'onglet Security : en cas d'échec, la même analyse en
+      # tableau dit dans le journal quels paquets sont en cause.
+      - name: Détail dans le journal
+        if: failure()
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          scanners: vuln,secret
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          format: table
+          exit-code: "0"
+
   npm-audit:
     name: npm audit (dépendances du site)
     runs-on: ubuntu-24.04
