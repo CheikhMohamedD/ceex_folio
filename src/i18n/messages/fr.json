@@ -1018,7 +1018,7 @@
       "score": "Qualification {score} / 4",
       "received": "Reçue le {date}",
       "locale": "Écrite en {locale, select, en {anglais} other {français}}",
-      "write": "Écrire à {name}",
+      "write": "Écrire à {name} : ",
       "whatsapp": "WhatsApp",
       "details": "Voir le brief complet",
       "fields": {

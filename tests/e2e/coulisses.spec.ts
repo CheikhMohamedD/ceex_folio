@@ -1,9 +1,9 @@
 import { expect, test } from "@playwright/test";
 
 /**
- * Les Coulisses vues de l'extérieur. La CI n'a ni base ni secrets : personne n'entre,
- * et c'est exactement ce qu'on vérifie. Le parcours du propriétaire (session en base)
- * se vérifie à la main, avec une base de test (README, « Coulisses »).
+ * Les Coulisses vues de l'extérieur, sans base ni secrets : personne n'entre, et c'est
+ * exactement ce qu'on vérifie. Le parcours du propriétaire, sur une vraie base, est dans
+ * coulisses-proprietaire.spec.ts (`npm run e2e:coulisses`).
  */
 const PRIVATE = [
   "/coulisses",

@@ -40,6 +40,9 @@ système, donc un dossier `node_modules` copié depuis Linux ne marche pas sur m
 | `npm run lighthouse:record` | Enregistre les scores de la dernière exécution                         |
 | `npm run check`             | Lint, types et tests unitaires d'un coup                               |
 | `npm run db:migrate`        | Applique les migrations Prisma à la base de `DATABASE_URL`             |
+| `npm run db:up`             | Démarre PostgreSQL 16 dans Docker (`compose.yaml`, port 5433)          |
+| `npm run db:down`           | Arrête le conteneur ; les données restent dans son volume              |
+| `npm run e2e:coulisses`     | Parcours du propriétaire des Coulisses sur la base de test Docker      |
 
 Les tests de bout en bout tournent sur le site construit. La première fois,
 installe le navigateur de Playwright :
@@ -202,9 +205,42 @@ CSP). Les Coulisses n'ont aucune animation.
 | `ALLOWED_GITHUB_ID`                        | Ton identifiant numérique : `https://api.github.com/users/<pseudo>`    |
 
 Sans l'une d'elles (ou sans `DATABASE_URL`), personne n'entre et `/api/auth` répond 404.
-La CI vérifie tout ce qui se voit de l'extérieur (`tests/e2e/coulisses.spec.ts`) ; le
-parcours du propriétaire se vérifie avec une base de test : `npm run db:migrate`, puis une
-session semée en base pour un compte GitHub dont l'identifiant est `ALLOWED_GITHUB_ID`.
+
+### Base de données locale (Docker)
+
+`compose.yaml` décrit un PostgreSQL 16, la version de la production. Sa base `ceexfolio`
+sert au développement ; `npm run e2e:coulisses` crée à côté `ceexfolio_test`, vidée à
+chaque passage. Il faut Docker Desktop, OrbStack ou Colima.
+
+```bash
+npm run db:up    # démarre PostgreSQL sur le port 5433
+# dans .env.local : DATABASE_URL=postgresql://ceex:ceex@localhost:5433/ceexfolio
+DATABASE_URL=postgresql://ceex:ceex@localhost:5433/ceexfolio npm run db:migrate
+npm run dev
+```
+
+Prisma ne lit pas `.env.local`, d'où l'adresse répétée pour les migrations.
+
+### Tests des Coulisses
+
+`tests/e2e/coulisses.spec.ts` vérifie, sans base, que personne n'entre : redirections,
+adresses encodées, page de refus neutre, noindex, CSP. `tests/e2e/coulisses-proprietaire.spec.ts`
+joue le parcours du propriétaire sur la base de test, à 360 px : tableau de bord, feuille
+de route, fiche de cadrage et son PDF, parking vers la Boussole, rêves et projet actif,
+statut d'une demande, accessibilité à 360 et 1 440 px, déconnexion ; et un autre compte
+GitHub refusé malgré une vraie session.
+
+```bash
+npm run db:up
+npm run build
+npm run e2e:coulisses
+```
+
+La connexion GitHub elle-même passe par github.com : le test crée donc en base ce
+qu'elle aurait créé (utilisateur, compte GitHub, session) et signe le cookie comme Better
+Auth, avec des secrets de test (`tests/e2e/support/coulisses-env.ts`). Le script refuse
+toute base dont le nom ne finit pas par `_test`. La CI rejoue ce parcours à chaque pull
+request, avec le même `compose.yaml`.
 
 ## Sécurité
 

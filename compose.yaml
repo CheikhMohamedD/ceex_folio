@@ -1,0 +1,24 @@
+# PostgreSQL pour le développement et les tests des Coulisses : `npm run db:up`.
+# La même version que la production (16) ; port 5433 pour ne pas entrer en conflit avec
+# un PostgreSQL déjà installé sur la machine. Deux bases dans le même conteneur :
+#   ceexfolio       le développement (npm run dev)
+#   ceexfolio_test  les tests de bout en bout, créée et vidée par npm run e2e:coulisses
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ceex
+      POSTGRES_PASSWORD: ceex
+      POSTGRES_DB: ceexfolio
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ceex -d ceexfolio"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  pgdata:
