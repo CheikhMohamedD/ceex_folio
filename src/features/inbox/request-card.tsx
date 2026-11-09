@@ -75,9 +75,10 @@ export async function RequestCard({ request }: { request: InboxRequest }) {
             <a
               href={`mailto:${request.email}`}
               className="inline-flex min-h-11 items-center gap-2 ink-link break-all"
-              aria-label={t("write", { name: request.name })}
             >
               <Mail size={20} strokeWidth={1.5} absoluteStrokeWidth aria-hidden />
+              {/* Le nom lu commence par « Écrire à … » et contient l'adresse affichée (WCAG 2.5.3). */}
+              <span className="sr-only">{t("write", { name: request.name })}</span>
               {request.email}
             </a>
           </li>
